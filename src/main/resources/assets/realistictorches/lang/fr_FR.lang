@@ -1,0 +1,8 @@
+# Realistic Torches Language File - FRANCE FRENCH
+
+tile.RealisticTorches_TorchUnlit.name=Torche Éteinte
+tile.RealisticTorches_TorchLit.name=Lit Torche Allumé
+tile.RealisticTorches_TorchSmoldering.name=Torche Fumant
+tile.RealisticTorches_MovingLightSource.name=Source de Lumière Portable
+
+item.RealisticTorches_Matchbox.name=Boîte d'Allumettes

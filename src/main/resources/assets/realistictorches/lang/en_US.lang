@@ -1,0 +1,8 @@
+# Realistic Torches Language File - ENGLISH UNITED STATES
+
+tile.RealisticTorches_TorchUnlit.name=Unlit Torch
+tile.RealisticTorches_TorchLit.name=Lit Torch
+tile.RealisticTorches_TorchSmoldering.name=Smoldering Torch
+tile.RealisticTorches_MovingLightSource.name=Moving Light Source
+
+item.RealisticTorches_Matchbox.name=Matchbox

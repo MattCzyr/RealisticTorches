@@ -1,0 +1,8 @@
+# Realistic Torches Language File - BRAZILIAN PORTUGEUSE
+
+tile.RealisticTorches_TorchUnlit.name=Tocha Iluminado
+tile.RealisticTorches_TorchLit.name=Tocha Apagada
+tile.RealisticTorches_TorchSmoldering.name=Latente Tocha
+tile.RealisticTorches_MovingLightSource.name=Fonte de Luz em Movimento
+
+item.RealisticTorches_Matchbox.name=Caixa de Fósforo
