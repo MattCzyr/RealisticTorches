@@ -10,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 import com.chaosthedude.realistictorches.RealisticTorches;
+import com.chaosthedude.realistictorches.handlers.ConfigHandler;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -45,32 +46,34 @@ public class BlockTorchUnlit extends BlockTorch {
 	@Override
 	@SideOnly(Side.CLIENT)
     public void randomDisplayTick(World world, int x, int y, int z, Random rand) {
-        int l = world.getBlockMetadata(x, y, z);
-        double d0 = (double)((float)x + 0.5F);
-        double d1 = (double)((float)y + 0.7F);
-        double d2 = (double)((float)z + 0.5F);
-        double d3 = 0.2199999988079071D;
-        double d4 = 0.27000001072883606D;
+		if (ConfigHandler.unlitParticlesEnabled == true) {
+			int l = world.getBlockMetadata(x, y, z);
+			double d0 = (double)((float)x + 0.5F);
+			double d1 = (double)((float)y + 0.7F);
+			double d2 = (double)((float)z + 0.5F);
+			double d3 = 0.2199999988079071D;
+			double d4 = 0.27000001072883606D;
 
-        if (l == 1) {
-        	world.spawnParticle("smoke", d0 - d4, d1 + d3, d2, 0.0D, 0.0D, 0.0D);
-        }
+			if (l == 1) {
+				world.spawnParticle("smoke", d0 - d4, d1 + d3, d2, 0.0D, 0.0D, 0.0D);
+			}
         
-        else if (l == 2) {
-        	world.spawnParticle("smoke", d0 + d4, d1 + d3, d2, 0.0D, 0.0D, 0.0D);
-        }
+			else if (l == 2) {
+				world.spawnParticle("smoke", d0 + d4, d1 + d3, d2, 0.0D, 0.0D, 0.0D);
+			}
         
-        else if (l == 3) {
-        	world.spawnParticle("smoke", d0, d1 + d3, d2 - d4, 0.0D, 0.0D, 0.0D);
-        }
+			else if (l == 3) {
+				world.spawnParticle("smoke", d0, d1 + d3, d2 - d4, 0.0D, 0.0D, 0.0D);
+			}
         
-        else if (l == 4) {
-        	world.spawnParticle("smoke", d0, d1 + d3, d2 + d4, 0.0D, 0.0D, 0.0D);
-        }
+			else if (l == 4) {
+				world.spawnParticle("smoke", d0, d1 + d3, d2 + d4, 0.0D, 0.0D, 0.0D);
+			}
         
-        else {
-        	world.spawnParticle("smoke", d0, d1, d2, 0.0D, 0.0D, 0.0D);
-        }
+			else {
+				world.spawnParticle("smoke", d0, d1, d2, 0.0D, 0.0D, 0.0D);
+			}
+		}
     }
 	
 }
