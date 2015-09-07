@@ -20,6 +20,7 @@ public class ConfigHandler {
 	
 	public static boolean handheldLightEnabled = false;
 	public static boolean removeRecipesEnabled = true;
+	public static boolean unlitParticlesEnabled = false;
 	
 	public static void loadConfig(File configFile) {
 		config = new Configuration(configFile);
@@ -45,13 +46,16 @@ public class ConfigHandler {
 		comment = "Should other mods' recipes for the vanilla torch be removed? Enabled by default.";
 		removeRecipesEnabled = loadBool("Remove Recipes", comment, removeRecipesEnabled);
 		
+		comment = "Should unlit torches emit smoke particles? Disabled by default.";
+		unlitParticlesEnabled = loadBool("Unlit Particles", comment, unlitParticlesEnabled);
+		
 		if(config.hasChanged())
 			config.save();
 	}
 	
-	public static int loadInt(String name, String desc, int def) {
+	public static int loadInt(String name, String comment, int def) {
 		Property prop = config.get(Configuration.CATEGORY_GENERAL, name, def);
-		prop.comment = desc;
+		prop.comment = comment;
 		int val = prop.getInt(def);
 		if(val <= 0) {
 			val = def;
@@ -62,9 +66,9 @@ public class ConfigHandler {
 		
 	}
 	
-	public static boolean loadBool(String name, String desc, boolean def) {
+	public static boolean loadBool(String name, String comment, boolean def) {
 		Property prop = config.get(Configuration.CATEGORY_GENERAL, name, def);
-		prop.comment = desc;
+		prop.comment = comment;
 		return prop.getBoolean(def);
 	}
 	

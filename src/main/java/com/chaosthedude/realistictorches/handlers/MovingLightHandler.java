@@ -12,10 +12,10 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.PlayerTickEvent;
 
-public class LightEventHandler {
+public class MovingLightHandler {
 	
 	@SubscribeEvent(priority=EventPriority.LOW, receiveCanceled=true)
-	public void onEvent(PlayerTickEvent event) {
+	public void MovingLightEvent(PlayerTickEvent event) {
 	    if (event.phase == TickEvent.Phase.START && !event.player.worldObj.isRemote) {
 	        if (event.player.getCurrentEquippedItem() != null) {
 	        	if (BlockMovingLightSource.isLightEmittingItem(event.player.getCurrentEquippedItem().getItem()) || event.player.getCurrentEquippedItem().getItem() == Item.getItemFromBlock(BlockRegistry.torchLit)) {

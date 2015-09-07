@@ -8,10 +8,10 @@ import com.chaosthedude.realistictorches.blocks.BlockRegistry;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
-public class TorchEventHandler {
+public class TorchDropHandler {
 	
 	@SubscribeEvent
-	public void TorchHarvestEvent(HarvestDropsEvent event) {
+	public void TorchDropEvent(HarvestDropsEvent event) {
 		if (event.harvester != null) {
 			if (event.block == Blocks.torch) {
 				event.drops.clear();

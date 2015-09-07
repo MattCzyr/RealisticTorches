@@ -1,5 +1,6 @@
 package com.chaosthedude.realistictorches.handlers;
 
+import net.minecraft.block.BlockLiquid;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
@@ -10,19 +11,29 @@ import com.chaosthedude.realistictorches.blocks.BlockRegistry;
 import cpw.mods.fml.common.eventhandler.Event.Result;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
-public class BlockPlacedEventHandler {
+public class TorchHandler {
 	
 	@SubscribeEvent
-	public void BlockPlacedEvent(PlayerInteractEvent event) {
+	public void TorchEvent(PlayerInteractEvent event) {
 		EntityPlayer player = event.entityPlayer;
 		
 		if (event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK) {
 			if (player.getCurrentEquippedItem() != null) {
 				if (player.getCurrentEquippedItem().getItem() == Item.getItemFromBlock(Blocks.torch)) {
 					event.useBlock = Result.DENY;
-					if (event.world.isBlockNormalCubeDefault(event.x, event.y, event.z, true) == true) {
 					
-						if (event.face == 1) {
+					if (event.world.isBlockNormalCubeDefault(event.x, event.y, event.z, true) == true) {
+						
+						if (event.world.getBlock(event.x, event.y, event.z) instanceof BlockLiquid ||
+								event.world.getBlock(event.x + 1, event.y, event.z) instanceof BlockLiquid ||
+								event.world.getBlock(event.x - 1, event.y, event.z) instanceof BlockLiquid ||
+								event.world.getBlock(event.x, event.y, event.z + 1) instanceof BlockLiquid ||
+								event.world.getBlock(event.x, event.y, event.z - 1) instanceof BlockLiquid ||
+								event.world.getBlock(event.x, event.y + 1, event.z) instanceof BlockLiquid) {
+							event.setCanceled(true);
+						}
+						
+						else if (event.face == 1) {
 							if (!event.world.isRemote) {
 								event.world.setBlock(event.x, event.y + 1, event.z, BlockRegistry.torchLit, 5, 2);
 							}

@@ -16,10 +16,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.chaosthedude.realistictorches.blocks.BlockRegistry;
-import com.chaosthedude.realistictorches.handlers.BlockPlacedEventHandler;
+import com.chaosthedude.realistictorches.handlers.TorchHandler;
 import com.chaosthedude.realistictorches.handlers.ConfigHandler;
-import com.chaosthedude.realistictorches.handlers.LightEventHandler;
-import com.chaosthedude.realistictorches.handlers.TorchEventHandler;
+import com.chaosthedude.realistictorches.handlers.MovingLightHandler;
+import com.chaosthedude.realistictorches.handlers.TorchDropHandler;
 import com.chaosthedude.realistictorches.items.ItemRegistry;
 
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -35,7 +35,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 public class RealisticTorches {
 	public static final String ID = "RealisticTorches";
 	public static final String NAME = "Realistic Torches";
-	public static final String VERSION = "1.0.1";
+	public static final String VERSION = "1.0.2";
 	
 	public static final Logger logger = LogManager.getLogger(ID);
 	
@@ -70,11 +70,11 @@ public class RealisticTorches {
 		
 		GameRegistry.addShapelessRecipe(new ItemStack(Blocks.torch, 1), new ItemStack(BlockRegistry.torchUnlit, 1), new ItemStack(ItemRegistry.matchbox, 1, OreDictionary.WILDCARD_VALUE));
 		
-		MinecraftForge.EVENT_BUS.register(new TorchEventHandler());
-		MinecraftForge.EVENT_BUS.register(new BlockPlacedEventHandler());
+		MinecraftForge.EVENT_BUS.register(new TorchDropHandler());
+		MinecraftForge.EVENT_BUS.register(new TorchHandler());
 		
 		if(ConfigHandler.handheldLightEnabled == true) {
-			FMLCommonHandler.instance().bus().register(new LightEventHandler());
+			FMLCommonHandler.instance().bus().register(new MovingLightHandler());
 		}		
 	}
 	
@@ -85,25 +85,32 @@ public class RealisticTorches {
 		}
 	}
 	
-	public static void removeRecipe(ItemStack stack)
+	public static void removeRecipe(ItemStack s)
 	{
-		int recipeCount = 0;
+		 int recipeCount = 0;
+		 int shapelessCount = 0;
 		
 	     List<IRecipe> recipeList = CraftingManager.getInstance().getRecipeList();
 	     
 	     for (int i = 0; i < recipeList.size(); i++) {
 	          IRecipe currentRecipe = recipeList.get(i);
 	          
-	          ItemStack output = currentRecipe.getRecipeOutput();
-	          if (output != null) {
-	        	  Item a = output.getItem();
-	              Item b = stack.getItem();
+	          if (currentRecipe instanceof ShapelessRecipes) {
+	        	  //Ignore shapeless recipes
+	          }
+	          
+	          else {
+	        	  ItemStack output = currentRecipe.getRecipeOutput();
+	              if (output != null) {
+	            	  Item a = output.getItem();
+	            	  Item b = s.getItem();
 	              
-	              if (a == b) {
-	            	  recipeList.remove(i);
-	            	  recipeCount++;
-	            }
-	         }
+	            	  if (a == b) {
+	            		  recipeList.remove(i);
+	            		  recipeCount++;
+	            	  }
+	              }
+	          }
 	     }
 	     logger.info("Successfully removed " + recipeCount + " torch recipe(s).");
 	}
