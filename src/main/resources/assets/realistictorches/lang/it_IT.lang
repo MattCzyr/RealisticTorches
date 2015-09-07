@@ -1,0 +1,8 @@
+# Realistic Torches Language File - ITALY ITALIAN
+
+tile.RealisticTorches_TorchUnlit.name=Spento Torcia
+tile.RealisticTorches_TorchLit.name=Torcia Accesa
+tile.RealisticTorches_TorchSmoldering.name=Fumante Torcia
+tile.RealisticTorches_MovingLightSource.name=Sorgente di Luce in Movimento
+
+item.RealisticTorches_Matchbox.name=Scatola per Fiammiferi

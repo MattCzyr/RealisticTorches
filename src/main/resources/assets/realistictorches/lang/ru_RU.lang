@@ -1,0 +1,8 @@
+# Realistic Torches Language File - RUSSIA RUSSIAN
+
+tile.RealisticTorches_TorchUnlit.name=горит факел
+tile.RealisticTorches_TorchLit.name=Горит факел
+tile.RealisticTorches_TorchSmoldering.name=Тлеющий факел
+tile.RealisticTorches_MovingLightSource.name=Движущийся источник света
+
+item.RealisticTorches_Matchbox.name=спичечная коробка
