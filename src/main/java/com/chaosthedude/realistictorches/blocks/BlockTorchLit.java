@@ -27,7 +27,7 @@ public class BlockTorchLit extends BlockTorch {
 	
 	@Override
 	public void onBlockAdded(World world, int x, int y, int z) {
-			world.scheduleBlockUpdate(x, y, z, this, (int)(ConfigHandler.torchBurnout * 0.9));
+		world.scheduleBlockUpdate(x, y, z, this, (int)(ConfigHandler.torchBurnout * 0.9));
 	}
 	
 	@Override

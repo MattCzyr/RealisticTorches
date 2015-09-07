@@ -17,6 +17,8 @@ import net.minecraft.world.World;
 import com.chaosthedude.realistictorches.RealisticTorches;
 import com.chaosthedude.realistictorches.blocks.tileentities.TileEntityMovingLightSource;
 
+import cpw.mods.fml.common.registry.GameData;
+
 public class BlockMovingLightSource extends Block implements ITileEntityProvider
 {
 	

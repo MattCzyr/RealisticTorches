@@ -34,7 +34,7 @@ public class BlockTorchSmoldering extends BlockTorch {
 	
 	@Override
 	public void onBlockAdded(World world, int x, int y, int z) {
-			world.scheduleBlockUpdate(x, y, z, this, (int)(ConfigHandler.torchBurnout / 10));
+		world.scheduleBlockUpdate(x, y, z, this, (int)(ConfigHandler.torchBurnout / 10));
 	}
 	
 	@Override
@@ -60,7 +60,6 @@ public class BlockTorchSmoldering extends BlockTorch {
 		
 		return true;
 	}
-	
 	
 	@Override
 	public Item getItemDropped(int meta, Random random, int fortune) {
