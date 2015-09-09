@@ -35,7 +35,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 public class RealisticTorches {
 	public static final String ID = "RealisticTorches";
 	public static final String NAME = "Realistic Torches";
-	public static final String VERSION = "1.0.2";
+	public static final String VERSION = "1.1.0";
 	
 	public static final Logger logger = LogManager.getLogger(ID);
 	
@@ -88,7 +88,6 @@ public class RealisticTorches {
 	public static void removeRecipe(ItemStack s)
 	{
 		 int recipeCount = 0;
-		 int shapelessCount = 0;
 		
 	     List<IRecipe> recipeList = CraftingManager.getInstance().getRecipeList();
 	     
