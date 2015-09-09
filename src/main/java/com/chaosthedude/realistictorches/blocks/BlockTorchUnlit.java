@@ -33,10 +33,14 @@ public class BlockTorchUnlit extends BlockTorch {
 		ItemStack itemStack = player.getCurrentEquippedItem();
 		
 		if (itemStack != null) {
-			if (itemStack.getItem() == Items.flint_and_steel) {
-				itemStack.damageItem(1, player);
-				world.setBlock(x, y, z, BlockRegistry.torchLit, meta, 2);
-				world.playSoundEffect(x, y, z, "random.fizz", 1.0F, world.rand.nextFloat() * 0.1F + 0.9F);
+			if (!world.canLightningStrikeAt(x, y, z)) {
+				if (itemStack.getItem() == Items.flint_and_steel) {
+					if (!world.canLightningStrikeAt(x, y, z)) {
+						itemStack.damageItem(1, player);
+						world.setBlock(x, y, z, BlockRegistry.torchLit, meta, 2);
+						world.playSoundEffect(x, y, z, "random.fizz", 1.0F, world.rand.nextFloat() * 0.1F + 0.9F);
+					}
+				}
 			}
 		}
 		
