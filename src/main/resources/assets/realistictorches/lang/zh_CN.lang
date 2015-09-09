@@ -1,0 +1,8 @@
+# Realistic Torches Language File - SIMPLIFIED CHINESE
+
+tile.RealisticTorches_TorchUnlit.name=熄灭火炬
+tile.RealisticTorches_TorchLit.name=点燃火炬
+tile.RealisticTorches_TorchSmoldering.name=阴燃火炬
+tile.RealisticTorches_MovingLightSource.name=移动光源
+
+item.RealisticTorches_Matchbox.name=火柴盒
