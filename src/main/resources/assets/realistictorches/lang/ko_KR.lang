@@ -1,0 +1,8 @@
+# Realistic Torches Language File - KOREA KOREAN
+
+tile.RealisticTorches_TorchUnlit.name=꺼짐 토치
+tile.RealisticTorches_TorchLit.name=조명 토치
+tile.RealisticTorches_TorchSmoldering.name=토치 연기
+tile.RealisticTorches_MovingLightSource.name=광원 이동
+
+item.RealisticTorches_Matchbox.name=성냥갑
