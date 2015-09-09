@@ -1,0 +1,8 @@
+# Realistic Torches Language File - JAPAN JAPANESE
+
+tile.RealisticTorches_TorchUnlit.name=消灯トーチ
+tile.RealisticTorches_TorchLit.name=点灯トーチ
+tile.RealisticTorches_TorchSmoldering.name=トーチをくすぶっ
+tile.RealisticTorches_MovingLightSource.name=光源を移動します
+
+item.RealisticTorches_Matchbox.name=マッチボックス
