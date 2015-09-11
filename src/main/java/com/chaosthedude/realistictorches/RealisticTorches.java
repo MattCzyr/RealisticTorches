@@ -35,7 +35,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 public class RealisticTorches {
 	public static final String ID = "RealisticTorches";
 	public static final String NAME = "Realistic Torches";
-	public static final String VERSION = "1.1.0";
+	public static final String VERSION = "1.2.0";
 	
 	public static final Logger logger = LogManager.getLogger(ID);
 	
@@ -57,21 +57,24 @@ public class RealisticTorches {
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
 		GameRegistry.addRecipe(new ItemStack(BlockRegistry.torchUnlit, 4), "x", "y", 'x', Items.coal, 'y', Items.stick);
-		
 		GameRegistry.addRecipe(new ItemStack(BlockRegistry.torchUnlit, 4), "x", "y", 'x', new ItemStack(Items.coal, 1, 1), 'y', Items.stick);
 		
 		for (ItemStack coal : OreDictionary.getOres("itemCharcoalSugar")) {
 			GameRegistry.addRecipe(new ItemStack(BlockRegistry.torchUnlit, 4), "x", "y", 'x', (coal), 'y', Items.stick);
+			GameRegistry.addShapedRecipe(new ItemStack(ItemRegistry.glowstoneCrystal, 1), " x ", "xyx", " x ", 'x', Items.glowstone_dust, 'y', (coal));
 		}
 		
 		for (ItemStack slab : OreDictionary.getOres("slabWood")) {
 			GameRegistry.addRecipe(new ItemStack(ItemRegistry.matchbox, 1), "xxx", "yyy", 'x', Items.paper, 'y', (slab));
 		}
 		
-		GameRegistry.addShapelessRecipe(new ItemStack(Blocks.torch, 1), new ItemStack(BlockRegistry.torchUnlit, 1), new ItemStack(ItemRegistry.matchbox, 1, OreDictionary.WILDCARD_VALUE));
+		GameRegistry.addShapelessRecipe(new ItemStack(BlockRegistry.torchLit, 1), new ItemStack(BlockRegistry.torchUnlit, 1), new ItemStack(ItemRegistry.matchbox, 1, OreDictionary.WILDCARD_VALUE));
+		
+		GameRegistry.addShapedRecipe(new ItemStack(ItemRegistry.glowstoneCrystal, 1), " x ", "xyx", " x ", 'x', Items.glowstone_dust, 'y', Items.coal);
+		GameRegistry.addShapedRecipe(new ItemStack(ItemRegistry.glowstoneCrystal, 1), " x ", "xyx", " x ", 'x', Items.glowstone_dust, 'y', new ItemStack(Items.coal, 1, 1));
 		
 		MinecraftForge.EVENT_BUS.register(new TorchDropHandler());
-		MinecraftForge.EVENT_BUS.register(new TorchHandler());
+		//MinecraftForge.EVENT_BUS.register(new TorchHandler());
 		
 		if(ConfigHandler.handheldLightEnabled == true) {
 			FMLCommonHandler.instance().bus().register(new MovingLightHandler());
@@ -83,6 +86,7 @@ public class RealisticTorches {
 		if (ConfigHandler.removeRecipesEnabled == true) {
 			removeRecipe(new ItemStack(Blocks.torch));
 		}
+		GameRegistry.addRecipe(new ItemStack(Blocks.torch, 4), "x", "y", 'x', ItemRegistry.glowstoneCrystal, 'y', Items.stick);
 	}
 	
 	public static void removeRecipe(ItemStack s)
@@ -93,21 +97,14 @@ public class RealisticTorches {
 	     
 	     for (int i = 0; i < recipeList.size(); i++) {
 	          IRecipe currentRecipe = recipeList.get(i);
-	          
-	          if (currentRecipe instanceof ShapelessRecipes) {
-	        	  //Ignore shapeless recipes
-	          }
-	          
-	          else {
-	        	  ItemStack output = currentRecipe.getRecipeOutput();
-	              if (output != null) {
-	            	  Item a = output.getItem();
-	            	  Item b = s.getItem();
+	          ItemStack output = currentRecipe.getRecipeOutput();
+	          if (output != null) {
+	        	  Item a = output.getItem();
+	              Item b = s.getItem();
 	              
-	            	  if (a == b) {
-	            		  recipeList.remove(i);
-	            		  recipeCount++;
-	            	  }
+	              if (a == b) {
+	            	  recipeList.remove(i);
+	            	  recipeCount++;
 	              }
 	          }
 	     }
