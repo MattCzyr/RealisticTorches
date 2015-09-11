@@ -1,8 +1,9 @@
 # Realistic Torches Language File - ITALY ITALIAN
 
-tile.RealisticTorches_TorchUnlit.name=Spento Torcia
-tile.RealisticTorches_TorchLit.name=Torcia Accesa
-tile.RealisticTorches_TorchSmoldering.name=Fumante Torcia
-tile.RealisticTorches_MovingLightSource.name=Sorgente di Luce in Movimento
+tile.RealisticTorches_TorchUnlit.name=Spento torcia
+tile.RealisticTorches_TorchLit.name=Torcia accesa
+tile.RealisticTorches_TorchSmoldering.name=Fumante torcia
+tile.RealisticTorches_MovingLightSource.name=Sorgente di luce in movimento
 
-item.RealisticTorches_Matchbox.name=Scatola per Fiammiferi
+item.RealisticTorches_Matchbox.name=Scatola per fiammiferi
+item.RealisticTorches_GlowstoneCrystal.name=Pietraluce Cristallo
