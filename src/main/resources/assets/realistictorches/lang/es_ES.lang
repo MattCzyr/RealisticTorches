@@ -1,8 +1,9 @@
 # Realistic Torches Language File - SPAIN ESPANOL
 
-tile.RealisticTorches_TorchUnlit.name=Antorcha Apagada
-tile.RealisticTorches_TorchLit.name=Antorcha Iluminado
-tile.RealisticTorches_TorchSmoldering.name=Antorcha Ardiente
-tile.RealisticTorches_MovingLightSource.name=Fuente de Luz en Movimiento
+tile.RealisticTorches_TorchUnlit.name=Antorcha apagada
+tile.RealisticTorches_TorchLit.name=Antorcha iluminado
+tile.RealisticTorches_TorchSmoldering.name=Antorcha ardiente
+tile.RealisticTorches_MovingLightSource.name=Fuente de luz en movimiento
 
-item.RealisticTorches_Matchbox.name=Caja de Cerillas
+item.RealisticTorches_Matchbox.name=Caja de cerillas
+item.RealisticTorches_GlowstoneCrystal.name=Piedra luminosa cristal
