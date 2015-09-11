@@ -1,8 +1,9 @@
 # Realistic Torches Language File - FRANCE FRENCH
 
-tile.RealisticTorches_TorchUnlit.name=Torche Éteinte
-tile.RealisticTorches_TorchLit.name=Lit Torche Allumé
-tile.RealisticTorches_TorchSmoldering.name=Torche Fumant
-tile.RealisticTorches_MovingLightSource.name=Source de Lumière Portable
+tile.RealisticTorches_TorchUnlit.name=Torche éteinte
+tile.RealisticTorches_TorchLit.name=Lit Torche allumé
+tile.RealisticTorches_TorchSmoldering.name=Torche fumant
+tile.RealisticTorches_MovingLightSource.name=Source de lumière portable
 
-item.RealisticTorches_Matchbox.name=Boîte d'Allumettes
+item.RealisticTorches_Matchbox.name=Boîte d'allumettes
+item.RealisticTorches_GlowstoneCrystal.name=Pierre lumineuse cristal
