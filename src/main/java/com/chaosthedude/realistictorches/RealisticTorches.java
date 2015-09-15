@@ -35,7 +35,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 public class RealisticTorches {
 	public static final String ID = "RealisticTorches";
 	public static final String NAME = "Realistic Torches";
-	public static final String VERSION = "1.2.0";
+	public static final String VERSION = "1.2.1";
 	
 	public static final Logger logger = LogManager.getLogger(ID);
 	
@@ -56,11 +56,20 @@ public class RealisticTorches {
 	
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
-		GameRegistry.addRecipe(new ItemStack(BlockRegistry.torchUnlit, 4), "x", "y", 'x', Items.coal, 'y', Items.stick);
-		GameRegistry.addRecipe(new ItemStack(BlockRegistry.torchUnlit, 4), "x", "y", 'x', new ItemStack(Items.coal, 1, 1), 'y', Items.stick);
+		if (ConfigHandler.oreDictionaryEnabled == true) {
+			OreDictionary.registerOre("blockTorch", BlockRegistry.torchLit);
+			OreDictionary.registerOre("blockTorch", Blocks.torch);
+		}
+		
+		for (ItemStack stick : OreDictionary.getOres("stickWood")) {
+			GameRegistry.addRecipe(new ItemStack(BlockRegistry.torchUnlit, 4), "x", "y", 'x', Items.coal, 'y', (stick));
+			GameRegistry.addRecipe(new ItemStack(BlockRegistry.torchUnlit, 4), "x", "y", 'x', new ItemStack(Items.coal, 1, 1), 'y', (stick));
+		}
 		
 		for (ItemStack coal : OreDictionary.getOres("itemCharcoalSugar")) {
-			GameRegistry.addRecipe(new ItemStack(BlockRegistry.torchUnlit, 4), "x", "y", 'x', (coal), 'y', Items.stick);
+			for (ItemStack stick : OreDictionary.getOres("stickWood")) {
+				GameRegistry.addRecipe(new ItemStack(BlockRegistry.torchUnlit, 4), "x", "y", 'x', (coal), 'y', (stick));
+			}
 			GameRegistry.addShapedRecipe(new ItemStack(ItemRegistry.glowstoneCrystal, 1), " x ", "xyx", " x ", 'x', Items.glowstone_dust, 'y', (coal));
 		}
 		
