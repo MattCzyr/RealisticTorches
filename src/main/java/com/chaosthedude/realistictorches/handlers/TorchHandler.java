@@ -14,7 +14,7 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class TorchHandler {
 	
-	@SubscribeEvent
+	/*@SubscribeEvent
 	public void TorchEvent(PlayerInteractEvent event) {
 		EntityPlayer player = event.entityPlayer;
 		
@@ -99,6 +99,6 @@ public class TorchHandler {
 				}
 			}
 		}
-	}
+	}*/
 	
 }
