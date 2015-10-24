@@ -22,6 +22,7 @@ public class ConfigHandler {
 	public static boolean removeRecipesEnabled = true;
 	public static boolean unlitParticlesEnabled = false;
 	public static boolean oreDictionaryEnabled = false;
+	public static boolean noRelightEnabled = false;
 	
 	public static void loadConfig(File configFile) {
 		config = new Configuration(configFile);
@@ -50,8 +51,11 @@ public class ConfigHandler {
 		comment = "Should unlit torches emit smoke particles? Disabled by default.";
 		unlitParticlesEnabled = loadBool("Unlit Particles", comment, unlitParticlesEnabled);
 		
-		comment = "Should lit torches be registered in the Ore Dictionary as vanilla torch variants? Disabled by default to keep things like jack-o-lanterns balanced.";
+		comment = "Should lit torches be registered in the Ore Dictionary as vanilla torch variants? Disabled by default.";
 		oreDictionaryEnabled = loadBool("Vanilla Torch Variants", comment, oreDictionaryEnabled);
+		
+		comment = "Should torches disappear after they are extinguished and be unable to be relit? Disabled by default.";
+		noRelightEnabled = loadBool("No Torch Relight", comment, noRelightEnabled);
 		
 		if(config.hasChanged())
 			config.save();
@@ -80,7 +84,7 @@ public class ConfigHandler {
 		
 		@SubscribeEvent
 		public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent eventArgs) {
-			if(eventArgs.modID.equals(RealisticTorches.ID))
+			if (eventArgs.modID.equals(RealisticTorches.ID))
 				init();
 		}
 	}

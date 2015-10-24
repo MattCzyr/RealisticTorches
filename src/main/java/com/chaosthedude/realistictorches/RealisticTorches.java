@@ -35,7 +35,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 public class RealisticTorches {
 	public static final String ID = "RealisticTorches";
 	public static final String NAME = "Realistic Torches";
-	public static final String VERSION = "1.2.1";
+	public static final String VERSION = "1.3.0";
 	
 	public static final Logger logger = LogManager.getLogger(ID);
 	
@@ -84,10 +84,7 @@ public class RealisticTorches {
 		
 		MinecraftForge.EVENT_BUS.register(new TorchDropHandler());
 		//MinecraftForge.EVENT_BUS.register(new TorchHandler());
-		
-		if(ConfigHandler.handheldLightEnabled == true) {
-			FMLCommonHandler.instance().bus().register(new MovingLightHandler());
-		}		
+		FMLCommonHandler.instance().bus().register(new MovingLightHandler());	
 	}
 	
 	@EventHandler
@@ -98,26 +95,25 @@ public class RealisticTorches {
 		GameRegistry.addRecipe(new ItemStack(Blocks.torch, 4), "x", "y", 'x', ItemRegistry.glowstoneCrystal, 'y', Items.stick);
 	}
 	
-	public static void removeRecipe(ItemStack s)
-	{
-		 int recipeCount = 0;
-		
-	     List<IRecipe> recipeList = CraftingManager.getInstance().getRecipeList();
-	     
-	     for (int i = 0; i < recipeList.size(); i++) {
-	          IRecipe currentRecipe = recipeList.get(i);
-	          ItemStack output = currentRecipe.getRecipeOutput();
-	          if (output != null) {
-	        	  Item a = output.getItem();
-	              Item b = s.getItem();
-	              
-	              if (a == b) {
-	            	  recipeList.remove(i);
-	            	  recipeCount++;
-	              }
-	          }
-	     }
-	     logger.info("Successfully removed " + recipeCount + " torch recipe(s).");
+	public static void removeRecipe(ItemStack s) {
+		int recipeCount = 0;
+
+		List<IRecipe> recipeList = CraftingManager.getInstance().getRecipeList();
+
+		for (int i = 0; i < recipeList.size(); i++) {
+			IRecipe currentRecipe = recipeList.get(i);
+			ItemStack output = currentRecipe.getRecipeOutput();
+			if (output != null) {
+				Item a = output.getItem();
+				Item b = s.getItem();
+
+				if (a == b) {
+					recipeList.remove(i);
+					recipeCount++;
+				}
+			}
+		}
+		logger.info("Successfully removed " + recipeCount + " torch recipe(s).");
 	}
 	
 }

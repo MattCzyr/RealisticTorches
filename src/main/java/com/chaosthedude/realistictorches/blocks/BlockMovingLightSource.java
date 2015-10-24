@@ -55,6 +55,11 @@ public class BlockMovingLightSource extends Block implements ITileEntityProvider
     }
     
     @Override
+    public int getRenderType() {
+        return -1;
+    }
+    
+    @Override
     public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int x, int y, int z) {
         return null;
     }
