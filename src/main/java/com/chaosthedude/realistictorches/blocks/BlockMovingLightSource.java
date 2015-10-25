@@ -3,9 +3,13 @@ package com.chaosthedude.realistictorches.blocks;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.chaosthedude.realistictorches.RealisticTorches;
+import com.chaosthedude.realistictorches.blocks.tileentities.TileEntityMovingLightSource;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -14,13 +18,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 
-import com.chaosthedude.realistictorches.RealisticTorches;
-import com.chaosthedude.realistictorches.blocks.tileentities.TileEntityMovingLightSource;
-
-import cpw.mods.fml.common.registry.GameData;
-
-public class BlockMovingLightSource extends Block implements ITileEntityProvider
-{
+public class BlockMovingLightSource extends Block implements ITileEntityProvider {
 	
     public static List<Item> lightSourceList = new ArrayList<Item>() {
     	{
