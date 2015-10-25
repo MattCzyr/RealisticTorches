@@ -35,66 +35,77 @@ import cpw.mods.fml.common.registry.GameRegistry;
 public class RealisticTorches {
 	public static final String ID = "RealisticTorches";
 	public static final String NAME = "Realistic Torches";
-	public static final String VERSION = "1.3.0";
-	
+	public static final String VERSION = "1.3.1";
+
 	public static final Logger logger = LogManager.getLogger(ID);
-	
+
 	@EventHandler
 	public void init(FMLPreInitializationEvent event) {
 		BlockRegistry.mainRegistry();
 		ItemRegistry.mainRegistry();
-		
+
 		ConfigHandler.loadConfig(event.getSuggestedConfigurationFile());
-		logger.info("Torch burnout rate: " + ConfigHandler.torchBurnout + " ticks (" + (float)(ConfigHandler.torchBurnout / 1200) + " minutes)");
-		if(ConfigHandler.handheldLightEnabled == true) {
+		logger.info("Torch burnout rate: " + ConfigHandler.torchBurnout + " ticks ("
+				+ (float) (ConfigHandler.torchBurnout / 1200) + " minutes)");
+		if (ConfigHandler.handheldLightEnabled == true) {
 			logger.info("Handheld light sources are enabled.");
-		}
-		else {
+		} else {
 			logger.info("Handheld light sources are disabled.");
 		}
 	}
-	
+
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
 		if (ConfigHandler.oreDictionaryEnabled == true) {
 			OreDictionary.registerOre("blockTorch", BlockRegistry.torchLit);
 			OreDictionary.registerOre("blockTorch", Blocks.torch);
 		}
-		
+
 		for (ItemStack stick : OreDictionary.getOres("stickWood")) {
 			GameRegistry.addRecipe(new ItemStack(BlockRegistry.torchUnlit, 4), "x", "y", 'x', Items.coal, 'y', (stick));
-			GameRegistry.addRecipe(new ItemStack(BlockRegistry.torchUnlit, 4), "x", "y", 'x', new ItemStack(Items.coal, 1, 1), 'y', (stick));
+			GameRegistry.addRecipe(new ItemStack(BlockRegistry.torchUnlit, 4), "x", "y", 'x',
+					new ItemStack(Items.coal, 1, 1), 'y', (stick));
 		}
-		
+
 		for (ItemStack coal : OreDictionary.getOres("itemCharcoalSugar")) {
 			for (ItemStack stick : OreDictionary.getOres("stickWood")) {
 				GameRegistry.addRecipe(new ItemStack(BlockRegistry.torchUnlit, 4), "x", "y", 'x', (coal), 'y', (stick));
 			}
-			GameRegistry.addShapedRecipe(new ItemStack(ItemRegistry.glowstoneCrystal, 1), " x ", "xyx", " x ", 'x', Items.glowstone_dust, 'y', (coal));
+			GameRegistry.addShapedRecipe(new ItemStack(ItemRegistry.glowstoneCrystal, 1), " x ", "xyx", " x ", 'x',
+					Items.glowstone_dust, 'y', (coal));
 		}
-		
-		for (ItemStack slab : OreDictionary.getOres("slabWood")) {
-			GameRegistry.addRecipe(new ItemStack(ItemRegistry.matchbox, 1), "xxx", "yyy", 'x', Items.paper, 'y', (slab));
-		}
-		
-		GameRegistry.addShapelessRecipe(new ItemStack(BlockRegistry.torchLit, 1), new ItemStack(BlockRegistry.torchUnlit, 1), new ItemStack(ItemRegistry.matchbox, 1, OreDictionary.WILDCARD_VALUE));
-		
-		GameRegistry.addShapedRecipe(new ItemStack(ItemRegistry.glowstoneCrystal, 1), " x ", "xyx", " x ", 'x', Items.glowstone_dust, 'y', Items.coal);
-		GameRegistry.addShapedRecipe(new ItemStack(ItemRegistry.glowstoneCrystal, 1), " x ", "xyx", " x ", 'x', Items.glowstone_dust, 'y', new ItemStack(Items.coal, 1, 1));
-		
+
+		GameRegistry.addShapelessRecipe(new ItemStack(BlockRegistry.torchLit, 1),
+				new ItemStack(BlockRegistry.torchUnlit, 1),
+				new ItemStack(ItemRegistry.matchbox, 1, OreDictionary.WILDCARD_VALUE));
+		GameRegistry.addShapelessRecipe(new ItemStack(ItemRegistry.matchbox, 1), new ItemStack(ItemRegistry.matchbox),
+				new ItemStack(ItemRegistry.matchbox));
+
+		GameRegistry.addShapedRecipe(new ItemStack(ItemRegistry.glowstoneCrystal, 1), " x ", "xyx", " x ", 'x',
+				Items.glowstone_dust, 'y', Items.coal);
+		GameRegistry.addShapedRecipe(new ItemStack(ItemRegistry.glowstoneCrystal, 1), " x ", "xyx", " x ", 'x',
+				Items.glowstone_dust, 'y', new ItemStack(Items.coal, 1, 1));
+
 		MinecraftForge.EVENT_BUS.register(new TorchDropHandler());
-		//MinecraftForge.EVENT_BUS.register(new TorchHandler());
-		FMLCommonHandler.instance().bus().register(new MovingLightHandler());	
+		// MinecraftForge.EVENT_BUS.register(new TorchHandler());
+		FMLCommonHandler.instance().bus().register(new MovingLightHandler());
 	}
-	
+
 	@EventHandler
 	public void init(FMLPostInitializationEvent event) {
+		removeRecipe(new ItemStack(ItemRegistry.matchbox));
+		for (ItemStack slab : OreDictionary.getOres("slabWood")) {
+			GameRegistry.addRecipe(new ItemStack(ItemRegistry.matchbox, 1), "xxx", "yyy", 'x', Items.paper, 'y',
+					(slab));
+		}
+
 		if (ConfigHandler.removeRecipesEnabled == true) {
 			removeRecipe(new ItemStack(Blocks.torch));
 		}
-		GameRegistry.addRecipe(new ItemStack(Blocks.torch, 4), "x", "y", 'x', ItemRegistry.glowstoneCrystal, 'y', Items.stick);
+		GameRegistry.addRecipe(new ItemStack(Blocks.torch, 4), "x", "y", 'x', ItemRegistry.glowstoneCrystal, 'y',
+				Items.stick);
 	}
-	
+
 	public static void removeRecipe(ItemStack s) {
 		int recipeCount = 0;
 
@@ -115,5 +126,5 @@ public class RealisticTorches {
 		}
 		logger.info("Successfully removed " + recipeCount + " torch recipe(s).");
 	}
-	
+
 }
