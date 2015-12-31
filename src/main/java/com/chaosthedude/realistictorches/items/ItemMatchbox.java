@@ -1,7 +1,7 @@
 package com.chaosthedude.realistictorches.items;
 
 import com.chaosthedude.realistictorches.RealisticTorches;
-import com.chaosthedude.realistictorches.handlers.ConfigHandler;
+import com.chaosthedude.realistictorches.config.ConfigHandler;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -9,28 +9,22 @@ import net.minecraft.item.ItemStack;
 
 public class ItemMatchbox extends Item {
 
-	private ItemStack emptyItem = null;
-
 	public static final String name = "Matchbox";
 
 	public ItemMatchbox() {
 		super();
 
-		this.setUnlocalizedName(RealisticTorches.ID + "_" + name);
-		this.maxStackSize = 1;
-		this.setMaxDamage(ConfigHandler.matchboxDurability - 1);
-		this.setCreativeTab(CreativeTabs.tabTools);
-		this.setTextureName(RealisticTorches.ID + ":" + name);
-		this.setNoRepair();
+		setUnlocalizedName(RealisticTorches.MODID + "_" + name);
+		maxStackSize = 1;
+		setMaxDamage(ConfigHandler.matchboxDurability - 1);
+		setCreativeTab(CreativeTabs.tabTools);
+		setTextureName(RealisticTorches.MODID + ":" + name);
+		setNoRepair();
 	}
 
 	@Override
 	public boolean hasContainerItem() {
 		return true;
-	}
-
-	public void setEmptyItem(ItemStack ei) {
-		this.emptyItem = ei;
 	}
 
 	public boolean doesContainerItemLeaveCraftingGrid(ItemStack stack) {
