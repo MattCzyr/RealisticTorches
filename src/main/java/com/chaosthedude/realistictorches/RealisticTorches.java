@@ -12,7 +12,7 @@ import com.chaosthedude.realistictorches.util.LightSources;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.ItemModelMesher;
+import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -21,7 +21,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -32,10 +31,9 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.oredict.OreDictionary;
 
-@Mod(modid = RealisticTorches.MODID, name = RealisticTorches.NAME, version = RealisticTorches.VERSION, acceptedMinecraftVersions = "[1.8]")
+@Mod(modid = RealisticTorches.MODID, name = RealisticTorches.NAME, version = RealisticTorches.VERSION, acceptedMinecraftVersions = "[1.8.8]")
 
 public class RealisticTorches {
-
 	public static final String MODID = "RealisticTorches";
 	public static final String NAME = "Realistic Torches";
 	public static final String VERSION = "1.5.0";
@@ -44,14 +42,17 @@ public class RealisticTorches {
 
 	@EventHandler
 	public void init(FMLPreInitializationEvent event) {
-		RealisticTorchesBlocks.mainRegistry();
-		RealisticTorchesItems.mainRegistry();
+		RealisticTorchesBlocks.initialize();
+		RealisticTorchesBlocks.register();
+
+		RealisticTorchesItems.initialize();
+		RealisticTorchesItems.register();
 
 		ConfigHandler.loadConfig(event.getSuggestedConfigurationFile());
 
 		logger.info("Torch burnout rate: " + ConfigHandler.torchBurnout + " ticks (" + ConfigHandler.torchBurnout / 1200 + " minutes)");
 
-		if (ConfigHandler.handheldLightEnabled) {
+		if (ConfigHandler.handheldLightEnabled == true) {
 			logger.info("Handheld light sources are enabled.");
 		} else {
 			logger.info("Handheld light sources are disabled.");
@@ -60,11 +61,6 @@ public class RealisticTorches {
 
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
-		if (ConfigHandler.oreDictionaryEnabled) {
-			OreDictionary.registerOre("blockTorch", RealisticTorchesBlocks.torchLit);
-			OreDictionary.registerOre("blockTorch", Blocks.torch);
-		}
-
 		for (ItemStack stick : OreDictionary.getOres("stickWood")) {
 			GameRegistry.addRecipe(new ItemStack(RealisticTorchesBlocks.torchUnlit, 4), "x", "y", 'x', Items.coal, 'y', stick);
 			GameRegistry.addRecipe(new ItemStack(RealisticTorchesBlocks.torchUnlit, 4), "x", "y", 'x', new ItemStack(Items.coal, 1, 1), 'y', stick);
@@ -74,6 +70,7 @@ public class RealisticTorches {
 			for (ItemStack stick : OreDictionary.getOres("stickWood")) {
 				GameRegistry.addRecipe(new ItemStack(RealisticTorchesBlocks.torchUnlit, 4), "x", "y", 'x', coal, 'y', stick);
 			}
+
 			GameRegistry.addShapedRecipe(new ItemStack(RealisticTorchesItems.glowstoneCrystal, 1), " x ", "xyx", " x ", 'x', Items.glowstone_dust, 'y', coal);
 		}
 
@@ -86,19 +83,24 @@ public class RealisticTorches {
 		GameRegistry.addShapedRecipe(new ItemStack(RealisticTorchesItems.glowstoneCrystal, 1), " x ", "xyx", " x ", 'x', Items.glowstone_dust, 'y', Items.coal);
 		GameRegistry.addShapedRecipe(new ItemStack(RealisticTorchesItems.glowstoneCrystal, 1), " x ", "xyx", " x ", 'x', Items.glowstone_dust, 'y', new ItemStack(Items.coal, 1, 1));
 
-		MinecraftForge.EVENT_BUS.register(new TorchDropHandler());
-		FMLCommonHandler.instance().bus().register(new MovingLightHandler());
-
 		if (event.getSide() == Side.CLIENT) {
-			ItemModelMesher mesher = Minecraft.getMinecraft().getRenderItem().getItemModelMesher();
+			RenderItem renderItem = Minecraft.getMinecraft().getRenderItem();
 
-			mesher.register(RealisticTorchesItems.matchbox, 0, new ModelResourceLocation(this.MODID + ":" + RealisticTorchesItems.matchbox.name, "inventory"));
-			mesher.register(RealisticTorchesItems.glowstoneCrystal, 0, new ModelResourceLocation(this.MODID + ":GlowstoneCrystal", "inventory"));
+			renderItem.getItemModelMesher().register(RealisticTorchesItems.matchbox, 0, new ModelResourceLocation(this.MODID + ":" + RealisticTorchesItems.matchbox.name, "inventory"));
+			renderItem.getItemModelMesher().register(RealisticTorchesItems.glowstoneCrystal, 0, new ModelResourceLocation(this.MODID + ":GlowstoneCrystal", "inventory"));
 
-			mesher.register(Item.getItemFromBlock(RealisticTorchesBlocks.torchLit), 0, new ModelResourceLocation(RealisticTorches.MODID + ":" + RealisticTorchesBlocks.torchLit.name, "inventory"));
-			mesher.register(Item.getItemFromBlock(RealisticTorchesBlocks.torchSmoldering), 0, new ModelResourceLocation(RealisticTorches.MODID + ":" + RealisticTorchesBlocks.torchSmoldering.name, "inventory"));
-			mesher.register(Item.getItemFromBlock(RealisticTorchesBlocks.torchUnlit), 0, new ModelResourceLocation(RealisticTorches.MODID + ":" + RealisticTorchesBlocks.torchUnlit.name, "inventory"));
+			renderItem.getItemModelMesher().register(Item.getItemFromBlock(RealisticTorchesBlocks.torchLit), 0, new ModelResourceLocation(this.MODID + ":" + RealisticTorchesBlocks.torchLit.name, "inventory"));
+			renderItem.getItemModelMesher().register(Item.getItemFromBlock(RealisticTorchesBlocks.torchSmoldering), 0, new ModelResourceLocation(this.MODID + ":" + RealisticTorchesBlocks.torchSmoldering.name, "inventory"));
+			renderItem.getItemModelMesher().register(Item.getItemFromBlock(RealisticTorchesBlocks.torchUnlit), 0, new ModelResourceLocation(this.MODID + ":" + RealisticTorchesBlocks.torchUnlit.name, "inventory"));
 		}
+
+		if (ConfigHandler.oreDictionaryEnabled) {
+			OreDictionary.registerOre("blockTorch", RealisticTorchesBlocks.torchLit);
+			OreDictionary.registerOre("blockTorch", Blocks.torch);
+		}
+
+		MinecraftForge.EVENT_BUS.register(new MovingLightHandler());
+		MinecraftForge.EVENT_BUS.register(new TorchDropHandler());
 
 	}
 
@@ -115,7 +117,7 @@ public class RealisticTorches {
 		for (Object i : GameData.getBlockRegistry()) {
 			Block block = (Block) i;
 			if (block.getLightValue() > 0) {
-				LightSources.lightSourceList.add(Item.getItemFromBlock(block));
+				LightSources.lightSources.add(Item.getItemFromBlock(block));
 				lightSources++;
 			}
 		}

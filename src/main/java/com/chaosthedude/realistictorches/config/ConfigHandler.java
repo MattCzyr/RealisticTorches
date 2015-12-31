@@ -4,10 +4,10 @@ import java.io.File;
 
 import com.chaosthedude.realistictorches.RealisticTorches;
 
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class ConfigHandler {
@@ -25,11 +25,11 @@ public class ConfigHandler {
 
 	public static void loadConfig(File configFile) {
 		config = new Configuration(configFile);
-		config.load();
 
+		config.load();
 		init();
 
-		FMLCommonHandler.instance().bus().register(new ChangeListener());
+		MinecraftForge.EVENT_BUS.register(new ChangeListener());
 	}
 
 	public static void init() {
@@ -41,7 +41,7 @@ public class ConfigHandler {
 		comment = "The durability of the matchbox (the number of torches that it can light before it breaks). Set this to a negative value for unlimited uses. Default: 64";
 		matchboxDurability = loadInt("Lighter Durability", comment, matchboxDurability);
 
-		comment = "Should certain blocks and items emit light when held? Default: false";
+		comment = "Should certain blocks and items emit light when held? This is still experimental and may cause performance issues. Default: false";
 		handheldLightEnabled = loadBool("Handheld Light", comment, handheldLightEnabled);
 
 		comment = "Should other mods' recipes for the vanilla torch be removed? Default: true";
@@ -56,9 +56,8 @@ public class ConfigHandler {
 		comment = "Should torches disappear after they are extinguished and be unable to be relit? Default: false";
 		noRelightEnabled = loadBool("No Torch Relight", comment, noRelightEnabled);
 
-		if (config.hasChanged()) {
+		if (config.hasChanged())
 			config.save();
-		}
 	}
 
 	public static int loadInt(String name, String comment, int def) {
@@ -81,6 +80,7 @@ public class ConfigHandler {
 	}
 
 	public static class ChangeListener {
+
 		@SubscribeEvent
 		public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent eventArgs) {
 			if (eventArgs.modID.equals(RealisticTorches.MODID))

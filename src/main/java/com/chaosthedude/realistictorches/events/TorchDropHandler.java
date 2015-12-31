@@ -10,7 +10,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class TorchDropHandler {
 
 	@SubscribeEvent
-	public void torchDropEvent(HarvestDropsEvent event) {
+	public void torchDropHandler(HarvestDropsEvent event) {
 		if (event.harvester != null && event.state == Blocks.torch) {
 			event.drops.clear();
 			event.dropChance = 1.0F;

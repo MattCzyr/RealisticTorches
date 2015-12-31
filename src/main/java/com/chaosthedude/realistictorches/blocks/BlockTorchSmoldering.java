@@ -48,9 +48,7 @@ public class BlockTorchSmoldering extends BlockTorch implements ITileEntityProvi
 		if (!ConfigHandler.noRelightEnabled) {
 			int meta = this.getMetaFromState(world.getBlockState(pos));
 			world.setBlockState(pos, RealisticTorchesBlocks.torchUnlit.getStateFromMeta(meta), 2);
-		}
-
-		else {
+		} else {
 			world.setBlockToAir(pos);
 		}
 	}
@@ -61,7 +59,7 @@ public class BlockTorchSmoldering extends BlockTorch implements ITileEntityProvi
 			int meta = this.getMetaFromState(world.getBlockState(pos));
 			ItemStack itemStack = player.getCurrentEquippedItem();
 
-			if (itemStack != null && itemStack.getItem() == Items.flint_and_steel && !world.canLightningStrike(pos)) {
+			if (itemStack != null && itemStack.getItem() == Items.flint_and_steel) {
 				itemStack.damageItem(1, player);
 				world.setBlockState(pos, RealisticTorchesBlocks.torchLit.getStateFromMeta(meta), 2);
 				world.playSoundEffect(pos.getX(), pos.getY(), pos.getZ(), "random.fizz", 1.0F, world.rand.nextFloat() * 0.1F + 0.9F);
@@ -108,9 +106,9 @@ public class BlockTorchSmoldering extends BlockTorch implements ITileEntityProvi
 			}
 		}
 	}
-
+	
 	@Override
-	public TileEntity createNewTileEntity(World worldIn, int meta) {
+	public TileEntity createNewTileEntity(World world, int meta) {
 		return new TETorch();
 	}
 

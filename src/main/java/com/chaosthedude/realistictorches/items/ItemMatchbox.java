@@ -1,11 +1,11 @@
 package com.chaosthedude.realistictorches.items;
 
-import com.chaosthedude.realistictorches.RealisticTorches;
-import com.chaosthedude.realistictorches.config.ConfigHandler;
-
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+
+import com.chaosthedude.realistictorches.RealisticTorches;
+import com.chaosthedude.realistictorches.config.ConfigHandler;
 
 public class ItemMatchbox extends Item {
 
@@ -33,8 +33,9 @@ public class ItemMatchbox extends Item {
 	@Override
 	public ItemStack getContainerItem(ItemStack stack) {
 		if (ConfigHandler.matchboxDurability > 1) {
+			int dmg = stack.getItemDamage();
 			ItemStack newStack = copyStack(stack, 1);
-			newStack.setItemDamage(stack.getItemDamage() + 1);
+			newStack.setItemDamage(dmg + 1);
 			return newStack;
 		} else {
 			return stack;

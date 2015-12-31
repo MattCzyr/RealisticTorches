@@ -10,10 +10,10 @@ import net.minecraft.item.Item;
 
 public class LightSources {
 
-	public static List<Item> lightSourceList = new ArrayList<Item>() {
+	public static List<Item> lightSources = new ArrayList<Item>() {
 		{
-			add(Items.lava_bucket);
 			add(Items.glowstone_dust);
+			add(Items.lava_bucket);
 			add(Items.blaze_powder);
 			add(Items.blaze_rod);
 			add(RealisticTorchesItems.glowstoneCrystal);
@@ -21,7 +21,7 @@ public class LightSources {
 	};
 
 	public static boolean isLightSource(Item item) {
-		return lightSourceList.contains(item);
+		return lightSources.contains(item);
 	}
 
 }

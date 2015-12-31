@@ -11,17 +11,12 @@ public class RealisticTorchesItems {
 	public static ItemMatchbox matchbox;
 	public static Item glowstoneCrystal;
 
-	public static void mainRegistry() {
-		initializeItem();
-		registerItem();
-	}
-
-	public static void initializeItem() {
+	public static void initialize() {
 		matchbox = new ItemMatchbox();
-		glowstoneCrystal = new Item().setUnlocalizedName(RealisticTorches.MODID + "_GlowstoneCrystal").setCreativeTab(CreativeTabs.tabMaterials);
+		glowstoneCrystal = new Item().setUnlocalizedName(RealisticTorches.MODID + "_GlowstoneCrystal").setCreativeTab(CreativeTabs.tabMaterials);;
 	}
 
-	public static void registerItem() {
+	public static void register() {
 		GameRegistry.registerItem(matchbox, matchbox.name);
 		GameRegistry.registerItem(glowstoneCrystal, "GlowstoneCrystal");
 	}

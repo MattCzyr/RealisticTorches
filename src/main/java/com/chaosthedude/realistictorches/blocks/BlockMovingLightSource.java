@@ -38,7 +38,7 @@ public class BlockMovingLightSource extends Block implements ITileEntityProvider
 	}
 
 	@Override
-	public AxisAlignedBB getCollisionBoundingBox(World world, BlockPos pos, IBlockState state) {
+	public AxisAlignedBB getCollisionBoundingBox(World worldIn, BlockPos pos, IBlockState state) {
 		return null;
 	}
 
@@ -53,22 +53,22 @@ public class BlockMovingLightSource extends Block implements ITileEntityProvider
 	}
 
 	@Override
-	public boolean canPlaceBlockAt(World world, BlockPos pos) {
+	public boolean canPlaceBlockAt(World worldIn, BlockPos pos) {
 		return true;
 	}
 
 	@Override
-	public IBlockState onBlockPlaced(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
+	public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
 		return getDefaultState();
 	}
 
 	@Override
-	public void onBlockAdded(World world, BlockPos pos, IBlockState state) {
+	public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
 		return;
 	}
 
 	@Override
-	public void onNeighborBlockChange(World world, BlockPos pos, IBlockState state, Block neighborBlock) {
+	public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock) {
 		return;
 	}
 
@@ -107,5 +107,4 @@ public class BlockMovingLightSource extends Block implements ITileEntityProvider
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
 		return new TEMovingLightSource();
 	}
-
 }

@@ -51,14 +51,16 @@ public class BlockTorchLit extends BlockTorch implements ITileEntityProvider {
 			int meta = this.getMetaFromState(world.getBlockState(pos));
 			ItemStack itemStack = player.getCurrentEquippedItem();
 
-			if (itemStack != null && itemStack.getItem() == Items.flint_and_steel && !world.canLightningStrike(pos)) {
+			if (itemStack != null && itemStack.getItem() == Items.flint_and_steel) {
 				itemStack.damageItem(1, player);
 				world.setBlockState(pos, RealisticTorchesBlocks.torchLit.getStateFromMeta(meta), 2);
 				world.playSoundEffect(pos.getX(), pos.getY(), pos.getZ(), "random.fizz", 1.0F, world.rand.nextFloat() * 0.1F + 0.9F);
 			}
 
 			return true;
-		} else {
+		}
+
+		else {
 			return false;
 		}
 	}

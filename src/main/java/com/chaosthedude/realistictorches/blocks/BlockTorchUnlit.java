@@ -31,10 +31,9 @@ public class BlockTorchUnlit extends BlockTorch {
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ) {
 		int meta = this.getMetaFromState(world.getBlockState(pos));
-
 		ItemStack itemStack = player.getCurrentEquippedItem();
 
-		if (itemStack != null && itemStack.getItem() == Items.flint_and_steel && !world.canLightningStrike(pos)) {
+		if (itemStack != null && itemStack.getItem() == Items.flint_and_steel) {
 			itemStack.damageItem(1, player);
 			world.setBlockState(pos, RealisticTorchesBlocks.torchLit.getStateFromMeta(meta), 2);
 			world.playSoundEffect(pos.getX(), pos.getY(), pos.getZ(), "random.fizz", 1.0F, world.rand.nextFloat() * 0.1F + 0.9F);
@@ -46,7 +45,7 @@ public class BlockTorchUnlit extends BlockTorch {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void randomDisplayTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
-		if (ConfigHandler.unlitParticlesEnabled == true) {
+		if (ConfigHandler.unlitParticlesEnabled) {
 			EnumFacing enumfacing = (EnumFacing) state.getValue(FACING);
 			double d0 = (double) pos.getX() + 0.5D;
 			double d1 = (double) pos.getY() + 0.7D;

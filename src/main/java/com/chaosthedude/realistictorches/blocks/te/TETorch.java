@@ -2,10 +2,10 @@ package com.chaosthedude.realistictorches.blocks.te;
 
 import com.chaosthedude.realistictorches.RealisticTorchesBlocks;
 
-import net.minecraft.server.gui.IUpdatePlayerListBox;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ITickable;
 
-public class TETorch extends TileEntity implements IUpdatePlayerListBox {
+public class TETorch extends TileEntity implements ITickable {
 
 	public static final String name = "TETorch";
 
