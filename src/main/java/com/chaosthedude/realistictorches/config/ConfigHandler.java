@@ -1,15 +1,14 @@
-package com.chaosthedude.realistictorches.handlers;
+package com.chaosthedude.realistictorches.config;
 
 import java.io.File;
-
-import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.common.config.Property;
 
 import com.chaosthedude.realistictorches.RealisticTorches;
 
 import cpw.mods.fml.client.event.ConfigChangedEvent;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.common.config.Property;
 
 public class ConfigHandler {
 
@@ -18,7 +17,7 @@ public class ConfigHandler {
 	public static int torchBurnout = 72000;
 	public static int matchboxDurability = 64;
 
-	public static boolean handheldLightEnabled = false;
+	public static boolean handheldLightEnabled = true;
 	public static boolean removeRecipesEnabled = true;
 	public static boolean unlitParticlesEnabled = false;
 	public static boolean oreDictionaryEnabled = false;
@@ -57,8 +56,9 @@ public class ConfigHandler {
 		comment = "Should torches disappear after they are extinguished and be unable to be relit? Default: false";
 		noRelightEnabled = loadBool("No Torch Relight", comment, noRelightEnabled);
 
-		if (config.hasChanged())
+		if (config.hasChanged()) {
 			config.save();
+		}
 	}
 
 	public static int loadInt(String name, String comment, int def) {
@@ -81,10 +81,9 @@ public class ConfigHandler {
 	}
 
 	public static class ChangeListener {
-
 		@SubscribeEvent
 		public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent eventArgs) {
-			if (eventArgs.modID.equals(RealisticTorches.ID))
+			if (eventArgs.modID.equals(RealisticTorches.MODID))
 				init();
 		}
 	}
