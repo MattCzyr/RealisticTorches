@@ -34,27 +34,31 @@ public class BlockTorchLit extends BlockTorch implements ITileEntityProvider {
 
 	@Override
 	public void onBlockAdded(World world, BlockPos pos, IBlockState state) {
-		if (ConfigHandler.torchBurnout > 0) {
+		if (world.canLightningStrike(pos)) {
+			world.playSoundEffect(pos.getX(), pos.getY(), pos.getZ(), "random.fizz", 1.0F, world.rand.nextFloat() * 0.1F + 0.9F);
+			world.setBlockState(pos, RealisticTorchesBlocks.torchUnlit.getStateFromMeta(getMetaFromState(world.getBlockState(pos))));
+		} else if (ConfigHandler.torchBurnout > 0) {
 			world.scheduleUpdate(pos, this, (int) (ConfigHandler.torchBurnout * 0.9));
 		}
 	}
 
 	@Override
 	public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
-		int meta = this.getMetaFromState(world.getBlockState(pos));
-		world.setBlockState(pos, RealisticTorchesBlocks.torchSmoldering.getStateFromMeta(meta), 2);
+		world.setBlockState(pos, RealisticTorchesBlocks.torchSmoldering.getStateFromMeta(getMetaFromState(world.getBlockState(pos))), 2);
 	}
 
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ) {
 		if (!ConfigHandler.noRelightEnabled) {
-			int meta = this.getMetaFromState(world.getBlockState(pos));
-			ItemStack itemStack = player.getCurrentEquippedItem();
-
-			if (itemStack != null && itemStack.getItem() == Items.flint_and_steel) {
-				itemStack.damageItem(1, player);
-				world.setBlockState(pos, RealisticTorchesBlocks.torchLit.getStateFromMeta(meta), 2);
+			ItemStack stack = player.getCurrentEquippedItem();
+			
+			if (stack != null && stack.getItem() == Items.flint_and_steel) {
+				stack.damageItem(1, player);
 				world.playSoundEffect(pos.getX(), pos.getY(), pos.getZ(), "random.fizz", 1.0F, world.rand.nextFloat() * 0.1F + 0.9F);
+
+				if (!world.canLightningStrike(pos)) {
+					world.setBlockState(pos, RealisticTorchesBlocks.torchLit.getStateFromMeta(getMetaFromState(world.getBlockState(pos))), 2);
+				}
 			}
 
 			return true;
@@ -67,7 +71,11 @@ public class BlockTorchLit extends BlockTorch implements ITileEntityProvider {
 
 	@Override
 	public Item getItemDropped(IBlockState state, Random random, int fortune) {
-		return ItemBlock.getItemFromBlock(RealisticTorchesBlocks.torchUnlit);
+		if (!ConfigHandler.noRelightEnabled) {
+			return ItemBlock.getItemFromBlock(RealisticTorchesBlocks.torchUnlit);
+		} else {
+			return null;
+		}
 	}
 
 	@Override

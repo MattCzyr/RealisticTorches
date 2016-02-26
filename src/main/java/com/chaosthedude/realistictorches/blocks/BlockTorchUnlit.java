@@ -30,13 +30,15 @@ public class BlockTorchUnlit extends BlockTorch {
 
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ) {
-		int meta = this.getMetaFromState(world.getBlockState(pos));
-		ItemStack itemStack = player.getCurrentEquippedItem();
+		ItemStack stack = player.getCurrentEquippedItem();
 
-		if (itemStack != null && itemStack.getItem() == Items.flint_and_steel) {
-			itemStack.damageItem(1, player);
-			world.setBlockState(pos, RealisticTorchesBlocks.torchLit.getStateFromMeta(meta), 2);
+		if (stack != null && stack.getItem() == Items.flint_and_steel) {
+			stack.damageItem(1, player);
 			world.playSoundEffect(pos.getX(), pos.getY(), pos.getZ(), "random.fizz", 1.0F, world.rand.nextFloat() * 0.1F + 0.9F);
+
+			if (!world.canLightningStrike(pos)) {
+				world.setBlockState(pos, RealisticTorchesBlocks.torchLit.getStateFromMeta(getMetaFromState(world.getBlockState(pos))), 2);
+			}
 		}
 
 		return true;
