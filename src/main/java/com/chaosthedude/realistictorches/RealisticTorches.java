@@ -34,7 +34,7 @@ public class RealisticTorches {
 
 	public static final String MODID = "RealisticTorches";
 	public static final String NAME = "Realistic Torches";
-	public static final String VERSION = "1.5.0";
+	public static final String VERSION = "1.5.1";
 
 	public static final Logger logger = LogManager.getLogger(MODID);
 
@@ -70,6 +70,7 @@ public class RealisticTorches {
 			for (ItemStack stick : OreDictionary.getOres("stickWood")) {
 				GameRegistry.addRecipe(new ItemStack(RealisticTorchesBlocks.torchUnlit, 4), "x", "y", 'x', coal, 'y', stick);
 			}
+			
 			GameRegistry.addShapedRecipe(new ItemStack(RealisticTorchesItems.glowstoneCrystal, 1), " x ", "xyx", " x ", 'x', Items.glowstone_dust, 'y', coal);
 		}
 
@@ -98,7 +99,7 @@ public class RealisticTorches {
 		GameRegistry.addRecipe(new ItemStack(Blocks.torch, 4), "x", "y", 'x', RealisticTorchesItems.glowstoneCrystal, 'y', Items.stick);
 
 		int lightSources = 0;
-		
+
 		for (Object i : GameData.getBlockRegistry()) {
 			Block block = (Block) i;
 			if (block.getLightValue() > 0) {
@@ -106,7 +107,7 @@ public class RealisticTorches {
 				lightSources++;
 			}
 		}
-		
+
 		logger.info("Registered " + lightSources + " blocks as light sources.");
 	}
 
@@ -124,7 +125,7 @@ public class RealisticTorches {
 				}
 			}
 		}
-		
+
 		if (recipeCount == 1) {
 			logger.info("Removed " + recipeCount + " torch recipe.");
 		} else {
