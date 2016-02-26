@@ -36,7 +36,7 @@ import net.minecraftforge.oredict.OreDictionary;
 public class RealisticTorches {
 	public static final String MODID = "RealisticTorches";
 	public static final String NAME = "Realistic Torches";
-	public static final String VERSION = "1.5.0";
+	public static final String VERSION = "1.5.1";
 
 	public static final Logger logger = LogManager.getLogger(MODID);
 
@@ -132,6 +132,7 @@ public class RealisticTorches {
 		for (int i = 0; i < recipeList.size(); i++) {
 			IRecipe currentRecipe = recipeList.get(i);
 			ItemStack output = currentRecipe.getRecipeOutput();
+
 			if (output != null && output.getItem() == s.getItem()) {
 				recipeList.remove(i);
 				recipeCount++;
