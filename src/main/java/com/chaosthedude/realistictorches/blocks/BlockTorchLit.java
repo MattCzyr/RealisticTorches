@@ -20,11 +20,11 @@ import net.minecraft.world.World;
 
 public class BlockTorchLit extends BlockTorch implements ITileEntityProvider {
 
-	public static final String name = "TorchLit";
+	public static final String NAME = "TorchLit";
 
 	public BlockTorchLit() {
-		setBlockName(RealisticTorches.MODID + "_" + name);
-		setBlockTextureName(RealisticTorches.MODID + ":" + name);
+		setBlockName(RealisticTorches.MODID + "_" + NAME);
+		setBlockTextureName(RealisticTorches.MODID + ":" + NAME);
 		setLightLevel(0.9375F);
 		setTickRandomly(false);
 		setCreativeTab(CreativeTabs.tabDecorations);
@@ -32,24 +32,27 @@ public class BlockTorchLit extends BlockTorch implements ITileEntityProvider {
 
 	@Override
 	public void onBlockAdded(World world, int x, int y, int z) {
-		world.scheduleBlockUpdate(x, y, z, this, (int) (ConfigHandler.torchBurnout * 0.9));
+		if (world.canLightningStrikeAt(x, y, z)) {
+			world.playSoundEffect(x, y, z, "random.fizz", 1.0F, world.rand.nextFloat() * 0.1F + 0.9F);
+			world.setBlock(x, y, z, RealisticTorchesBlocks.torchUnlit, world.getBlockMetadata(x, y, z), 2);
+		} else if (ConfigHandler.torchBurnout > 0) {
+			world.scheduleBlockUpdate(x, y, z, this, (int) (ConfigHandler.torchBurnout * 0.9));
+		}
 	}
 
 	@Override
 	public void updateTick(World world, int x, int y, int z, Random rand) {
-		int meta = world.getBlockMetadata(x, y, z);
-		world.setBlock(x, y, z, RealisticTorchesBlocks.torchSmoldering, meta, 2);
+		world.setBlock(x, y, z, RealisticTorchesBlocks.torchSmoldering, world.getBlockMetadata(x, y, z), 2);
 	}
 
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int metadata, float sideX, float sideY, float sideZ) {
 		if (!ConfigHandler.noRelightEnabled) {
-			int meta = world.getBlockMetadata(x, y, z);
-			ItemStack itemStack = player.getCurrentEquippedItem();
+			ItemStack stack = player.getCurrentEquippedItem();
 
-			if (itemStack != null && itemStack.getItem() == Items.flint_and_steel) {
-				itemStack.damageItem(1, player);
-				world.setBlock(x, y, z, RealisticTorchesBlocks.torchLit, meta, 2);
+			if (stack != null && stack.getItem() == Items.flint_and_steel) {
+				stack.damageItem(1, player);
+				world.setBlock(x, y, z, RealisticTorchesBlocks.torchLit, world.getBlockMetadata(x, y, z), 2);
 				world.playSoundEffect(x, y, z, "random.fizz", 1.0F, world.rand.nextFloat() * 0.1F + 0.9F);
 			}
 
@@ -61,7 +64,11 @@ public class BlockTorchLit extends BlockTorch implements ITileEntityProvider {
 
 	@Override
 	public Item getItemDropped(int meta, Random random, int fortune) {
-		return ItemBlock.getItemFromBlock(RealisticTorchesBlocks.torchUnlit);
+		if (!ConfigHandler.noRelightEnabled) {
+			return ItemBlock.getItemFromBlock(RealisticTorchesBlocks.torchUnlit);
+		} else {
+			return null;
+		}
 	}
 
 	@Override

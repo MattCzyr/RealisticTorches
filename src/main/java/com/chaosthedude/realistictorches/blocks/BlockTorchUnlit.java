@@ -17,23 +17,25 @@ import net.minecraft.world.World;
 
 public class BlockTorchUnlit extends BlockTorch {
 
-	public static final String name = "TorchUnlit";
+	public static final String NAME = "TorchUnlit";
 
 	public BlockTorchUnlit() {
-		setBlockName(RealisticTorches.MODID + "_" + name);
-		setBlockTextureName(RealisticTorches.MODID + ":" + name);
+		setBlockName(RealisticTorches.MODID + "_" + NAME);
+		setBlockTextureName(RealisticTorches.MODID + ":" + NAME);
 		setCreativeTab(CreativeTabs.tabDecorations);
 	}
 
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int metadata, float sideX, float sideY, float sideZ) {
-		int meta = world.getBlockMetadata(x, y, z);
-		ItemStack itemStack = player.getCurrentEquippedItem();
+		ItemStack stack = player.getCurrentEquippedItem();
 
-		if (itemStack != null && itemStack.getItem() == Items.flint_and_steel) {
-			itemStack.damageItem(1, player);
-			world.setBlock(x, y, z, RealisticTorchesBlocks.torchLit, meta, 2);
+		if (stack != null && stack.getItem() == Items.flint_and_steel) {
+			stack.damageItem(1, player);
 			world.playSoundEffect(x, y, z, "random.fizz", 1.0F, world.rand.nextFloat() * 0.1F + 0.9F);
+
+			if (!world.canLightningStrikeAt(x, y, z)) {
+				world.setBlock(x, y, z, RealisticTorchesBlocks.torchLit, world.getBlockMetadata(x, y, z), 2);
+			}
 		}
 
 		return true;

@@ -21,23 +21,24 @@ import net.minecraft.world.World;
 
 public class BlockTorchSmoldering extends BlockTorch implements ITileEntityProvider {
 
-	public static final String name = "TorchSmoldering";
+	public static final String NAME = "TorchSmoldering";
 
 	public BlockTorchSmoldering() {
-		setBlockName(RealisticTorches.MODID + "_" + name);
-		setBlockTextureName(RealisticTorches.MODID + ":" + name);
+		setBlockName(RealisticTorches.MODID + "_" + NAME);
+		setBlockTextureName(RealisticTorches.MODID + ":" + NAME);
 		setLightLevel(0.51F);
 		setTickRandomly(false);
 		setCreativeTab(null);
 	}
 
-	public int damageDropped(int meta) {
-		return meta;
-	}
-
 	@Override
 	public void onBlockAdded(World world, int x, int y, int z) {
-		world.scheduleBlockUpdate(x, y, z, this, (int) (ConfigHandler.torchBurnout / 10));
+		if (world.canLightningStrikeAt(x, y, z)) {
+			world.playSoundEffect(x, y, z, "random.fizz", 1.0F, world.rand.nextFloat() * 0.1F + 0.9F);
+			world.setBlock(x, y, z, RealisticTorchesBlocks.torchUnlit, world.getBlockMetadata(x, y, z), 2);
+		} else if (ConfigHandler.torchBurnout > 0) {
+			world.scheduleBlockUpdate(x, y, z, this, (int) (ConfigHandler.torchBurnout / 10));
+		}
 	}
 
 	@Override
@@ -54,14 +55,17 @@ public class BlockTorchSmoldering extends BlockTorch implements ITileEntityProvi
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int metadata, float sideX, float sideY, float sideZ) {
 		if (!ConfigHandler.noRelightEnabled) {
-			int meta = world.getBlockMetadata(x, y, z);
-			ItemStack itemStack = player.getCurrentEquippedItem();
+			ItemStack stack = player.getCurrentEquippedItem();
 
-			if (itemStack != null && itemStack.getItem() == Items.flint_and_steel) {
-				itemStack.damageItem(1, player);
-				world.setBlock(x, y, z, RealisticTorchesBlocks.torchLit, meta, 2);
-				world.playSoundEffect(x, y, z, "random.fizz", 1.0F, world.rand.nextFloat() * 0.1F + 0.9F);
+			if (stack != null && stack.getItem() == Items.flint_and_steel) {
+				stack.damageItem(1, player);
+
+				if (!world.canLightningStrikeAt(x, y, z)) {
+					world.setBlock(x, y, z, RealisticTorchesBlocks.torchLit, world.getBlockMetadata(x, y, z), 2);
+					world.playSoundEffect(x, y, z, "random.fizz", 1.0F, world.rand.nextFloat() * 0.1F + 0.9F);
+				}
 			}
+
 			return true;
 		} else {
 			return false;
@@ -90,6 +94,7 @@ public class BlockTorchSmoldering extends BlockTorch implements ITileEntityProvi
 
 		if (l == 1) {
 			world.spawnParticle("smoke", d0 - d4, d1 + d3, d2, 0.0D, 0.0D, 0.0D);
+
 			if (r == 2) {
 				world.spawnParticle("flame", d0 - d4, d1 + d3, d2, 0.0D, 0.0D, 0.0D);
 			}
@@ -97,27 +102,25 @@ public class BlockTorchSmoldering extends BlockTorch implements ITileEntityProvi
 
 		else if (l == 2) {
 			world.spawnParticle("smoke", d0 + d4, d1 + d3, d2, 0.0D, 0.0D, 0.0D);
+
 			if (r == 2) {
 				world.spawnParticle("flame", d0 + d4, d1 + d3, d2, 0.0D, 0.0D, 0.0D);
 			}
-		}
-
-		else if (l == 3) {
+		} else if (l == 3) {
 			world.spawnParticle("smoke", d0, d1 + d3, d2 - d4, 0.0D, 0.0D, 0.0D);
+
 			if (r == 2) {
 				world.spawnParticle("flame", d0, d1 + d3, d2 - d4, 0.0D, 0.0D, 0.0D);
 			}
-		}
-
-		else if (l == 4) {
+		} else if (l == 4) {
 			world.spawnParticle("smoke", d0, d1 + d3, d2 + d4, 0.0D, 0.0D, 0.0D);
+
 			if (r == 2) {
 				world.spawnParticle("flame", d0, d1 + d3, d2 + d4, 0.0D, 0.0D, 0.0D);
 			}
-		}
-
-		else {
+		} else {
 			world.spawnParticle("smoke", d0, d1, d2, 0.0D, 0.0D, 0.0D);
+
 			if (r == 2) {
 				world.spawnParticle("flame", d0, d1, d2, 0.0D, 0.0D, 0.0D);
 			}
