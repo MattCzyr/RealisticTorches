@@ -9,16 +9,16 @@ import net.minecraft.item.ItemStack;
 
 public class ItemMatchbox extends Item {
 
-	public static final String name = "Matchbox";
+	public static final String NAME = "Matchbox";
 
 	public ItemMatchbox() {
 		super();
 
-		setUnlocalizedName(RealisticTorches.MODID + "_" + name);
+		setUnlocalizedName(RealisticTorches.MODID + "_" + NAME);
+		setTextureName(RealisticTorches.MODID + ":" + NAME);
 		maxStackSize = 1;
 		setMaxDamage(ConfigHandler.matchboxDurability - 1);
 		setCreativeTab(CreativeTabs.tabTools);
-		setTextureName(RealisticTorches.MODID + ":" + name);
 		setNoRepair();
 	}
 

@@ -11,12 +11,10 @@ public class TorchDropHandler {
 
 	@SubscribeEvent
 	public void torchDropHandler(HarvestDropsEvent event) {
-		if (event.harvester != null) {
-			if (event.block == Blocks.torch) {
-				event.drops.clear();
-				event.dropChance = 1.0F;
-				event.drops.add(new ItemStack(RealisticTorchesBlocks.torchUnlit));
-			}
+		if (event.harvester != null && event.block == Blocks.torch) {
+			event.drops.clear();
+			event.dropChance = 1.0F;
+			event.drops.add(new ItemStack(RealisticTorchesBlocks.torchUnlit));
 		}
 	}
 

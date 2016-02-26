@@ -6,7 +6,7 @@ import net.minecraft.tileentity.TileEntity;
 
 public class TETorch extends TileEntity {
 
-	public static final String name = "TETorch";
+	public static final String NAME = "TETorch";
 
 	public TETorch() {
 
@@ -14,9 +14,8 @@ public class TETorch extends TileEntity {
 
 	@Override
 	public void updateEntity() {
-		if (worldObj.isRaining() && worldObj.canLightningStrikeAt(xCoord, yCoord, zCoord)) {
-			int meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
-			worldObj.setBlock(xCoord, yCoord, zCoord, RealisticTorchesBlocks.torchUnlit, meta, 2);
+		if (worldObj.canLightningStrikeAt(xCoord, yCoord, zCoord)) {
+			worldObj.setBlock(xCoord, yCoord, zCoord, RealisticTorchesBlocks.torchUnlit, worldObj.getBlockMetadata(xCoord, yCoord, zCoord), 2);
 			worldObj.playSoundEffect(xCoord, yCoord, zCoord, "random.fizz", 1.0F, worldObj.rand.nextFloat() * 0.1F + 0.9F);
 		}
 	}

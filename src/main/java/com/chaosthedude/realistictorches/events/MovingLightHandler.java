@@ -14,7 +14,8 @@ public class MovingLightHandler {
 
 	@SubscribeEvent(priority = EventPriority.LOW, receiveCanceled = true)
 	public void movingLightHandler(PlayerTickEvent event) {
-		if (ConfigHandler.handheldLightEnabled && event.phase == TickEvent.Phase.START && !event.player.worldObj.isRemote && event.player.getCurrentEquippedItem() != null && LightSources.isLightSource(event.player.getCurrentEquippedItem().getItem())) {
+		if (ConfigHandler.handheldLightEnabled && event.phase == TickEvent.Phase.START && !event.player.worldObj.isRemote && event.player.getCurrentEquippedItem() != null
+				&& LightSources.isLightSource(event.player.getCurrentEquippedItem().getItem())) {
 			int x = MathHelper.floor_double(event.player.posX);
 			int y = MathHelper.floor_double(event.player.posY - 0.2D - event.player.getYOffset()) + 1;
 			int z = MathHelper.floor_double(event.player.posZ);

@@ -22,7 +22,7 @@ public class RealisticTorchesItems {
 	}
 
 	public static void register() {
-		GameRegistry.registerItem(matchbox, matchbox.name);
+		GameRegistry.registerItem(matchbox, matchbox.NAME);
 		GameRegistry.registerItem(glowstoneCrystal, "GlowstoneCrystal");
 	}
 

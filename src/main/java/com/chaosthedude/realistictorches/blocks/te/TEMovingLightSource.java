@@ -11,7 +11,7 @@ import net.minecraft.world.World;
 
 public class TEMovingLightSource extends TileEntity {
 
-	public static final String name = "TEMovingLightSource";
+	public static final String NAME = "TEMovingLightSource";
 
 	public TEMovingLightSource() {
 

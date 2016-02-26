@@ -13,11 +13,11 @@ import net.minecraft.world.World;
 
 public class BlockMovingLightSource extends Block implements ITileEntityProvider {
 
-	public static final String name = "MovingLightSource";
+	public static final String NAME = "MovingLightSource";
 
 	public BlockMovingLightSource() {
 		super(Material.air);
-		setBlockName(RealisticTorches.MODID + "_" + name);
+		setBlockName(RealisticTorches.MODID + "_" + NAME);
 		setTickRandomly(false);
 		setLightLevel(0.9F);
 		setBlockBounds(0.5F, 0.5F, 0.5F, 0.5F, 0.5F, 0.5F);
