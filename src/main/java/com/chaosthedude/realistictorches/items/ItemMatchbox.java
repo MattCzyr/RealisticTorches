@@ -33,9 +33,8 @@ public class ItemMatchbox extends Item {
 	@Override
 	public ItemStack getContainerItem(ItemStack stack) {
 		if (ConfigHandler.matchboxDurability > 1) {
-			int dmg = stack.getItemDamage();
 			ItemStack newStack = copyStack(stack, 1);
-			newStack.setItemDamage(dmg + 1);
+			newStack.setItemDamage(stack.getItemDamage() + 1);
 			return newStack;
 		} else {
 			return stack;
