@@ -59,7 +59,6 @@ public class BlockTorchSmoldering extends BlockTorch implements ITileEntityProvi
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ) {
 		if (!ConfigHandler.noRelightEnabled) {
 			ItemStack stack = player.getCurrentEquippedItem();
-
 			if (stack != null && stack.getItem() == Items.flint_and_steel) {
 				stack.damageItem(1, player);
 				world.playSoundEffect(pos.getX(), pos.getY(), pos.getZ(), "random.fizz", 1.0F, world.rand.nextFloat() * 0.1F + 0.9F);
@@ -70,9 +69,9 @@ public class BlockTorchSmoldering extends BlockTorch implements ITileEntityProvi
 			}
 
 			return true;
-		} else {
-			return false;
 		}
+		
+		return false;
 
 	}
 
@@ -80,15 +79,15 @@ public class BlockTorchSmoldering extends BlockTorch implements ITileEntityProvi
 	public Item getItemDropped(IBlockState state, Random random, int fortune) {
 		if (!ConfigHandler.noRelightEnabled) {
 			return ItemBlock.getItemFromBlock(RealisticTorchesBlocks.torchUnlit);
-		} else {
-			return null;
 		}
+		
+		return null;
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void randomDisplayTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
-		EnumFacing enumfacing = (EnumFacing) state.getValue(FACING);
+		EnumFacing facing = (EnumFacing) state.getValue(FACING);
 		double d0 = (double) pos.getX() + 0.5D;
 		double d1 = (double) pos.getY() + 0.7D;
 		double d2 = (double) pos.getZ() + 0.5D;
@@ -97,8 +96,8 @@ public class BlockTorchSmoldering extends BlockTorch implements ITileEntityProvi
 
 		int r = rand.nextInt(4);
 
-		if (enumfacing.getAxis().isHorizontal()) {
-			EnumFacing enumfacing1 = enumfacing.getOpposite();
+		if (facing.getAxis().isHorizontal()) {
+			EnumFacing enumfacing1 = facing.getOpposite();
 			worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0 + d4 * (double) enumfacing1.getFrontOffsetX(), d1 + d3, d2 + d4 * (double) enumfacing1.getFrontOffsetZ(), 0.0D, 0.0D, 0.0D, new int[0]);
 			if (r == 2) {
 				worldIn.spawnParticle(EnumParticleTypes.FLAME, d0 + d4 * (double) enumfacing1.getFrontOffsetX(), d1 + d3, d2 + d4 * (double) enumfacing1.getFrontOffsetZ(), 0.0D, 0.0D, 0.0D, new int[0]);

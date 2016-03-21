@@ -51,7 +51,7 @@ public class BlockTorchLit extends BlockTorch implements ITileEntityProvider {
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ) {
 		if (!ConfigHandler.noRelightEnabled) {
 			ItemStack stack = player.getCurrentEquippedItem();
-			
+
 			if (stack != null && stack.getItem() == Items.flint_and_steel) {
 				stack.damageItem(1, player);
 				world.playSoundEffect(pos.getX(), pos.getY(), pos.getZ(), "random.fizz", 1.0F, world.rand.nextFloat() * 0.1F + 0.9F);
@@ -64,18 +64,16 @@ public class BlockTorchLit extends BlockTorch implements ITileEntityProvider {
 			return true;
 		}
 
-		else {
-			return false;
-		}
+		return false;
 	}
 
 	@Override
 	public Item getItemDropped(IBlockState state, Random random, int fortune) {
 		if (!ConfigHandler.noRelightEnabled) {
 			return ItemBlock.getItemFromBlock(RealisticTorchesBlocks.torchUnlit);
-		} else {
-			return null;
 		}
+
+		return null;
 	}
 
 	@Override

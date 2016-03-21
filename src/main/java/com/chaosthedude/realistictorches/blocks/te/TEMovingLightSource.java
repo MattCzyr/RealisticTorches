@@ -18,11 +18,7 @@ public class TEMovingLightSource extends TileEntity implements ITickable {
 	@Override
 	public void update() {
 		EntityPlayer player = worldObj.getClosestPlayer(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, 2.0D);
-		if (player == null || player.getHeldItem() == null) {
-			if (worldObj.getBlockState(pos).getBlock() == RealisticTorchesBlocks.movingLightSource) {
-				worldObj.setBlockToAir(pos);
-			}
-		} else if (!LightSources.isLightSource(player.getCurrentEquippedItem().getItem())) {
+		if (player == null || player.getHeldItem() == null || !LightSources.isLightSource(player.getCurrentEquippedItem().getItem())) {
 			if (worldObj.getBlockState(pos).getBlock() == RealisticTorchesBlocks.movingLightSource) {
 				worldObj.setBlockToAir(pos);
 			}

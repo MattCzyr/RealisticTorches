@@ -13,7 +13,8 @@ public class RealisticTorchesItems {
 
 	public static void initialize() {
 		matchbox = new ItemMatchbox();
-		glowstoneCrystal = new Item().setUnlocalizedName(RealisticTorches.MODID + "_GlowstoneCrystal").setCreativeTab(CreativeTabs.tabMaterials);;
+		glowstoneCrystal = new Item().setUnlocalizedName(RealisticTorches.MODID + "_GlowstoneCrystal").setCreativeTab(CreativeTabs.tabMaterials);
+		;
 	}
 
 	public static void register() {
