@@ -67,18 +67,18 @@ public class BlockTorchSmoldering extends BlockTorch implements ITileEntityProvi
 			}
 
 			return true;
-		} else {
-			return false;
 		}
+
+		return false;
 	}
 
 	@Override
 	public Item getItemDropped(int meta, Random random, int fortune) {
 		if (!ConfigHandler.noRelightEnabled) {
 			return ItemBlock.getItemFromBlock(RealisticTorchesBlocks.torchUnlit);
-		} else {
-			return null;
 		}
+
+		return null;
 	}
 
 	@Override

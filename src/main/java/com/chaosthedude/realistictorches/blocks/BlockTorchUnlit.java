@@ -28,7 +28,6 @@ public class BlockTorchUnlit extends BlockTorch {
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int metadata, float sideX, float sideY, float sideZ) {
 		ItemStack stack = player.getCurrentEquippedItem();
-
 		if (stack != null && stack.getItem() == Items.flint_and_steel) {
 			stack.damageItem(1, player);
 			world.playSoundEffect(x, y, z, "random.fizz", 1.0F, world.rand.nextFloat() * 0.1F + 0.9F);

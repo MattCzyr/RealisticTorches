@@ -24,12 +24,8 @@ public class TEMovingLightSource extends TileEntity {
 
 	@Override
 	public void updateEntity() {
-		EntityPlayer player = worldObj.getClosestPlayer(this.xCoord + 0.5D, this.yCoord + 0.5D, this.zCoord + 0.5D, 2.0D);
-		if (player == null || player.getHeldItem() == null) {
-			if (worldObj.getBlock(xCoord, yCoord, zCoord) == RealisticTorchesBlocks.movingLightSource) {
-				worldObj.setBlockToAir(xCoord, yCoord, zCoord);
-			}
-		} else if (!LightSources.isLightSource(player.getCurrentEquippedItem().getItem()) && player.getCurrentEquippedItem().getItem() != Item.getItemFromBlock(RealisticTorchesBlocks.torchLit)) {
+		EntityPlayer player = worldObj.getClosestPlayer(xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D, 2.0D);
+		if (player == null || player.getHeldItem() == null || !LightSources.isLightSource(player.getCurrentEquippedItem().getItem())) {
 			if (worldObj.getBlock(xCoord, yCoord, zCoord) == RealisticTorchesBlocks.movingLightSource) {
 				worldObj.setBlockToAir(xCoord, yCoord, zCoord);
 			}
