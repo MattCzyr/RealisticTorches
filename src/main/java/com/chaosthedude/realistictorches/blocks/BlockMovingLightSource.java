@@ -4,6 +4,7 @@ import com.chaosthedude.realistictorches.RealisticTorches;
 import com.chaosthedude.realistictorches.blocks.te.TEMovingLightSource;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockAir;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockState;
@@ -19,88 +20,16 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockMovingLightSource extends Block implements ITileEntityProvider {
+public class BlockMovingLightSource extends BlockAir implements ITileEntityProvider {
 
 	public static final String name = "MovingLightSource";
 
 	public BlockMovingLightSource() {
-		super(Material.air);
+		super();
 		setUnlocalizedName(RealisticTorches.MODID + "_" + name);
-		setDefaultState(blockState.getBaseState());
 		setTickRandomly(false);
 		setLightLevel(0.9F);
 		setBlockBounds(0.5F, 0.5F, 0.5F, 0.5F, 0.5F, 0.5F);
-	}
-
-	@Override
-	public int getRenderType() {
-		return -1;
-	}
-
-	@Override
-	public AxisAlignedBB getCollisionBoundingBox(World worldIn, BlockPos pos, IBlockState state) {
-		return null;
-	}
-
-	@Override
-	public boolean isOpaqueCube() {
-		return false;
-	}
-
-	@Override
-	public boolean isFullCube() {
-		return false;
-	}
-
-	@Override
-	public boolean canPlaceBlockAt(World worldIn, BlockPos pos) {
-		return true;
-	}
-
-	@Override
-	public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
-		return getDefaultState();
-	}
-
-	@Override
-	public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
-		return;
-	}
-
-	@Override
-	public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock) {
-		return;
-	}
-
-	@Override
-	public IBlockState getStateFromMeta(int meta) {
-		return getDefaultState();
-	}
-
-	@Override
-	public int getMetaFromState(IBlockState state) {
-		return 0;
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public EnumWorldBlockLayer getBlockLayer() {
-		return EnumWorldBlockLayer.CUTOUT;
-	}
-
-	@Override
-	public void onFallenUpon(World worldIn, BlockPos pos, Entity entityIn, float fallDistance) {
-		return;
-	}
-
-	@Override
-	public void onLanded(World worldIn, Entity entityIn) {
-		return;
-	}
-
-	@Override
-	protected BlockState createBlockState() {
-		return new BlockState(this);
 	}
 
 	@Override
