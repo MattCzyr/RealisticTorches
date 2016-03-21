@@ -2,6 +2,7 @@ package com.chaosthedude.realistictorches.blocks.te;
 
 import com.chaosthedude.realistictorches.RealisticTorchesBlocks;
 import com.chaosthedude.realistictorches.util.LightSources;
+import com.chaosthedude.realistictorches.util.Util;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
@@ -17,8 +18,8 @@ public class TEMovingLightSource extends TileEntity implements ITickable {
 
 	@Override
 	public void update() {
-		EntityPlayer player = worldObj.getClosestPlayer(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, 2.0D);
-		if (player == null || player.getHeldItem() == null || !LightSources.isLightSource(player.getCurrentEquippedItem().getItem())) {
+		EntityPlayer player = Util.getClosestPlayer(worldObj, pos, 2.0D);
+		if (player == null || player.getHeldEquipment() == null || !LightSources.containsLightSource(player.getHeldEquipment())) {
 			if (worldObj.getBlockState(pos).getBlock() == RealisticTorchesBlocks.movingLightSource) {
 				worldObj.setBlockToAir(pos);
 			}

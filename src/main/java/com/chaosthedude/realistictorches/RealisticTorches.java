@@ -10,8 +10,8 @@ import com.chaosthedude.realistictorches.util.Util;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.entity.RenderItem;
-import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.client.renderer.RenderItem;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -27,7 +27,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.oredict.OreDictionary;
 
-@Mod(modid = RealisticTorches.MODID, name = RealisticTorches.NAME, version = RealisticTorches.VERSION, acceptedMinecraftVersions = "[1.8.9]")
+@Mod(modid = RealisticTorches.MODID, name = RealisticTorches.NAME, version = RealisticTorches.VERSION, acceptedMinecraftVersions = "[1.9]")
 
 public class RealisticTorches {
 	public static final String MODID = "RealisticTorches";
@@ -108,10 +108,9 @@ public class RealisticTorches {
 		GameRegistry.addRecipe(new ItemStack(Blocks.torch), "x", "y", 'x', RealisticTorchesItems.glowstoneCrystal, 'y', Items.stick);
 
 		int lightSources = 0;
-
 		for (Object i : GameData.getBlockRegistry()) {
 			Block block = (Block) i;
-			if (block.getLightValue() > 0) {
+			if (block.getLightValue(block.getDefaultState()) > 0) {
 				LightSources.lightSources.add(Item.getItemFromBlock(block));
 				lightSources++;
 			}

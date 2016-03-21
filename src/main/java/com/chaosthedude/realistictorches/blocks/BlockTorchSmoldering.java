@@ -12,13 +12,16 @@ import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -36,8 +39,9 @@ public class BlockTorchSmoldering extends BlockTorch implements ITileEntityProvi
 
 	@Override
 	public void onBlockAdded(World world, BlockPos pos, IBlockState state) {
-		if (world.canLightningStrike(pos)) {
-			world.playSoundEffect(pos.getX(), pos.getY(), pos.getZ(), "random.fizz", 1.0F, world.rand.nextFloat() * 0.1F + 0.9F);
+		if (world.isRainingAt(pos)) {
+			world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.block_fire_extinguish, SoundCategory.BLOCKS,
+					1.0F, world.rand.nextFloat() * 0.1F + 0.9F, true);
 			world.setBlockState(pos, RealisticTorchesBlocks.torchUnlit.getStateFromMeta(getMetaFromState(world.getBlockState(pos))));
 		} else if (ConfigHandler.torchBurnout > 0) {
 			world.scheduleUpdate(pos, this, (int) (ConfigHandler.torchBurnout / 10));
@@ -46,33 +50,32 @@ public class BlockTorchSmoldering extends BlockTorch implements ITileEntityProvi
 
 	@Override
 	public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
-		world.playSoundEffect(pos.getX(), pos.getY(), pos.getZ(), "random.fizz", 1.0F, world.rand.nextFloat() * 0.1F + 0.9F);
+		world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.block_fire_extinguish, SoundCategory.BLOCKS, 1.0F, world.rand.nextFloat() * 0.1F + 0.9F, true);
 
 		if (!ConfigHandler.noRelightEnabled) {
-			world.setBlockState(pos, RealisticTorchesBlocks.torchUnlit.getStateFromMeta(getMetaFromState(world.getBlockState(pos))), 2);
+			world.setBlockState(pos,
+					RealisticTorchesBlocks.torchUnlit.getStateFromMeta(getMetaFromState(world.getBlockState(pos))), 2);
 		} else {
 			world.setBlockToAir(pos);
 		}
 	}
 
 	@Override
-	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ) {
+	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
 		if (!ConfigHandler.noRelightEnabled) {
-			ItemStack stack = player.getCurrentEquippedItem();
-			if (stack != null && stack.getItem() == Items.flint_and_steel) {
-				stack.damageItem(1, player);
-				world.playSoundEffect(pos.getX(), pos.getY(), pos.getZ(), "random.fizz", 1.0F, world.rand.nextFloat() * 0.1F + 0.9F);
+			if (heldItem != null && heldItem.getItem() == Items.flint_and_steel) {
+				heldItem.damageItem(1, player);
+				world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.item_flintandsteel_use, SoundCategory.BLOCKS, 1.0F, world.rand.nextFloat() * 0.1F + 0.9F, true);
 
-				if (!world.canLightningStrike(pos)) {
+				if (!world.isRainingAt(pos)) {
 					world.setBlockState(pos, RealisticTorchesBlocks.torchLit.getStateFromMeta(getMetaFromState(world.getBlockState(pos))), 2);
 				}
 			}
 
 			return true;
 		}
-		
-		return false;
 
+		return false;
 	}
 
 	@Override
@@ -80,33 +83,34 @@ public class BlockTorchSmoldering extends BlockTorch implements ITileEntityProvi
 		if (!ConfigHandler.noRelightEnabled) {
 			return ItemBlock.getItemFromBlock(RealisticTorchesBlocks.torchUnlit);
 		}
-		
+
 		return null;
 	}
 
-	@Override
 	@SideOnly(Side.CLIENT)
-	public void randomDisplayTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
-		EnumFacing facing = (EnumFacing) state.getValue(FACING);
-		double d0 = (double) pos.getX() + 0.5D;
-		double d1 = (double) pos.getY() + 0.7D;
-		double d2 = (double) pos.getZ() + 0.5D;
+	public void randomDisplayTick(IBlockState worldIn, World pos, BlockPos state, Random rand) {
+		EnumFacing facing = (EnumFacing) worldIn.getValue(FACING);
+		double d0 = (double) state.getX() + 0.5D;
+		double d1 = (double) state.getY() + 0.7D;
+		double d2 = (double) state.getZ() + 0.5D;
 		double d3 = 0.22D;
 		double d4 = 0.27D;
 
 		int r = rand.nextInt(4);
 
 		if (facing.getAxis().isHorizontal()) {
-			EnumFacing enumfacing1 = facing.getOpposite();
-			worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0 + d4 * (double) enumfacing1.getFrontOffsetX(), d1 + d3, d2 + d4 * (double) enumfacing1.getFrontOffsetZ(), 0.0D, 0.0D, 0.0D, new int[0]);
+			EnumFacing facing1 = facing.getOpposite();
+			pos.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0 + d4 * (double) facing1.getFrontOffsetX(), d1 + d3,
+					d2 + d4 * (double) facing1.getFrontOffsetZ(), 0.0D, 0.0D, 0.0D, new int[0]);
 			if (r == 2) {
-				worldIn.spawnParticle(EnumParticleTypes.FLAME, d0 + d4 * (double) enumfacing1.getFrontOffsetX(), d1 + d3, d2 + d4 * (double) enumfacing1.getFrontOffsetZ(), 0.0D, 0.0D, 0.0D, new int[0]);
+				pos.spawnParticle(EnumParticleTypes.FLAME, d0 + d4 * (double) facing1.getFrontOffsetX(), d1 + d3,
+						d2 + d4 * (double) facing1.getFrontOffsetZ(), 0.0D, 0.0D, 0.0D, new int[0]);
 			}
 		} else {
-			worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0, d1, d2, 0.0D, 0.0D, 0.0D, new int[0]);
 			if (r == 2) {
-				worldIn.spawnParticle(EnumParticleTypes.FLAME, d0, d1, d2, 0.0D, 0.0D, 0.0D, new int[0]);
+				pos.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0, d1, d2, 0.0D, 0.0D, 0.0D, new int[0]);
 			}
+			pos.spawnParticle(EnumParticleTypes.FLAME, d0, d1, d2, 0.0D, 0.0D, 0.0D, new int[0]);
 		}
 	}
 

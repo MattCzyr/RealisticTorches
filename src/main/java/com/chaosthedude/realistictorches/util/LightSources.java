@@ -7,6 +7,7 @@ import com.chaosthedude.realistictorches.RealisticTorchesItems;
 
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 
 public class LightSources {
 
@@ -22,6 +23,16 @@ public class LightSources {
 
 	public static boolean isLightSource(Item item) {
 		return lightSources.contains(item);
+	}
+	
+	public static boolean containsLightSource(Iterable<ItemStack> iterator) {
+		for (ItemStack stack : iterator) {
+			if (stack != null && isLightSource(stack.getItem())) {
+				return true;
+			}
+		}
+		
+		return false;
 	}
 
 }
