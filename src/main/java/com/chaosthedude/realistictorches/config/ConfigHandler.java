@@ -35,33 +35,34 @@ public class ConfigHandler {
 	public static void init() {
 		String comment;
 
-		comment = "The amount of time until a torch burns out, in ticks (20 ticks = 1 second). Set this to a negative value to make torches never burn out. Default: 72000";
-		torchBurnout = loadInt("Torch Burnout Time", comment, torchBurnout);
+		comment = "The amount of time until a torch burns out, in ticks (20 ticks = 1 second). Setting this to a negative value will disable torch burnout.";
+		torchBurnout = loadInt("torch.burnoutTime", comment, torchBurnout);
 
-		comment = "The durability of the matchbox (the number of torches that it can light before it breaks). Set this to a negative value for unlimited uses. Default: 64";
-		matchboxDurability = loadInt("Lighter Durability", comment, matchboxDurability);
+		comment = "The durability of the matchbox. Setting this to a negative value will result in unlimited uses.";
+		matchboxDurability = loadInt("matchbox.durability", comment, matchboxDurability);
 
-		comment = "Should certain blocks and items emit light when held? This is still experimental and may cause performance issues. Default: false";
-		handheldLightEnabled = loadBool("Handheld Light", comment, handheldLightEnabled);
+		comment = "Set this to false to disable certain blocks and items emitting light when held.";
+		handheldLightEnabled = loadBool("handheldLight.enabled", comment, handheldLightEnabled);
 
-		comment = "Should other mods' recipes for the vanilla torch be removed? Default: true";
-		removeRecipesEnabled = loadBool("Remove Recipes", comment, removeRecipesEnabled);
+		comment = "Set this to false to disable the removal of other mods' recipes for the vanilla torch.";
+		removeRecipesEnabled = loadBool("recipes.removeModded", comment, removeRecipesEnabled);
 
-		comment = "Should unlit torches emit smoke particles? Default: false";
-		unlitParticlesEnabled = loadBool("Unlit Particles", comment, unlitParticlesEnabled);
+		comment = "Set this to true to enable unlit torch particles.";
+		unlitParticlesEnabled = loadBool("unlitTorch.particles", comment, unlitParticlesEnabled);
 
-		comment = "Should lit torches be registered in the Ore Dictionary as vanilla torch variants? Default: false";
-		oreDictionaryEnabled = loadBool("Vanilla Torch Variants", comment, oreDictionaryEnabled);
+		comment = "Set this to true to register both the lit torch and the vanilla torch in the Ore Dictionary under blockTorch.";
+		oreDictionaryEnabled = loadBool("torch.oreDictionary", comment, oreDictionaryEnabled);
 
-		comment = "Should torches disappear after they are extinguished and be unable to be relit? Default: false";
-		noRelightEnabled = loadBool("No Torch Relight", comment, noRelightEnabled);
+		comment = "Set this to true to make lit torches disappear after they are extinguished, rather than turning into unlit torches.";
+		noRelightEnabled = loadBool("torch.noRelight", comment, noRelightEnabled);
 
-		if (config.hasChanged())
+		if (config.hasChanged()) {
 			config.save();
+		}
 	}
 
 	public static int loadInt(String name, String comment, int def) {
-		Property prop = config.get("Integer", name, def);
+		Property prop = config.get(Configuration.CATEGORY_GENERAL, name, def);
 		prop.comment = comment;
 		int val = prop.getInt(def);
 		if (val == 0) {
@@ -74,17 +75,17 @@ public class ConfigHandler {
 	}
 
 	public static boolean loadBool(String name, String comment, boolean def) {
-		Property prop = config.get("Boolean", name, def);
+		Property prop = config.get(Configuration.CATEGORY_GENERAL, name, def);
 		prop.comment = comment;
 		return prop.getBoolean(def);
 	}
 
 	public static class ChangeListener {
-
 		@SubscribeEvent
 		public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent eventArgs) {
-			if (eventArgs.modID.equals(RealisticTorches.MODID))
+			if (eventArgs.modID.equals(RealisticTorches.MODID)) {
 				init();
+			}
 		}
 	}
 
