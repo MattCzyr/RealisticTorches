@@ -1,11 +1,12 @@
 package com.chaosthedude.realistictorches.items;
 
+import com.chaosthedude.realistictorches.RealisticTorches;
+import com.chaosthedude.realistictorches.config.ConfigHandler;
+import com.chaosthedude.realistictorches.util.Util;
+
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-
-import com.chaosthedude.realistictorches.RealisticTorches;
-import com.chaosthedude.realistictorches.config.ConfigHandler;
 
 public class ItemMatchbox extends Item {
 
@@ -13,9 +14,8 @@ public class ItemMatchbox extends Item {
 
 	public ItemMatchbox() {
 		super();
-
 		setUnlocalizedName(RealisticTorches.MODID + "_" + name);
-		maxStackSize = 1;
+		setMaxStackSize(1);
 		setMaxDamage(ConfigHandler.matchboxDurability - 1);
 		setCreativeTab(CreativeTabs.tabTools);
 		setNoRepair();
@@ -26,23 +26,15 @@ public class ItemMatchbox extends Item {
 		return true;
 	}
 
-	public boolean doesContainerItemLeaveCraftingGrid(ItemStack stack) {
-		return false;
-	}
-
 	@Override
 	public ItemStack getContainerItem(ItemStack stack) {
 		if (ConfigHandler.matchboxDurability > 1) {
-			ItemStack newStack = copyStack(stack, 1);
+			ItemStack newStack = Util.copyStack(stack, 1);
 			newStack.setItemDamage(stack.getItemDamage() + 1);
 			return newStack;
-		} else {
-			return stack;
 		}
-	}
-
-	public static ItemStack copyStack(ItemStack stack, int n) {
-		return new ItemStack(stack.getItem(), n, stack.getItemDamage());
+		
+		return stack;
 	}
 
 }

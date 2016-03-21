@@ -1,14 +1,12 @@
 package com.chaosthedude.realistictorches;
 
-import java.util.List;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.chaosthedude.realistictorches.config.ConfigHandler;
 import com.chaosthedude.realistictorches.events.MovingLightHandler;
-import com.chaosthedude.realistictorches.events.TorchDropHandler;
 import com.chaosthedude.realistictorches.util.LightSources;
+import com.chaosthedude.realistictorches.util.Util;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -18,8 +16,6 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.CraftingManager;
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -36,7 +32,7 @@ import net.minecraftforge.oredict.OreDictionary;
 public class RealisticTorches {
 	public static final String MODID = "RealisticTorches";
 	public static final String NAME = "Realistic Torches";
-	public static final String VERSION = "1.5.1";
+	public static final String VERSION = "1.5.2";
 
 	public static final Logger logger = LogManager.getLogger(MODID);
 
@@ -100,14 +96,13 @@ public class RealisticTorches {
 		}
 
 		MinecraftForge.EVENT_BUS.register(new MovingLightHandler());
-		MinecraftForge.EVENT_BUS.register(new TorchDropHandler());
 
 	}
 
 	@EventHandler
 	public void init(FMLPostInitializationEvent event) {
 		if (ConfigHandler.removeRecipesEnabled) {
-			removeRecipe(new ItemStack(Blocks.torch));
+			Util.removeRecipe(new ItemStack(Blocks.torch));
 		}
 
 		GameRegistry.addRecipe(new ItemStack(Blocks.torch), "x", "y", 'x', RealisticTorchesItems.glowstoneCrystal, 'y', Items.stick);
@@ -123,27 +118,6 @@ public class RealisticTorches {
 		}
 
 		logger.info("Registered " + lightSources + " blocks as light sources.");
-	}
-
-	public static void removeRecipe(ItemStack s) {
-		int recipeCount = 0;
-		List<IRecipe> recipeList = CraftingManager.getInstance().getRecipeList();
-
-		for (int i = 0; i < recipeList.size(); i++) {
-			IRecipe currentRecipe = recipeList.get(i);
-			ItemStack output = currentRecipe.getRecipeOutput();
-
-			if (output != null && output.getItem() == s.getItem()) {
-				recipeList.remove(i);
-				recipeCount++;
-			}
-		}
-
-		if (recipeCount == 1) {
-			logger.info("Removed " + recipeCount + " torch recipe.");
-		} else {
-			logger.info("Removed " + recipeCount + " torch recipes.");
-		}
 	}
 
 }
