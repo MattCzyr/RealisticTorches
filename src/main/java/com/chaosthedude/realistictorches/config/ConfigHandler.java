@@ -63,7 +63,7 @@ public class ConfigHandler {
 
 	public static int loadInt(String name, String comment, int def) {
 		Property prop = config.get(Configuration.CATEGORY_GENERAL, name, def);
-		prop.comment = comment;
+		prop.setComment(comment);
 		int val = prop.getInt(def);
 		if (val == 0) {
 			val = def;
@@ -76,14 +76,14 @@ public class ConfigHandler {
 
 	public static boolean loadBool(String name, String comment, boolean def) {
 		Property prop = config.get(Configuration.CATEGORY_GENERAL, name, def);
-		prop.comment = comment;
+		prop.setComment(comment);
 		return prop.getBoolean(def);
 	}
 
 	public static class ChangeListener {
 		@SubscribeEvent
 		public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent eventArgs) {
-			if (eventArgs.modID.equals(RealisticTorches.MODID)) {
+			if (eventArgs.getModID().equals(RealisticTorches.MODID)) {
 				init();
 			}
 		}
