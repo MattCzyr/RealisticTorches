@@ -16,12 +16,25 @@ public class ConfigHandler {
 
 	public static int torchBurnout = 72000;
 	public static int matchboxDurability = 64;
+	public static int lightSourceRegistryThreshold = 1;
 
 	public static boolean handheldLightEnabled = true;
 	public static boolean removeRecipesEnabled = true;
 	public static boolean unlitParticlesEnabled = false;
 	public static boolean oreDictionaryEnabled = false;
 	public static boolean noRelightEnabled = false;
+	public static boolean registerLightSourceBlocks = true;
+	public static boolean matchboxCreatesFire = false;
+	
+	public static String[] lightSourceItems = {
+			"minecraft:lava_bucket",
+			"minecraft:glowstone_dust",
+			"minecraft:blaze_powder",
+			"minecraft:blaze_rod",
+			"RealisticTorches:GlowstoneCrystal"
+	};
+	
+	public static String[] lightSourceBlocks = {};
 
 	public static void loadConfig(File configFile) {
 		config = new Configuration(configFile);
@@ -40,6 +53,9 @@ public class ConfigHandler {
 
 		comment = "The durability of the matchbox. Setting this to a negative value will result in unlimited uses.";
 		matchboxDurability = loadInt("matchbox.durability", comment, matchboxDurability);
+		
+		comment = "The threshold for which all blocks with a light level above will be registered as handheld light sources. Acceptable values are between 0 and 15, inclusive.";
+		lightSourceRegistryThreshold = loadInt("handheldLight.registry.threshold", comment, lightSourceRegistryThreshold);
 
 		comment = "Set this to false to disable certain blocks and items emitting light when held.";
 		handheldLightEnabled = loadBool("handheldLight.enabled", comment, handheldLightEnabled);
@@ -55,6 +71,18 @@ public class ConfigHandler {
 
 		comment = "Set this to true to make lit torches disappear after they are extinguished, rather than turning into unlit torches.";
 		noRelightEnabled = loadBool("torch.noRelight", comment, noRelightEnabled);
+		
+		comment = "Set this to false to disable light emitting blocks from automatically being registered as handheld light sources.";
+		registerLightSourceBlocks = loadBool("handheldLight.registerBlocks", comment, registerLightSourceBlocks);
+		
+		comment = "Set this to true to enable matchboxes lighting fires in the world like flint and steel.";
+		matchboxCreatesFire = loadBool("matchbox.createsFire", comment, matchboxCreatesFire);
+		
+		comment = "A list of items that will emit light when held, if handheldLight.enabled is set to true.";
+		lightSourceItems = loadStringArray("lightSources.items", comment, "light_sources", lightSourceItems);
+		
+		comment = "A list of blocks that will emit light when held, if handheldLight.enabled is set to true. This list will be used ONLY if handheldLight.registerBlocks is set to false.";
+		lightSourceBlocks = loadStringArray("lightSources.blocks", comment, "light_sources", lightSourceBlocks);
 
 		if (config.hasChanged()) {
 			config.save();
@@ -71,13 +99,18 @@ public class ConfigHandler {
 		}
 
 		return val;
-
 	}
 
 	public static boolean loadBool(String name, String comment, boolean def) {
 		Property prop = config.get(Configuration.CATEGORY_GENERAL, name, def);
 		prop.setComment(comment);
 		return prop.getBoolean(def);
+	}
+	
+	public static String[] loadStringArray(String name, String comment, String category, String[] def) {
+		Property prop = config.get(category, name, def);
+		prop.setComment(comment);
+		return prop.getStringList();
 	}
 
 	public static class ChangeListener {
