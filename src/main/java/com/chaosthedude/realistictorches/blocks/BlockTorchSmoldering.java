@@ -4,6 +4,7 @@ import java.util.Random;
 
 import com.chaosthedude.realistictorches.RealisticTorches;
 import com.chaosthedude.realistictorches.RealisticTorchesBlocks;
+import com.chaosthedude.realistictorches.RealisticTorchesItems;
 import com.chaosthedude.realistictorches.blocks.te.TETorch;
 import com.chaosthedude.realistictorches.config.ConfigHandler;
 
@@ -42,7 +43,8 @@ public class BlockTorchSmoldering extends BlockTorch implements ITileEntityProvi
 		if (world.isRainingAt(pos)) {
 			world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.block_fire_extinguish, SoundCategory.BLOCKS,
 					1.0F, world.rand.nextFloat() * 0.1F + 0.9F, true);
-			world.setBlockState(pos, RealisticTorchesBlocks.torchUnlit.getStateFromMeta(getMetaFromState(world.getBlockState(pos))));
+			world.setBlockState(pos,
+					RealisticTorchesBlocks.torchUnlit.getStateFromMeta(getMetaFromState(world.getBlockState(pos))));
 		} else if (ConfigHandler.torchBurnout > 0) {
 			world.scheduleUpdate(pos, this, (int) (ConfigHandler.torchBurnout / 10));
 		}
@@ -50,7 +52,8 @@ public class BlockTorchSmoldering extends BlockTorch implements ITileEntityProvi
 
 	@Override
 	public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
-		world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.block_fire_extinguish, SoundCategory.BLOCKS, 1.0F, world.rand.nextFloat() * 0.1F + 0.9F, true);
+		world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.block_fire_extinguish, SoundCategory.BLOCKS,
+				1.0F, world.rand.nextFloat() * 0.1F + 0.9F, true);
 
 		if (!ConfigHandler.noRelightEnabled) {
 			world.setBlockState(pos,
@@ -63,16 +66,18 @@ public class BlockTorchSmoldering extends BlockTorch implements ITileEntityProvi
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
 		if (!ConfigHandler.noRelightEnabled) {
-			if (heldItem != null && heldItem.getItem() == Items.flint_and_steel) {
-				heldItem.damageItem(1, player);
-				world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.item_flintandsteel_use, SoundCategory.BLOCKS, 1.0F, world.rand.nextFloat() * 0.1F + 0.9F, true);
+			if (heldItem != null) {
+				if (heldItem.getItem() == Items.flint_and_steel || (ConfigHandler.matchboxCreatesFire && heldItem.getItem() == RealisticTorchesItems.matchbox)) {
+					heldItem.damageItem(1, player);
+					world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.item_flintandsteel_use, SoundCategory.BLOCKS, 1.0F, world.rand.nextFloat() * 0.1F + 0.9F, true);
 
-				if (!world.isRainingAt(pos)) {
-					world.setBlockState(pos, RealisticTorchesBlocks.torchLit.getStateFromMeta(getMetaFromState(world.getBlockState(pos))), 2);
+					if (!world.isRainingAt(pos)) {
+						world.setBlockState(pos, RealisticTorchesBlocks.torchLit.getStateFromMeta(getMetaFromState(world.getBlockState(pos))), 2);
+					}
+					
+					return true;
 				}
 			}
-
-			return true;
 		}
 
 		return false;

@@ -4,6 +4,7 @@ import java.util.Random;
 
 import com.chaosthedude.realistictorches.RealisticTorches;
 import com.chaosthedude.realistictorches.RealisticTorchesBlocks;
+import com.chaosthedude.realistictorches.RealisticTorchesItems;
 import com.chaosthedude.realistictorches.config.ConfigHandler;
 
 import net.minecraft.block.BlockTorch;
@@ -33,16 +34,20 @@ public class BlockTorchUnlit extends BlockTorch {
 
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
-		if (heldItem != null && heldItem.getItem() == Items.flint_and_steel) {
-			heldItem.damageItem(1, player);
-			world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.item_flintandsteel_use, SoundCategory.BLOCKS, 1.0F, world.rand.nextFloat() * 0.1F + 0.9F, true);
+		if (heldItem != null) {
+			if (heldItem.getItem() == Items.flint_and_steel || (ConfigHandler.matchboxCreatesFire && heldItem.getItem() == RealisticTorchesItems.matchbox)) {
+				heldItem.damageItem(1, player);
+				world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.item_flintandsteel_use, SoundCategory.BLOCKS, 1.0F, world.rand.nextFloat() * 0.1F + 0.9F, true);
 
-			if (!world.isRainingAt(pos)) {
-				world.setBlockState(pos, RealisticTorchesBlocks.torchLit.getStateFromMeta(getMetaFromState(world.getBlockState(pos))), 2);
+				if (!world.isRainingAt(pos)) {
+					world.setBlockState(pos, RealisticTorchesBlocks.torchLit.getStateFromMeta(getMetaFromState(world.getBlockState(pos))), 2);
+				}
+				
+				return true;
 			}
 		}
 
-		return true;
+		return false;
 	}
 
 	@Override
@@ -51,7 +56,7 @@ public class BlockTorchUnlit extends BlockTorch {
 		if (!ConfigHandler.unlitParticlesEnabled) {
 			return;
 		}
-		
+
 		EnumFacing facing = (EnumFacing) state.getValue(FACING);
 		double d0 = (double) pos.getX() + 0.5D;
 		double d1 = (double) pos.getY() + 0.7D;
