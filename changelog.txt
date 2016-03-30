@@ -1,0 +1,102 @@
+---------------------------------------
+Version 1.5.4 - 1.7.10, 1.8.9, 1.9
+---------------------------------------
+- Added a config field to specify the threshold above which all blocks with higher light values will be registered as handheld light sources
+- Added a config option to disable the automatic registry of light emitting blocks as handheld light sources
+- Added a config field to register specified blocks as handheld light sources if the option to disable automatic registry is enabled
+- Added a config field to register specified items as handheld light sources
+- Added a config option to enable Matchboxes being used as a Flint and Steel alternative at an increased durability cost
+1.9:
+   - Fixed item models
+
+
+---------------------------------------
+Version 1.5.3 - 1.9
+---------------------------------------
+- Updated to Forge #1811. This and all subsequent versions may not be compatible with older versions of Forge.
+
+
+---------------------------------------
+Version 1.5.2 - 1.7.10, 1.8.9, 1.9
+---------------------------------------
+- Vanilla torches no longer drop an Unlit Torch when broken.
+- Overhauled config to give everything a uniform style
+
+
+---------------------------------------
+Version 1.5.1 - 1.7.10, 1.8.9
+---------------------------------------
+- Fixed lag spike when attempting to light or place a torch in rain
+
+
+------------------------------------------
+Version 1.5.0 - 1.7.10, 1.8, 1.8.8, 1.8.9
+------------------------------------------
+- Lit Torches and Smoldering Torches are now tile entities and will be extinguished (turned into Unlit Torches) when rained on.
+- A list of handheld light sources is now compiled during initialization. This is now used to determine what blocks should emit light when held (rather than a hardcoded list).
+- Optimized handheld light
+
+
+------------------------------------------
+Version 1.4.0 - 1.8.8
+------------------------------------------
+- Ported to 1.8.8
+
+
+------------------------------------------
+Version 1.3.1 - 1.7.10, 1.8
+------------------------------------------
+- Fixed Matchbox duplication
+- Added a config option for unlimited matchbox uses
+
+
+------------------------------------------
+Version 1.3.0 - 1.7.10, 1.8
+------------------------------------------
+- Fixed NPE related to handheld light sources
+
+
+------------------------------------------
+Version 1.2.1 - 1.7.10, 1.8
+------------------------------------------
+- Added a config option to register both Lit Torches and vanilla Torches in the Ore Dictionary under "blockTorch"
+
+
+------------------------------------------
+Version 1.2.0 - 1.7.10, 1.8
+------------------------------------------
+- Added Glowstone Crystal
+- Vanilla torches (permanently lit) can now be crafted with a Glowstone Crystal
+
+
+------------------------------------------
+Version 1.1.0 - 1.7.10, 1.8
+------------------------------------------
+- Added localization for Chinese, Japanese, and Korean
+- Torches placed in the world can no longer be lit while being rained on
+
+
+------------------------------------------
+Version 1.0.3 - 1.7.10, 1.8
+------------------------------------------
+- Fixed torches not being removed from inventory after being placed
+
+
+------------------------------------------
+Version 1.0.2 - 1.7.10, 1.8
+------------------------------------------
+- Added localization for Russian and Italian
+- Updated translations
+- Added config option to enable unlit torch particles
+
+
+------------------------------------------
+Version 1.0.1 - 1.7.10, 1.8
+------------------------------------------
+- Fixed a duplication glitch
+
+
+------------------------------------------
+Version 1.0.0 - 1.7.10, 1.8
+------------------------------------------
+- Initial release
