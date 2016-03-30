@@ -32,7 +32,7 @@ import net.minecraftforge.oredict.OreDictionary;
 public class RealisticTorches {
 	public static final String MODID = "RealisticTorches";
 	public static final String NAME = "Realistic Torches";
-	public static final String VERSION = "1.5.2";
+	public static final String VERSION = "1.5.4";
 
 	public static final Logger logger = LogManager.getLogger(MODID);
 
@@ -107,17 +107,7 @@ public class RealisticTorches {
 
 		GameRegistry.addRecipe(new ItemStack(Blocks.torch), "x", "y", 'x', RealisticTorchesItems.glowstoneCrystal, 'y', Items.stick);
 
-		int lightSources = 0;
-
-		for (Object i : GameData.getBlockRegistry()) {
-			Block block = (Block) i;
-			if (block.getLightValue() > 0) {
-				LightSources.lightSources.add(Item.getItemFromBlock(block));
-				lightSources++;
-			}
-		}
-
-		logger.info("Registered " + lightSources + " blocks as light sources.");
+		LightSources.registerLightSources();
 	}
 
 }
