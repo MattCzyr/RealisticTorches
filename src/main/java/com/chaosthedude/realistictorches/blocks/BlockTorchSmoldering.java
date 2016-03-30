@@ -4,6 +4,7 @@ import java.util.Random;
 
 import com.chaosthedude.realistictorches.RealisticTorches;
 import com.chaosthedude.realistictorches.RealisticTorchesBlocks;
+import com.chaosthedude.realistictorches.RealisticTorchesItems;
 import com.chaosthedude.realistictorches.blocks.te.TETorch;
 import com.chaosthedude.realistictorches.config.ConfigHandler;
 
@@ -56,17 +57,18 @@ public class BlockTorchSmoldering extends BlockTorch implements ITileEntityProvi
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int metadata, float sideX, float sideY, float sideZ) {
 		if (!ConfigHandler.noRelightEnabled) {
 			ItemStack stack = player.getCurrentEquippedItem();
+			if (stack != null) {
+				if (stack.getItem() == Items.flint_and_steel || (ConfigHandler.matchboxCreatesFire && stack.getItem() == RealisticTorchesItems.matchbox)) {
+					stack.damageItem(1, player);
 
-			if (stack != null && stack.getItem() == Items.flint_and_steel) {
-				stack.damageItem(1, player);
+					if (!world.canLightningStrikeAt(x, y, z)) {
+						world.setBlock(x, y, z, RealisticTorchesBlocks.torchLit, world.getBlockMetadata(x, y, z), 2);
+						world.playSoundEffect(x, y, z, "random.fizz", 1.0F, world.rand.nextFloat() * 0.1F + 0.9F);
 
-				if (!world.canLightningStrikeAt(x, y, z)) {
-					world.setBlock(x, y, z, RealisticTorchesBlocks.torchLit, world.getBlockMetadata(x, y, z), 2);
-					world.playSoundEffect(x, y, z, "random.fizz", 1.0F, world.rand.nextFloat() * 0.1F + 0.9F);
+						return true;
+					}
 				}
 			}
-
-			return true;
 		}
 
 		return false;
