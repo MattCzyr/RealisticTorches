@@ -19,12 +19,7 @@ public class RealisticTorchesBlocks {
 	public static TEMovingLightSource teMovingLightSource;
 	public static TETorch teTorch;
 
-	public static void mainRegistry() {
-		initialize();
-		register();
-	}
-
-	public static void initialize() {
+	public static void init() {
 		torchUnlit = new BlockTorchUnlit();
 		torchLit = new BlockTorchLit();
 		torchSmoldering = new BlockTorchSmoldering();

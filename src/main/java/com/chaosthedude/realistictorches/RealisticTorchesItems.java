@@ -11,12 +11,7 @@ public class RealisticTorchesItems {
 	public static ItemMatchbox matchbox;
 	public static Item glowstoneCrystal;
 
-	public static void mainRegistry() {
-		initialize();
-		register();
-	}
-
-	public static void initialize() {
+	public static void init() {
 		matchbox = new ItemMatchbox();
 		glowstoneCrystal = new Item().setUnlocalizedName(RealisticTorches.MODID + "_GlowstoneCrystal").setCreativeTab(CreativeTabs.tabMaterials).setTextureName(RealisticTorches.MODID + ":GlowstoneCrystal");
 	}
