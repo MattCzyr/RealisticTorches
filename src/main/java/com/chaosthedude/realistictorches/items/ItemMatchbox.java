@@ -5,8 +5,13 @@ import com.chaosthedude.realistictorches.config.ConfigHandler;
 import com.chaosthedude.realistictorches.util.Util;
 
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.world.World;
 
 public class ItemMatchbox extends Item {
 
@@ -22,6 +27,27 @@ public class ItemMatchbox extends Item {
 	}
 
 	@Override
+	public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ) {
+		if (!ConfigHandler.matchboxCreatesFire) {
+			return false;
+		}
+		
+		pos = pos.offset(side);
+
+		if (!player.canPlayerEdit(pos, side, stack)) {
+			return false;
+		} else {
+			if (world.isAirBlock(pos)) {
+				world.playSoundEffect((double) pos.getX() + 0.5D, (double) pos.getY() + 0.5D, (double) pos.getZ() + 0.5D, "fire.ignite", 1.0F, itemRand.nextFloat() * 0.4F + 0.8F);
+				world.setBlockState(pos, Blocks.fire.getDefaultState());
+			}
+
+			stack.damageItem(1, player);
+			return true;
+		}
+	}
+
+	@Override
 	public boolean hasContainerItem() {
 		return true;
 	}
@@ -33,7 +59,7 @@ public class ItemMatchbox extends Item {
 			newStack.setItemDamage(stack.getItemDamage() + 1);
 			return newStack;
 		}
-		
+
 		return stack;
 	}
 
