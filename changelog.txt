@@ -1,4 +1,17 @@
 ---------------------------------------
+Version 1.5.5 - 1.7.10, 1.8.9, 1.9.4
+---------------------------------------
+- Updated to 1.9.4
+- Fixed recipes for the vanilla torch not being removed under certain conditions
+- Fixed ore dictionary recipes not being registered correctly
+- Fixed startup spam due to missing model
+- Added Polish localization (courtesy of hamster1701)
+- Updated Portuguese localization (courtesy of Haurid)
+1.7.10:
+   - Updated to Forge #1614
+
+
+---------------------------------------
 Version 1.5.4 - 1.7.10, 1.8.9, 1.9
 ---------------------------------------
 - Added a config field to specify the threshold above which all blocks with higher light values will be registered as handheld light sources
@@ -14,6 +27,7 @@ Version 1.5.4 - 1.7.10, 1.8.9, 1.9
 Version 1.5.3 - 1.9
 ---------------------------------------
 - Updated to Forge #1811. This and all subsequent versions may not be compatible with older versions of Forge.
+- Added German localization (courtesy of Tails32)
 
 
 ---------------------------------------
