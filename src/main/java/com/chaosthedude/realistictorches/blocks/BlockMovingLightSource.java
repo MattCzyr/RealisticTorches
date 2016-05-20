@@ -22,11 +22,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockMovingLightSource extends BlockAir implements ITileEntityProvider {
 
-	public static final String name = "MovingLightSource";
+	public static final String NAME = "MovingLightSource";
 
 	public BlockMovingLightSource() {
 		super();
-		setUnlocalizedName(RealisticTorches.MODID + "_" + name);
+		setUnlocalizedName(RealisticTorches.MODID + "_" + NAME);
 		setTickRandomly(false);
 		setLightLevel(0.9F);
 		setBlockBounds(0.5F, 0.5F, 0.5F, 0.5F, 0.5F, 0.5F);

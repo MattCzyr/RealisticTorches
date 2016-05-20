@@ -19,7 +19,7 @@ public class RealisticTorchesBlocks {
 	public static TEMovingLightSource teMovingLightSource;
 	public static TETorch teTorch;
 
-	public static void initialize() {
+	public static void init() {
 		torchUnlit = new BlockTorchUnlit();
 		torchLit = new BlockTorchLit();
 		torchSmoldering = new BlockTorchSmoldering();
@@ -30,13 +30,13 @@ public class RealisticTorchesBlocks {
 	}
 
 	public static void register() {
-		GameRegistry.registerBlock(torchUnlit, torchUnlit.name);
-		GameRegistry.registerBlock(torchLit, torchLit.name);
-		GameRegistry.registerBlock(torchSmoldering, torchSmoldering.name);
-		GameRegistry.registerBlock(movingLightSource, movingLightSource.name);
+		GameRegistry.registerBlock(torchUnlit, torchUnlit.NAME);
+		GameRegistry.registerBlock(torchLit, torchLit.NAME);
+		GameRegistry.registerBlock(torchSmoldering, torchSmoldering.NAME);
+		GameRegistry.registerBlock(movingLightSource, movingLightSource.NAME);
 
-		GameRegistry.registerTileEntity(TEMovingLightSource.class, teMovingLightSource.name);
-		GameRegistry.registerTileEntity(TETorch.class, teTorch.name);
+		GameRegistry.registerTileEntity(TEMovingLightSource.class, teMovingLightSource.NAME);
+		GameRegistry.registerTileEntity(TETorch.class, teTorch.NAME);
 	}
 
 }

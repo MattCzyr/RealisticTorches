@@ -10,7 +10,7 @@ import net.minecraft.util.ITickable;
 
 public class TETorch extends TileEntity implements ITickable {
 
-	public static final String name = "TETorch";
+	public static final String NAME = "TETorch";
 
 	public TETorch() {
 
