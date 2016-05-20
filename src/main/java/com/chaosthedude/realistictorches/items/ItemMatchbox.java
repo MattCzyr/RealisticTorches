@@ -1,14 +1,19 @@
 package com.chaosthedude.realistictorches.items;
 
+import java.util.List;
+
 import com.chaosthedude.realistictorches.RealisticTorches;
 import com.chaosthedude.realistictorches.config.ConfigHandler;
-import com.chaosthedude.realistictorches.util.Util;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
 
 public class ItemMatchbox extends Item {
@@ -30,7 +35,7 @@ public class ItemMatchbox extends Item {
 		if (!ConfigHandler.matchboxCreatesFire) {
 			return false;
 		}
-		
+
 		if (side == 0) {
 			--y;
 		}
@@ -67,7 +72,6 @@ public class ItemMatchbox extends Item {
 			return true;
 		}
 	}
-
 	@Override
 	public boolean hasContainerItem() {
 		return true;
@@ -82,12 +86,20 @@ public class ItemMatchbox extends Item {
 	public ItemStack getContainerItem(ItemStack stack) {
 		if (ConfigHandler.matchboxDurability > 1) {
 			int dmg = stack.getItemDamage();
-			ItemStack newStack = Util.copyStack(stack, 1);
+			ItemStack newStack = stack.copy();
 			newStack.setItemDamage(dmg + 1);
 			return newStack;
 		}
 
 		return stack;
+	}
+	
+	@SideOnly(Side.CLIENT)
+	@Override
+	public void addInformation(ItemStack stack, EntityPlayer player, List info, boolean par4) {
+		if (GuiScreen.isShiftKeyDown()) {
+			info.add(EnumChatFormatting.ITALIC + "It's lit");
+		}
 	}
 
 }
