@@ -1,0 +1,9 @@
+# Realistic Torches Language File - POLAND POLISH
+
+tile.RealisticTorches_TorchUnlit.name=Zgaszona Pochodnia
+tile.RealisticTorches_TorchLit.name=Płonąca Pochodnia
+tile.RealisticTorches_TorchSmoldering.name=Tląca Pochodnia
+tile.RealisticTorches_MovingLightSource.name=Ruchome Źródło Światła
+
+item.RealisticTorches_Matchbox.name=Pudełko Zapałek
+item.RealisticTorches_GlowstoneCrystal.name=Kryształ Jasnogłazu
