@@ -2,7 +2,7 @@ package com.chaosthedude.realistictorches.events;
 
 import com.chaosthedude.realistictorches.RealisticTorchesBlocks;
 import com.chaosthedude.realistictorches.config.ConfigHandler;
-import com.chaosthedude.realistictorches.util.LightSources;
+import com.chaosthedude.realistictorches.handler.LightSourceHandler;
 
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -15,9 +15,7 @@ public class MovingLightHandler {
 
 	@SubscribeEvent(priority = EventPriority.LOW, receiveCanceled = true)
 	public void movingLightHandler(PlayerTickEvent event) {
-		if (!ConfigHandler.handheldLightEnabled || event.phase != TickEvent.Phase.START
-				|| event.player.worldObj.isRemote || event.player.getHeldEquipment() == null
-				|| !LightSources.containsLightSource(event.player.getHeldEquipment())) {
+		if (!ConfigHandler.handheldLightEnabled || event.phase != TickEvent.Phase.START || event.player.worldObj.isRemote || event.player.getHeldEquipment() == null || !LightSourceHandler.containsLightSource(event.player.getHeldEquipment())) {
 			return;
 		}
 
@@ -26,8 +24,7 @@ public class MovingLightHandler {
 		int blockZ = MathHelper.floor_double(event.player.posZ);
 		BlockPos pos = new BlockPos(blockX, blockY + 1, blockZ);
 
-		if (event.player.worldObj.getBlockState(pos) != RealisticTorchesBlocks.movingLightSource
-				&& event.player.worldObj.isAirBlock(pos)) {
+		if (event.player.worldObj.getBlockState(pos) != RealisticTorchesBlocks.movingLightSource && event.player.worldObj.isAirBlock(pos)) {
 			event.player.worldObj.setBlockState(pos, RealisticTorchesBlocks.movingLightSource.getDefaultState());
 		}
 	}

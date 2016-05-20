@@ -1,24 +1,37 @@
 package com.chaosthedude.realistictorches.util;
 
-import java.util.List;
-
 import com.chaosthedude.realistictorches.RealisticTorches;
+import com.chaosthedude.realistictorches.RealisticTorchesBlocks;
+import com.chaosthedude.realistictorches.RealisticTorchesItems;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.ItemModelMesher;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.CraftingManager;
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.EntitySelectors;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class Util {
 
+	public static void registerModels() {
+		ItemModelMesher modelMesher = Minecraft.getMinecraft().getRenderItem().getItemModelMesher();
+
+		modelMesher.register(RealisticTorchesItems.matchbox, 0, new ModelResourceLocation(RealisticTorches.MODID + ":" + RealisticTorchesItems.matchbox.NAME, "inventory"));
+		modelMesher.register(RealisticTorchesItems.glowstoneCrystal, 0, new ModelResourceLocation(RealisticTorches.MODID + ":GlowstoneCrystal", "inventory"));
+
+		modelMesher.register(Item.getItemFromBlock(RealisticTorchesBlocks.torchLit), 0, new ModelResourceLocation(RealisticTorches.MODID + ":" + RealisticTorchesBlocks.torchLit.NAME, "inventory"));
+		modelMesher.register(Item.getItemFromBlock(RealisticTorchesBlocks.torchSmoldering), 0, new ModelResourceLocation(RealisticTorches.MODID + ":" + RealisticTorchesBlocks.torchSmoldering.NAME, "inventory"));
+		modelMesher.register(Item.getItemFromBlock(RealisticTorchesBlocks.torchUnlit), 0, new ModelResourceLocation(RealisticTorches.MODID + ":" + RealisticTorchesBlocks.torchUnlit.NAME, "inventory"));
+	}
+
 	public static EntityPlayer getClosestPlayer(World world, BlockPos pos, double distance) {
 		double d0 = -1.0D;
 		EntityPlayer player = null;
 
-		for (int i = 0; i < world.playerEntities.size(); ++i) {
+		for (int i = 0; i < world.playerEntities.size(); i++) {
 			EntityPlayer player1 = (EntityPlayer) world.playerEntities.get(i);
 
 			if (EntitySelectors.NOT_SPECTATING.apply(player1)) {
@@ -32,29 +45,6 @@ public class Util {
 		}
 
 		return player;
-	}
-
-	public static void removeRecipe(ItemStack s) {
-		int recipeCount = 0;
-		List<IRecipe> recipeList = CraftingManager.getInstance().getRecipeList();
-		for (int i = 0; i < recipeList.size(); i++) {
-			IRecipe currentRecipe = recipeList.get(i);
-			ItemStack output = currentRecipe.getRecipeOutput();
-			if (output != null && output.getItem() == s.getItem()) {
-				recipeList.remove(i);
-				recipeCount++;
-			}
-		}
-
-		if (recipeCount == 1) {
-			RealisticTorches.logger.info("Removed " + recipeCount + " torch recipe.");
-		} else {
-			RealisticTorches.logger.info("Removed " + recipeCount + " torch recipes.");
-		}
-	}
-
-	public static ItemStack copyStack(ItemStack stack, int n) {
-		return new ItemStack(stack.getItem(), n, stack.getItemDamage());
 	}
 
 }

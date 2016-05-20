@@ -17,12 +17,11 @@ import net.minecraft.world.World;
 
 public class BlockMovingLightSource extends BlockAir implements ITileEntityProvider {
 
-	public static final String name = "MovingLightSource";
+	public static final String NAME = "MovingLightSource";
 
 	public BlockMovingLightSource() {
 		super();
-		setUnlocalizedName(RealisticTorches.MODID + "_" + name);
-		//setDefaultState(blockState.getBaseState());
+		setUnlocalizedName(RealisticTorches.MODID + "_" + NAME);
 		setTickRandomly(false);
 		setLightLevel(0.9F);
 	}

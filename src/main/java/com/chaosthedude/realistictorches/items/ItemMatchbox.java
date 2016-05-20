@@ -1,9 +1,12 @@
 package com.chaosthedude.realistictorches.items;
 
+import java.util.List;
+
 import com.chaosthedude.realistictorches.RealisticTorches;
 import com.chaosthedude.realistictorches.config.ConfigHandler;
-import com.chaosthedude.realistictorches.util.Util;
+import com.mojang.realmsclient.gui.ChatFormatting;
 
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -16,17 +19,19 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemMatchbox extends Item {
 
-	public static final String name = "Matchbox";
+	public static final String NAME = "Matchbox";
 
 	public ItemMatchbox() {
 		super();
-		setUnlocalizedName(RealisticTorches.MODID + "_" + name);
+		setUnlocalizedName(RealisticTorches.MODID + "_" + NAME);
 		setMaxStackSize(1);
 		setMaxDamage(ConfigHandler.matchboxDurability - 1);
-		setCreativeTab(CreativeTabs.tabTools);
+		setCreativeTab(CreativeTabs.TOOLS);
 		setNoRepair();
 	}
 
@@ -35,15 +40,15 @@ public class ItemMatchbox extends Item {
 		if (!ConfigHandler.matchboxCreatesFire) {
 			return EnumActionResult.FAIL;
 		}
-		
+
 		pos = pos.offset(facing);
 
 		if (!player.canPlayerEdit(pos, facing, stack)) {
 			return EnumActionResult.FAIL;
 		} else {
 			if (world.isAirBlock(pos)) {
-				world.playSound(player, pos, SoundEvents.item_flintandsteel_use, SoundCategory.BLOCKS, 1.0F, itemRand.nextFloat() * 0.4F + 0.8F);
-				world.setBlockState(pos, Blocks.fire.getDefaultState(), 11);
+				world.playSound(player, pos, SoundEvents.ITEM_FLINTANDSTEEL_USE, SoundCategory.BLOCKS, 1.0F, itemRand.nextFloat() * 0.4F + 0.8F);
+				world.setBlockState(pos, Blocks.FIRE.getDefaultState(), 11);
 			}
 
 			stack.damageItem(1, player);
@@ -59,12 +64,20 @@ public class ItemMatchbox extends Item {
 	@Override
 	public ItemStack getContainerItem(ItemStack stack) {
 		if (ConfigHandler.matchboxDurability > 1) {
-			ItemStack newStack = Util.copyStack(stack, 1);
+			ItemStack newStack = stack.copy();
 			newStack.setItemDamage(stack.getItemDamage() + 1);
 			return newStack;
 		}
 
 		return stack;
+	}
+
+	@SideOnly(Side.CLIENT)
+	@Override
+	public void addInformation(ItemStack stack, EntityPlayer player, List info, boolean par4) {
+		if (GuiScreen.isShiftKeyDown()) {
+			info.add(ChatFormatting.ITALIC + "It's lit");
+		}
 	}
 
 }

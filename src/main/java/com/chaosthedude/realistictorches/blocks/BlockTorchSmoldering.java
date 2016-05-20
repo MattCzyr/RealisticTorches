@@ -7,6 +7,7 @@ import com.chaosthedude.realistictorches.RealisticTorchesBlocks;
 import com.chaosthedude.realistictorches.RealisticTorchesItems;
 import com.chaosthedude.realistictorches.blocks.te.TETorch;
 import com.chaosthedude.realistictorches.config.ConfigHandler;
+import com.chaosthedude.realistictorches.handler.TorchHandler;
 
 import net.minecraft.block.BlockTorch;
 import net.minecraft.block.ITileEntityProvider;
@@ -29,11 +30,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockTorchSmoldering extends BlockTorch implements ITileEntityProvider {
 
-	public static final String name = "TorchSmoldering";
+	public static final String NAME = "TorchSmoldering";
 
 	public BlockTorchSmoldering() {
-		setUnlocalizedName(RealisticTorches.MODID + "_" + name);
-		setLightLevel(0.51F);
+		setUnlocalizedName(RealisticTorches.MODID + "_" + NAME);
+		setLightLevel(0.65F);
 		setTickRandomly(false);
 		setCreativeTab(null);
 	}
@@ -41,10 +42,7 @@ public class BlockTorchSmoldering extends BlockTorch implements ITileEntityProvi
 	@Override
 	public void onBlockAdded(World world, BlockPos pos, IBlockState state) {
 		if (world.isRainingAt(pos)) {
-			world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.block_fire_extinguish, SoundCategory.BLOCKS,
-					1.0F, world.rand.nextFloat() * 0.1F + 0.9F, true);
-			world.setBlockState(pos,
-					RealisticTorchesBlocks.torchUnlit.getStateFromMeta(getMetaFromState(world.getBlockState(pos))));
+			TorchHandler.extinguishTorch(world, pos, true);
 		} else if (ConfigHandler.torchBurnout > 0) {
 			world.scheduleUpdate(pos, this, (int) (ConfigHandler.torchBurnout / 10));
 		}
@@ -52,35 +50,12 @@ public class BlockTorchSmoldering extends BlockTorch implements ITileEntityProvi
 
 	@Override
 	public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
-		world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.block_fire_extinguish, SoundCategory.BLOCKS,
-				1.0F, world.rand.nextFloat() * 0.1F + 0.9F, true);
-
-		if (!ConfigHandler.noRelightEnabled) {
-			world.setBlockState(pos,
-					RealisticTorchesBlocks.torchUnlit.getStateFromMeta(getMetaFromState(world.getBlockState(pos))), 2);
-		} else {
-			world.setBlockToAir(pos);
-		}
+		TorchHandler.extinguishTorch(world, pos, false);
 	}
 
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
-		if (!ConfigHandler.noRelightEnabled) {
-			if (heldItem != null) {
-				if (heldItem.getItem() == Items.flint_and_steel || (ConfigHandler.matchboxCreatesFire && heldItem.getItem() == RealisticTorchesItems.matchbox)) {
-					heldItem.damageItem(1, player);
-					world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.item_flintandsteel_use, SoundCategory.BLOCKS, 1.0F, world.rand.nextFloat() * 0.1F + 0.9F, true);
-
-					if (!world.isRainingAt(pos)) {
-						world.setBlockState(pos, RealisticTorchesBlocks.torchLit.getStateFromMeta(getMetaFromState(world.getBlockState(pos))), 2);
-					}
-					
-					return true;
-				}
-			}
-		}
-
-		return false;
+		return TorchHandler.lightTorch(world, pos, player, heldItem);
 	}
 
 	@Override
@@ -105,11 +80,9 @@ public class BlockTorchSmoldering extends BlockTorch implements ITileEntityProvi
 
 		if (facing.getAxis().isHorizontal()) {
 			EnumFacing facing1 = facing.getOpposite();
-			pos.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0 + d4 * (double) facing1.getFrontOffsetX(), d1 + d3,
-					d2 + d4 * (double) facing1.getFrontOffsetZ(), 0.0D, 0.0D, 0.0D, new int[0]);
+			pos.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0 + d4 * (double) facing1.getFrontOffsetX(), d1 + d3, d2 + d4 * (double) facing1.getFrontOffsetZ(), 0.0D, 0.0D, 0.0D, new int[0]);
 			if (r == 2) {
-				pos.spawnParticle(EnumParticleTypes.FLAME, d0 + d4 * (double) facing1.getFrontOffsetX(), d1 + d3,
-						d2 + d4 * (double) facing1.getFrontOffsetZ(), 0.0D, 0.0D, 0.0D, new int[0]);
+				pos.spawnParticle(EnumParticleTypes.FLAME, d0 + d4 * (double) facing1.getFrontOffsetX(), d1 + d3, d2 + d4 * (double) facing1.getFrontOffsetZ(), 0.0D, 0.0D, 0.0D, new int[0]);
 			}
 		} else {
 			if (r == 2) {

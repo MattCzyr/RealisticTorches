@@ -7,6 +7,8 @@ import com.chaosthedude.realistictorches.blocks.BlockTorchUnlit;
 import com.chaosthedude.realistictorches.blocks.te.TEMovingLightSource;
 import com.chaosthedude.realistictorches.blocks.te.TETorch;
 
+import net.minecraft.block.Block;
+import net.minecraft.item.ItemBlock;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class RealisticTorchesBlocks {
@@ -19,7 +21,7 @@ public class RealisticTorchesBlocks {
 	public static TEMovingLightSource teMovingLightSource;
 	public static TETorch teTorch;
 
-	public static void initialize() {
+	public static void init() {
 		torchUnlit = new BlockTorchUnlit();
 		torchLit = new BlockTorchLit();
 		torchSmoldering = new BlockTorchSmoldering();
@@ -30,13 +32,19 @@ public class RealisticTorchesBlocks {
 	}
 
 	public static void register() {
-		GameRegistry.registerBlock(torchUnlit, torchUnlit.name);
-		GameRegistry.registerBlock(torchLit, torchLit.name);
-		GameRegistry.registerBlock(torchSmoldering, torchSmoldering.name);
-		GameRegistry.registerBlock(movingLightSource, movingLightSource.name);
+		registerBlock(torchUnlit, torchUnlit.NAME);
+		registerBlock(torchLit, torchLit.NAME);
+		registerBlock(torchSmoldering, torchSmoldering.NAME);
+		registerBlock(movingLightSource, movingLightSource.NAME);
 
-		GameRegistry.registerTileEntity(TEMovingLightSource.class, teMovingLightSource.name);
-		GameRegistry.registerTileEntity(TETorch.class, teTorch.name);
+		GameRegistry.registerTileEntity(TEMovingLightSource.class, teMovingLightSource.NAME);
+		GameRegistry.registerTileEntity(TETorch.class, teTorch.NAME);
+	}
+
+	private static void registerBlock(Block block, String name) {
+		block.setRegistryName(name);
+		GameRegistry.register(block);
+		GameRegistry.register(new ItemBlock(block), block.getRegistryName());
 	}
 
 }
