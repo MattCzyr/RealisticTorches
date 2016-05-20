@@ -6,6 +6,7 @@ import com.chaosthedude.realistictorches.RealisticTorches;
 import com.chaosthedude.realistictorches.RealisticTorchesBlocks;
 import com.chaosthedude.realistictorches.RealisticTorchesItems;
 import com.chaosthedude.realistictorches.config.ConfigHandler;
+import com.chaosthedude.realistictorches.handler.TorchHandler;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -28,21 +29,7 @@ public class BlockTorchUnlit extends BlockTorch {
 
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int metadata, float sideX, float sideY, float sideZ) {
-		ItemStack stack = player.getCurrentEquippedItem();
-		if (stack != null) {
-			if (stack.getItem() == Items.flint_and_steel || (ConfigHandler.matchboxCreatesFire && stack.getItem() == RealisticTorchesItems.matchbox)) {
-				stack.damageItem(1, player);
-				world.playSoundEffect(x, y, z, "random.fizz", 1.0F, world.rand.nextFloat() * 0.1F + 0.9F);
-
-				if (!world.canLightningStrikeAt(x, y, z)) {
-					world.setBlock(x, y, z, RealisticTorchesBlocks.torchLit, world.getBlockMetadata(x, y, z), 2);
-				}
-
-				return true;
-			}
-		}
-
-		return false;
+		return TorchHandler.lightTorch(world, x, y, z, player);
 	}
 
 	@Override

@@ -7,6 +7,7 @@ import com.chaosthedude.realistictorches.RealisticTorchesBlocks;
 import com.chaosthedude.realistictorches.RealisticTorchesItems;
 import com.chaosthedude.realistictorches.blocks.te.TETorch;
 import com.chaosthedude.realistictorches.config.ConfigHandler;
+import com.chaosthedude.realistictorches.handler.TorchHandler;
 
 import net.minecraft.block.BlockTorch;
 import net.minecraft.block.ITileEntityProvider;
@@ -34,8 +35,7 @@ public class BlockTorchLit extends BlockTorch implements ITileEntityProvider {
 	@Override
 	public void onBlockAdded(World world, int x, int y, int z) {
 		if (world.canLightningStrikeAt(x, y, z)) {
-			world.playSoundEffect(x, y, z, "random.fizz", 1.0F, world.rand.nextFloat() * 0.1F + 0.9F);
-			world.setBlock(x, y, z, RealisticTorchesBlocks.torchUnlit, world.getBlockMetadata(x, y, z), 2);
+			TorchHandler.extinguishTorch(world, x, y, z, true);
 		} else if (ConfigHandler.torchBurnout > 0) {
 			world.scheduleBlockUpdate(x, y, z, this, (int) (ConfigHandler.torchBurnout * 0.9));
 		}
@@ -43,25 +43,12 @@ public class BlockTorchLit extends BlockTorch implements ITileEntityProvider {
 
 	@Override
 	public void updateTick(World world, int x, int y, int z, Random rand) {
-		world.setBlock(x, y, z, RealisticTorchesBlocks.torchSmoldering, world.getBlockMetadata(x, y, z), 2);
+		TorchHandler.extinguishTorch(world, x, y, z, false);
 	}
 
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int metadata, float sideX, float sideY, float sideZ) {
-		if (!ConfigHandler.noRelightEnabled) {
-			ItemStack stack = player.getCurrentEquippedItem();
-			if (stack != null) {
-				if (stack.getItem() == Items.flint_and_steel || (ConfigHandler.matchboxCreatesFire && stack.getItem() == RealisticTorchesItems.matchbox)) {
-					stack.damageItem(1, player);
-					world.setBlock(x, y, z, RealisticTorchesBlocks.torchLit, world.getBlockMetadata(x, y, z), 2);
-					world.playSoundEffect(x, y, z, "random.fizz", 1.0F, world.rand.nextFloat() * 0.1F + 0.9F);
-
-					return true;
-				}
-			}
-		}
-
-		return false;
+		return TorchHandler.lightTorch(world, x, y, z, player);
 	}
 
 	@Override

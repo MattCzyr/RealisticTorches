@@ -7,6 +7,7 @@ import com.chaosthedude.realistictorches.RealisticTorchesBlocks;
 import com.chaosthedude.realistictorches.RealisticTorchesItems;
 import com.chaosthedude.realistictorches.blocks.te.TETorch;
 import com.chaosthedude.realistictorches.config.ConfigHandler;
+import com.chaosthedude.realistictorches.handler.TorchHandler;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -27,7 +28,7 @@ public class BlockTorchSmoldering extends BlockTorch implements ITileEntityProvi
 	public BlockTorchSmoldering() {
 		setBlockName(RealisticTorches.MODID + "_" + NAME);
 		setBlockTextureName(RealisticTorches.MODID + ":" + NAME);
-		setLightLevel(0.51F);
+		setLightLevel(0.65F);
 		setTickRandomly(false);
 		setCreativeTab(null);
 	}
@@ -35,8 +36,7 @@ public class BlockTorchSmoldering extends BlockTorch implements ITileEntityProvi
 	@Override
 	public void onBlockAdded(World world, int x, int y, int z) {
 		if (world.canLightningStrikeAt(x, y, z)) {
-			world.playSoundEffect(x, y, z, "random.fizz", 1.0F, world.rand.nextFloat() * 0.1F + 0.9F);
-			world.setBlock(x, y, z, RealisticTorchesBlocks.torchUnlit, world.getBlockMetadata(x, y, z), 2);
+			TorchHandler.extinguishTorch(world, x, y, z, true);
 		} else if (ConfigHandler.torchBurnout > 0) {
 			world.scheduleBlockUpdate(x, y, z, this, (int) (ConfigHandler.torchBurnout / 10));
 		}
@@ -44,34 +44,12 @@ public class BlockTorchSmoldering extends BlockTorch implements ITileEntityProvi
 
 	@Override
 	public void updateTick(World world, int x, int y, int z, Random rand) {
-		world.playSoundEffect(x, y, z, "random.fizz", 1.0F, world.rand.nextFloat() * 0.1F + 0.9F);
-		if (!ConfigHandler.noRelightEnabled) {
-			int meta = world.getBlockMetadata(x, y, z);
-			world.setBlock(x, y, z, RealisticTorchesBlocks.torchUnlit, meta, 2);
-		} else {
-			world.setBlockToAir(x, y, z);
-		}
+		TorchHandler.extinguishTorch(world, x, y, z, false);
 	}
 
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int metadata, float sideX, float sideY, float sideZ) {
-		if (!ConfigHandler.noRelightEnabled) {
-			ItemStack stack = player.getCurrentEquippedItem();
-			if (stack != null) {
-				if (stack.getItem() == Items.flint_and_steel || (ConfigHandler.matchboxCreatesFire && stack.getItem() == RealisticTorchesItems.matchbox)) {
-					stack.damageItem(1, player);
-
-					if (!world.canLightningStrikeAt(x, y, z)) {
-						world.setBlock(x, y, z, RealisticTorchesBlocks.torchLit, world.getBlockMetadata(x, y, z), 2);
-						world.playSoundEffect(x, y, z, "random.fizz", 1.0F, world.rand.nextFloat() * 0.1F + 0.9F);
-
-						return true;
-					}
-				}
-			}
-		}
-
-		return false;
+		return TorchHandler.lightTorch(world, x, y, z, player);
 	}
 
 	@Override
