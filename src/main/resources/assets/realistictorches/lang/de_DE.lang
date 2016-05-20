@@ -1,0 +1,9 @@
+# Realistic Torches Language File - GERMANY GERMAN
+
+tile.RealisticTorches_TorchUnlit.name=Nicht angezündete Fackel
+tile.RealisticTorches_TorchLit.name=Angezündete Fackel
+tile.RealisticTorches_TorchSmoldering.name=Glimmende Fackel
+tile.RealisticTorches_MovingLightSource.name=Bewegende Lichtquelle
+
+item.RealisticTorches_Matchbox.name=Zündholzschachtel
+item.RealisticTorches_GlowstoneCrystal.name=Glowstonekristall
