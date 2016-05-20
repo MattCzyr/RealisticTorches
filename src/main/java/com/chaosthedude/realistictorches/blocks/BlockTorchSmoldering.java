@@ -7,6 +7,7 @@ import com.chaosthedude.realistictorches.RealisticTorchesBlocks;
 import com.chaosthedude.realistictorches.RealisticTorchesItems;
 import com.chaosthedude.realistictorches.blocks.te.TETorch;
 import com.chaosthedude.realistictorches.config.ConfigHandler;
+import com.chaosthedude.realistictorches.handler.TorchHandler;
 
 import net.minecraft.block.BlockTorch;
 import net.minecraft.block.ITileEntityProvider;
@@ -26,11 +27,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockTorchSmoldering extends BlockTorch implements ITileEntityProvider {
 
-	public static final String name = "TorchSmoldering";
+	public static final String NAME = "TorchSmoldering";
 
 	public BlockTorchSmoldering() {
-		setUnlocalizedName(RealisticTorches.MODID + "_" + name);
-		setLightLevel(0.51F);
+		setUnlocalizedName(RealisticTorches.MODID + "_" + NAME);
+		setLightLevel(0.65F);
 		setTickRandomly(false);
 		setCreativeTab(null);
 	}
@@ -38,8 +39,7 @@ public class BlockTorchSmoldering extends BlockTorch implements ITileEntityProvi
 	@Override
 	public void onBlockAdded(World world, BlockPos pos, IBlockState state) {
 		if (world.canLightningStrike(pos)) {
-			world.playSoundEffect(pos.getX(), pos.getY(), pos.getZ(), "random.fizz", 1.0F, world.rand.nextFloat() * 0.1F + 0.9F);
-			world.setBlockState(pos, RealisticTorchesBlocks.torchUnlit.getStateFromMeta(getMetaFromState(world.getBlockState(pos))));
+			TorchHandler.extinguishTorch(world, pos, true);
 		} else if (ConfigHandler.torchBurnout > 0) {
 			world.scheduleUpdate(pos, this, (int) (ConfigHandler.torchBurnout / 10));
 		}
@@ -47,34 +47,12 @@ public class BlockTorchSmoldering extends BlockTorch implements ITileEntityProvi
 
 	@Override
 	public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
-		world.playSoundEffect(pos.getX(), pos.getY(), pos.getZ(), "random.fizz", 1.0F, world.rand.nextFloat() * 0.1F + 0.9F);
-
-		if (!ConfigHandler.noRelightEnabled) {
-			world.setBlockState(pos, RealisticTorchesBlocks.torchUnlit.getStateFromMeta(getMetaFromState(world.getBlockState(pos))), 2);
-		} else {
-			world.setBlockToAir(pos);
-		}
+		TorchHandler.extinguishTorch(world, pos, false);
 	}
 
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ) {
-		if (!ConfigHandler.noRelightEnabled) {
-			ItemStack stack = player.getCurrentEquippedItem();
-			if (stack != null) {
-				if (stack.getItem() == Items.flint_and_steel || (ConfigHandler.matchboxCreatesFire && stack.getItem() == RealisticTorchesItems.matchbox)) {
-					stack.damageItem(1, player);
-					world.playSoundEffect(pos.getX(), pos.getY(), pos.getZ(), "random.fizz", 1.0F, world.rand.nextFloat() * 0.1F + 0.9F);
-
-					if (!world.canLightningStrike(pos)) {
-						world.setBlockState(pos, RealisticTorchesBlocks.torchLit.getStateFromMeta(getMetaFromState(world.getBlockState(pos))), 2);
-					}
-					
-					return true;
-				}
-			}
-		}
-
-		return false;
+		return TorchHandler.lightTorch(world, pos, player, player.getHeldItem());
 
 	}
 

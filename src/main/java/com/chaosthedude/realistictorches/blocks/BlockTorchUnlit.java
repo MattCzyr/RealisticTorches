@@ -6,6 +6,7 @@ import com.chaosthedude.realistictorches.RealisticTorches;
 import com.chaosthedude.realistictorches.RealisticTorchesBlocks;
 import com.chaosthedude.realistictorches.RealisticTorchesItems;
 import com.chaosthedude.realistictorches.config.ConfigHandler;
+import com.chaosthedude.realistictorches.handler.TorchHandler;
 
 import net.minecraft.block.BlockTorch;
 import net.minecraft.block.state.IBlockState;
@@ -22,31 +23,16 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockTorchUnlit extends BlockTorch {
 
-	public static final String name = "TorchUnlit";
+	public static final String NAME = "TorchUnlit";
 
 	public BlockTorchUnlit() {
-		setUnlocalizedName(RealisticTorches.MODID + "_" + name);
+		setUnlocalizedName(RealisticTorches.MODID + "_" + NAME);
 		setCreativeTab(CreativeTabs.tabDecorations);
 	}
 
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ) {
-		ItemStack stack = player.getCurrentEquippedItem();
-
-		if (stack != null) {
-			if (stack.getItem() == Items.flint_and_steel || (ConfigHandler.matchboxCreatesFire && stack.getItem() == RealisticTorchesItems.matchbox)) {
-				stack.damageItem(1, player);
-				world.playSoundEffect(pos.getX(), pos.getY(), pos.getZ(), "random.fizz", 1.0F, world.rand.nextFloat() * 0.1F + 0.9F);
-
-				if (!world.canLightningStrike(pos)) {
-					world.setBlockState(pos, RealisticTorchesBlocks.torchLit.getStateFromMeta(getMetaFromState(world.getBlockState(pos))), 2);
-				}
-				
-				return true;
-			}
-		}
-
-		return false;
+		return TorchHandler.lightTorch(world, pos, player, player.getHeldItem());
 	}
 
 	@Override
