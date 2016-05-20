@@ -1,7 +1,7 @@
 package com.chaosthedude.realistictorches.blocks.te;
 
 import com.chaosthedude.realistictorches.RealisticTorchesBlocks;
-import com.chaosthedude.realistictorches.util.LightSources;
+import com.chaosthedude.realistictorches.handler.LightSourceHandler;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
@@ -25,7 +25,7 @@ public class TEMovingLightSource extends TileEntity {
 	@Override
 	public void updateEntity() {
 		EntityPlayer player = worldObj.getClosestPlayer(xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D, 2.0D);
-		if (player == null || player.getHeldItem() == null || !LightSources.isLightSource(player.getCurrentEquippedItem().getItem())) {
+		if (player == null || player.getHeldItem() == null || !LightSourceHandler.isLightSource(player.getCurrentEquippedItem().getItem())) {
 			if (worldObj.getBlock(xCoord, yCoord, zCoord) == RealisticTorchesBlocks.movingLightSource) {
 				worldObj.setBlockToAir(xCoord, yCoord, zCoord);
 			}
