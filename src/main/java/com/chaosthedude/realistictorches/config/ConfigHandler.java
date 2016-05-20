@@ -115,16 +115,6 @@ public class ConfigHandler {
 		prop.comment = comment;
 		return prop.getStringList();
 	}
-	
-	public static void printConfigInfo() {
-		RealisticTorches.logger.info("Torch burnout rate: " + ConfigHandler.torchBurnout + " ticks (" + (float) (ConfigHandler.torchBurnout / 1200) + " minutes)");
-
-		if (ConfigHandler.handheldLightEnabled) {
-			RealisticTorches.logger.info("Handheld light sources are enabled.");
-		} else {
-			RealisticTorches.logger.info("Handheld light sources are disabled.");
-		}
-	}
 
 	public static class ChangeListener {
 		@SubscribeEvent
