@@ -1,4 +1,4 @@
-package com.chaosthedude.realistictorches.util;
+package com.chaosthedude.realistictorches.handler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +11,7 @@ import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameData;
 
-public class LightSources {
+public class LightSourceHandler {
 
 	public static List<Item> lightSources = new ArrayList<Item>();
 

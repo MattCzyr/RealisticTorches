@@ -2,7 +2,7 @@ package com.chaosthedude.realistictorches.events;
 
 import com.chaosthedude.realistictorches.RealisticTorchesBlocks;
 import com.chaosthedude.realistictorches.config.ConfigHandler;
-import com.chaosthedude.realistictorches.util.LightSources;
+import com.chaosthedude.realistictorches.handler.LightSourceHandler;
 
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
@@ -16,7 +16,7 @@ public class MovingLightHandler {
 	@SubscribeEvent(priority = EventPriority.LOW, receiveCanceled = true)
 	public void movingLightHandler(PlayerTickEvent event) {
 		if (!ConfigHandler.handheldLightEnabled || event.phase != TickEvent.Phase.START || event.player.worldObj.isRemote || event.player.getCurrentEquippedItem() == null
-				|| !LightSources.isLightSource(event.player.getCurrentEquippedItem().getItem())) {
+				|| !LightSourceHandler.isLightSource(event.player.getCurrentEquippedItem().getItem())) {
 			return;
 		}
 
