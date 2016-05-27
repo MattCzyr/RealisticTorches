@@ -74,7 +74,7 @@ public class TorchHandler {
 	}
 
 	public static void updateTorch(World world, BlockPos pos) {
-		if (world.isRainingAt(pos)) {
+		if (world.isRainingAt(pos) && torchHasTE(world, pos)) {
 			world.setBlockState(pos, getState(world, pos, RealisticTorchesBlocks.torchUnlit), 2);
 		}
 	}
@@ -89,6 +89,14 @@ public class TorchHandler {
 	
 	public static void playExtinguishSound(World world, BlockPos pos) {
 		world.playSound(null, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 1.0F, world.rand.nextFloat() * 0.1F + 0.9F);
+	}
+	
+	public static boolean torchHasTE(World world, BlockPos pos) {
+		if (world.getBlockState(pos).getBlock() == RealisticTorchesBlocks.torchLit || world.getBlockState(pos).getBlock() == RealisticTorchesBlocks.torchSmoldering) {
+			return true;
+		}
+		
+		return false;
 	}
 
 }
