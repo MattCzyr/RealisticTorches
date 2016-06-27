@@ -7,28 +7,33 @@ import com.chaosthedude.realistictorches.config.ConfigHandler;
 import com.chaosthedude.realistictorches.events.MovingLightHandler;
 import com.chaosthedude.realistictorches.handler.LightSourceHandler;
 import com.chaosthedude.realistictorches.handler.RecipeHandler;
-import com.chaosthedude.realistictorches.handler.TorchHandler;
+import com.chaosthedude.realistictorches.util.Util;
 
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.EventHandler;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.RenderItem;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventHandler;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.registry.GameData;
+import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.oredict.OreDictionary;
-import net.minecraftforge.oredict.ShapedOreRecipe;
 
-@Mod(modid = RealisticTorches.MODID, name = RealisticTorches.NAME, version = RealisticTorches.VERSION, acceptedMinecraftVersions = "[1.7.10]")
+@Mod(modid = RealisticTorches.MODID, name = RealisticTorches.NAME, version = RealisticTorches.VERSION, acceptedMinecraftVersions = "[1.10]")
 
 public class RealisticTorches {
-
 	public static final String MODID = "RealisticTorches";
 	public static final String NAME = "Realistic Torches";
-	public static final String VERSION = "1.5.5";
+	public static final String VERSION = "1.5.6";
 
 	public static final Logger logger = LogManager.getLogger(MODID);
 
@@ -46,21 +51,26 @@ public class RealisticTorches {
 
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
-		RecipeHandler.removeRecipe(new ItemStack(Blocks.torch));
-		
+		RecipeHandler.removeRecipe(new ItemStack(Blocks.TORCH));
 		RecipeHandler.registerRecipes();
 		RecipeHandler.registerOres();
 
-		FMLCommonHandler.instance().bus().register(new MovingLightHandler());
+		if (event.getSide() == Side.CLIENT) {
+			Util.registerModels();
+		}
+
+		MinecraftForge.EVENT_BUS.register(new MovingLightHandler());
+
 	}
 
 	@EventHandler
 	public void init(FMLPostInitializationEvent event) {
 		if (ConfigHandler.removeRecipesEnabled) {
-			RecipeHandler.removeRecipe(new ItemStack(Blocks.torch));
+			RecipeHandler.removeRecipe(new ItemStack(Blocks.TORCH));
 		}
 
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Blocks.torch, 4), "G", "S", 'G', RealisticTorchesItems.glowstoneCrystal, 'S', "stickWood"));
+		GameRegistry.addRecipe(new ItemStack(Blocks.TORCH), "x", "y", 'x', RealisticTorchesItems.glowstoneCrystal, 'y', Items.STICK);
+
 		LightSourceHandler.registerLightSources();
 	}
 

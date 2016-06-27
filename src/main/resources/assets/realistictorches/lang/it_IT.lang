@@ -1,7 +1,7 @@
 # Realistic Torches Language File - ITALY ITALIAN
 
 tile.RealisticTorches_TorchUnlit.name=Spento torcia
-tile.RealisticTorches_TorchLit.name=Torcia accesa
+tile.RealisticTorches_TorchLit.name=Torcia aAccesa
 tile.RealisticTorches_TorchSmoldering.name=Fumante torcia
 tile.RealisticTorches_MovingLightSource.name=Sorgente di luce in movimento
 

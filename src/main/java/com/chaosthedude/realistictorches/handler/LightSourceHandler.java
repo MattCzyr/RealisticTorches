@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.chaosthedude.realistictorches.RealisticTorches;
-import com.chaosthedude.realistictorches.RealisticTorchesItems;
 import com.chaosthedude.realistictorches.config.ConfigHandler;
 
-import cpw.mods.fml.common.registry.GameData;
 import net.minecraft.block.Block;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.registry.GameData;
 
 public class LightSourceHandler {
 
@@ -19,9 +19,9 @@ public class LightSourceHandler {
 	public static void registerLightSources() {
 		int lightSourceBlocks = 0;
 		if (ConfigHandler.registerLightSourceBlocks) {
-			for (Object b : GameData.getBlockRegistry()) {
+			for (Object b : Block.REGISTRY) {
 				Block block = (Block) b;
-				if (block.getLightValue() > ConfigHandler.lightSourceRegistryThreshold) {
+				if (block.getLightValue(block.getDefaultState()) > ConfigHandler.lightSourceRegistryThreshold) {
 					lightSources.add(Item.getItemFromBlock(block));
 					lightSourceBlocks++;
 				}
@@ -38,7 +38,7 @@ public class LightSourceHandler {
 
 		int lightSourceItems = 0;
 		for (String itemName : ConfigHandler.lightSourceItems) {
-			Item item = (Item) Item.itemRegistry.getObject(itemName);
+			Item item = (Item) Item.REGISTRY.getObject(new ResourceLocation(itemName));
 			if (item != null) {
 				lightSources.add(item);
 				lightSourceItems++;
@@ -50,6 +50,16 @@ public class LightSourceHandler {
 
 	public static boolean isLightSource(Item item) {
 		return lightSources.contains(item);
+	}
+
+	public static boolean containsLightSource(Iterable<ItemStack> iterator) {
+		for (ItemStack stack : iterator) {
+			if (stack != null && isLightSource(stack.getItem())) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 }

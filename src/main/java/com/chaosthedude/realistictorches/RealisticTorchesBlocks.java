@@ -7,7 +7,9 @@ import com.chaosthedude.realistictorches.blocks.BlockTorchUnlit;
 import com.chaosthedude.realistictorches.blocks.te.TEMovingLightSource;
 import com.chaosthedude.realistictorches.blocks.te.TETorch;
 
-import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraft.block.Block;
+import net.minecraft.item.ItemBlock;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class RealisticTorchesBlocks {
 
@@ -30,13 +32,19 @@ public class RealisticTorchesBlocks {
 	}
 
 	public static void register() {
-		GameRegistry.registerBlock(torchUnlit, torchUnlit.NAME);
-		GameRegistry.registerBlock(torchLit, torchLit.NAME);
-		GameRegistry.registerBlock(torchSmoldering, torchSmoldering.NAME);
-		GameRegistry.registerBlock(movingLightSource, movingLightSource.NAME);
+		registerBlock(torchUnlit, torchUnlit.NAME);
+		registerBlock(torchLit, torchLit.NAME);
+		registerBlock(torchSmoldering, torchSmoldering.NAME);
+		registerBlock(movingLightSource, movingLightSource.NAME);
 
 		GameRegistry.registerTileEntity(TEMovingLightSource.class, teMovingLightSource.NAME);
 		GameRegistry.registerTileEntity(TETorch.class, teTorch.NAME);
+	}
+
+	private static void registerBlock(Block block, String name) {
+		block.setRegistryName(name);
+		GameRegistry.register(block);
+		GameRegistry.register(new ItemBlock(block), block.getRegistryName());
 	}
 
 }

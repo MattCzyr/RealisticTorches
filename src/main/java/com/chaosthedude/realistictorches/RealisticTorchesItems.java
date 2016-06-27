@@ -2,9 +2,9 @@ package com.chaosthedude.realistictorches;
 
 import com.chaosthedude.realistictorches.items.ItemMatchbox;
 
-import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class RealisticTorchesItems {
 
@@ -13,12 +13,17 @@ public class RealisticTorchesItems {
 
 	public static void init() {
 		matchbox = new ItemMatchbox();
-		glowstoneCrystal = new Item().setUnlocalizedName(RealisticTorches.MODID + "_GlowstoneCrystal").setCreativeTab(CreativeTabs.tabMaterials).setTextureName(RealisticTorches.MODID + ":GlowstoneCrystal");
+		glowstoneCrystal = new Item().setUnlocalizedName(RealisticTorches.MODID + "_GlowstoneCrystal").setCreativeTab(CreativeTabs.MATERIALS);
 	}
 
 	public static void register() {
-		GameRegistry.registerItem(matchbox, matchbox.NAME);
-		GameRegistry.registerItem(glowstoneCrystal, "GlowstoneCrystal");
+		registerItem(matchbox, matchbox.NAME);
+		registerItem(glowstoneCrystal, "GlowstoneCrystal");
+	}
+
+	private static void registerItem(Item item, String name) {
+		item.setRegistryName(name);
+		GameRegistry.register(item);
 	}
 
 }

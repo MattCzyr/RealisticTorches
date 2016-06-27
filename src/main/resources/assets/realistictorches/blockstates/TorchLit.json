@@ -1,0 +1,9 @@
+{
+    "variants": {
+        "facing=up": { "model": "RealisticTorches:TorchLit" },
+        "facing=east": { "model": "RealisticTorches:TorchLitWall" },
+        "facing=south": { "model": "RealisticTorches:TorchLitWall", "y": 90 },
+        "facing=west": { "model": "RealisticTorches:TorchLitWall", "y": 180 },
+        "facing=north": { "model": "RealisticTorches:TorchLitWall", "y": 270 }
+    }
+}

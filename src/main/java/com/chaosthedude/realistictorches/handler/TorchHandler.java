@@ -4,69 +4,99 @@ import com.chaosthedude.realistictorches.RealisticTorchesBlocks;
 import com.chaosthedude.realistictorches.RealisticTorchesItems;
 import com.chaosthedude.realistictorches.config.ConfigHandler;
 
+import net.minecraft.block.BlockTorch;
+import net.minecraft.block.properties.PropertyDirection;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class TorchHandler {
 
-	public static void extinguishTorch(World world, int x, int y, int z, boolean extinguishFully) {
-		if (extinguishFully || world.getBlock(x, y, z) == RealisticTorchesBlocks.torchSmoldering) {
-			playTorchSound(world, x, y, z);
-			if (!ConfigHandler.noRelightEnabled) {
-				int meta = world.getBlockMetadata(x, y, z);
-				world.setBlock(x, y, z, RealisticTorchesBlocks.torchUnlit, meta, 2);
-			} else {
-				world.setBlockToAir(x, y, z);
+	public static void extinguishTorch(World world, BlockPos pos, boolean extinguishFully) {
+		if (world.getBlockState(pos).getBlock() instanceof BlockTorch) {
+			BlockTorch torch = (BlockTorch) world.getBlockState(pos).getBlock();
+			if (extinguishFully || torch == RealisticTorchesBlocks.torchSmoldering) {
+				playExtinguishSound(world, pos);
+
+				if (!ConfigHandler.noRelightEnabled) {
+					world.setBlockState(pos, getState(world, pos, RealisticTorchesBlocks.torchUnlit), 2);
+				} else {
+					world.setBlockToAir(pos);
+				}
+			} else if (torch == RealisticTorchesBlocks.torchLit) {
+				world.setBlockState(pos, getState(world, pos, RealisticTorchesBlocks.torchSmoldering), 2);
 			}
-		} else if (world.getBlock(x, y, z) == RealisticTorchesBlocks.torchLit) {
-			world.setBlock(x, y, z, RealisticTorchesBlocks.torchSmoldering, world.getBlockMetadata(x, y, z), 2);
 		}
 	}
 
-	public static boolean lightTorch(World world, int x, int y, int z, EntityPlayer player) {
-		ItemStack stack = player.getHeldItem();
+	public static boolean lightTorch(World world, BlockPos pos, EntityPlayer player, ItemStack heldItem) {
+		if (world.getBlockState(pos).getBlock() instanceof BlockTorch) {
+			BlockTorch torch = (BlockTorch) world.getBlockState(pos).getBlock();
+			if (heldItem != null && (heldItem.getItem() == Items.FLINT_AND_STEEL || (ConfigHandler.matchboxCreatesFire && heldItem.getItem() == RealisticTorchesItems.matchbox))) {
+				if (ConfigHandler.noRelightEnabled || torch == RealisticTorchesBlocks.torchUnlit) {
+					heldItem.damageItem(1, player);
+					playIgniteSound(world, pos);
 
-		if (stack != null && (stack.getItem() == Items.flint_and_steel || (ConfigHandler.matchboxCreatesFire && stack.getItem() == RealisticTorchesItems.matchbox))) {
-			if (ConfigHandler.noRelightEnabled || world.getBlock(x, y, z) == RealisticTorchesBlocks.torchUnlit) {
-				stack.damageItem(1, player);
-				playTorchSound(world, x, y, z);
+					if (!world.isRainingAt(pos)) {
+						world.setBlockState(pos, getState(world, pos, RealisticTorchesBlocks.torchLit), 2);
+					}
 
-				if (!world.canLightningStrikeAt(x, y, z)) {
-					world.setBlock(x, y, z, RealisticTorchesBlocks.torchLit, world.getBlockMetadata(x, y, z), 2);
-				}
+					return true;
+				} else if (torch == RealisticTorchesBlocks.torchLit) {
+					heldItem.damageItem(1, player);
+					playIgniteSound(world, pos);
 
-				return true;
-			} else if (world.getBlock(x, y, z) == RealisticTorchesBlocks.torchLit) {
-				stack.damageItem(1, player);
-				world.setBlock(x, y, z, RealisticTorchesBlocks.torchLit, world.getBlockMetadata(x, y, z), 2);
-				playTorchSound(world, x, y, z);
+					if (!world.isRainingAt(pos)) {
+						world.setBlockState(pos, getState(world, pos, RealisticTorchesBlocks.torchLit), 2);
+					}
 
-				return true;
-			} else if (world.getBlock(x, y, z) == RealisticTorchesBlocks.torchSmoldering) {
-				stack.damageItem(1, player);
+					return true;
+				} else if (torch == RealisticTorchesBlocks.torchSmoldering) {
+					heldItem.damageItem(1, player);
+					playIgniteSound(world, pos);
 
-				if (!world.canLightningStrikeAt(x, y, z)) {
-					world.setBlock(x, y, z, RealisticTorchesBlocks.torchLit, world.getBlockMetadata(x, y, z), 2);
-					playTorchSound(world, x, y, z);
+					if (!world.isRainingAt(pos)) {
+						world.setBlockState(pos, getState(world, pos, RealisticTorchesBlocks.torchLit), 2);
+					}
 
 					return true;
 				}
 			}
 		}
-		
+
 		return false;
 	}
-	
-	public static void updateTorch(World world, int x, int y, int z) {
-		if (world.canLightningStrikeAt(x, y, z)) {
-			extinguishTorch(world, x, y, z, true);
+
+	public static void updateTorch(World world, BlockPos pos) {
+		if (world.isRainingAt(pos) && torchHasTE(world, pos)) {
+			world.setBlockState(pos, getState(world, pos, RealisticTorchesBlocks.torchUnlit), 2);
 		}
 	}
 	
-	public static void playTorchSound(World world, int x, int y, int z) {
-		world.playSoundEffect(x, y, z, "random.fizz", 1.0F, world.rand.nextFloat() * 0.1F + 0.9F);
+	public static IBlockState getState(World world, BlockPos pos, BlockTorch torch) {
+		return torch.getStateFromMeta(torch.getMetaFromState(world.getBlockState(pos)));
+	}
+	
+	public static void playIgniteSound(World world, BlockPos pos) {
+		world.playSound(null, pos, SoundEvents.ITEM_FLINTANDSTEEL_USE, SoundCategory.BLOCKS, 1.0F, world.rand.nextFloat() * 0.1F + 0.9F);
+	}
+	
+	public static void playExtinguishSound(World world, BlockPos pos) {
+		world.playSound(null, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 1.0F, world.rand.nextFloat() * 0.1F + 0.9F);
+	}
+	
+	public static boolean torchHasTE(World world, BlockPos pos) {
+		if (world.getBlockState(pos).getBlock() == RealisticTorchesBlocks.torchLit || world.getBlockState(pos).getBlock() == RealisticTorchesBlocks.torchSmoldering) {
+			return true;
+		}
+		
+		return false;
 	}
 
 }
