@@ -1,0 +1,51 @@
+buildscript {
+    repositories {
+        jcenter()
+        maven {
+            name = "forge"
+            url = "http://files.minecraftforge.net/maven"
+        }
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
+    }
+}
+
+apply plugin: 'net.minecraftforge.gradle.forge'
+
+/*
+plugins {
+    id "net.minecraftforge.gradle.forge" version "2.0.2"
+}
+*/
+
+version = "1.10-1.5.6"
+group= "com.chaosthedude.realistictorches"
+archivesBaseName = "RealisticTorches"
+
+minecraft {
+    version = "1.10-12.18.0.1986-1.10.0"
+    runDir = "run"
+
+    mappings = "snapshot_20160518"
+    // makeObfSourceJar = false
+}
+
+dependencies {
+
+}
+
+processResources {
+    inputs.property "version", project.version
+    inputs.property "mcversion", project.minecraft.version
+
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mcmod.info'
+
+        expand 'version':project.version, 'mcversion':project.minecraft.version
+    }
+
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'mcmod.info'
+    }
+}
