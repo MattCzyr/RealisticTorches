@@ -17,13 +17,16 @@ public class RealisticTorchesItems {
 	}
 
 	public static void register() {
-		registerItem(matchbox, matchbox.NAME);
-		registerItem(glowstoneCrystal, "GlowstoneCrystal");
+		matchbox = registerItem(new ItemMatchbox(), ItemMatchbox.NAME);
+		glowstoneCrystal = registerItem(new Item(), "GlowstoneCrystal");
 	}
 
-	private static void registerItem(Item item, String name) {
+	protected static <T extends Item> T registerItem(T itemType, String name) {
+		T item = itemType;
 		item.setRegistryName(name);
 		GameRegistry.register(item);
+
+		return item;
 	}
 
 }

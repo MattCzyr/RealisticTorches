@@ -28,7 +28,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.oredict.OreDictionary;
 
-@Mod(modid = RealisticTorches.MODID, name = RealisticTorches.NAME, version = RealisticTorches.VERSION, acceptedMinecraftVersions = "[1.10]")
+@Mod(modid = RealisticTorches.MODID, name = RealisticTorches.NAME, version = RealisticTorches.VERSION, acceptedMinecraftVersions = "[1.10,1.10.2]")
 
 public class RealisticTorches {
 	public static final String MODID = "RealisticTorches";
@@ -38,11 +38,8 @@ public class RealisticTorches {
 	public static final Logger logger = LogManager.getLogger(MODID);
 
 	@EventHandler
-	public void init(FMLPreInitializationEvent event) {
-		RealisticTorchesBlocks.init();
+	public void preInit(FMLPreInitializationEvent event) {
 		RealisticTorchesBlocks.register();
-
-		RealisticTorchesItems.init();
 		RealisticTorchesItems.register();
 
 		ConfigHandler.loadConfig(event.getSuggestedConfigurationFile());
@@ -64,7 +61,7 @@ public class RealisticTorches {
 	}
 
 	@EventHandler
-	public void init(FMLPostInitializationEvent event) {
+	public void postInit(FMLPostInitializationEvent event) {
 		if (ConfigHandler.removeRecipesEnabled) {
 			RecipeHandler.removeRecipe(new ItemStack(Blocks.TORCH));
 		}

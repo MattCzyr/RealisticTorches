@@ -9,6 +9,7 @@ import com.chaosthedude.realistictorches.blocks.te.TETorch;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class RealisticTorchesBlocks {
@@ -18,33 +19,23 @@ public class RealisticTorchesBlocks {
 	public static BlockTorchSmoldering torchSmoldering;
 	public static BlockMovingLightSource movingLightSource;
 
-	public static TEMovingLightSource teMovingLightSource;
-	public static TETorch teTorch;
-
-	public static void init() {
-		torchUnlit = new BlockTorchUnlit();
-		torchLit = new BlockTorchLit();
-		torchSmoldering = new BlockTorchSmoldering();
-		movingLightSource = new BlockMovingLightSource();
-
-		teMovingLightSource = new TEMovingLightSource();
-		teTorch = new TETorch();
-	}
-
 	public static void register() {
-		registerBlock(torchUnlit, torchUnlit.NAME);
-		registerBlock(torchLit, torchLit.NAME);
-		registerBlock(torchSmoldering, torchSmoldering.NAME);
-		registerBlock(movingLightSource, movingLightSource.NAME);
+		torchUnlit = registerBlock(new BlockTorchUnlit(), BlockTorchUnlit.NAME);
+		torchLit = registerBlock(new BlockTorchLit(), BlockTorchLit.NAME);
+		torchSmoldering = registerBlock(new BlockTorchSmoldering(), BlockTorchSmoldering.NAME);
+		movingLightSource = registerBlock(new BlockMovingLightSource(), BlockMovingLightSource.NAME);
 
-		GameRegistry.registerTileEntity(TEMovingLightSource.class, teMovingLightSource.NAME);
-		GameRegistry.registerTileEntity(TETorch.class, teTorch.NAME);
+		GameRegistry.registerTileEntity(TEMovingLightSource.class, TEMovingLightSource.NAME);
+		GameRegistry.registerTileEntity(TETorch.class, TETorch.NAME);
 	}
 
-	private static void registerBlock(Block block, String name) {
+	protected static <T extends Block> T registerBlock(T blockType, String name) {
+		T block = blockType;
 		block.setRegistryName(name);
 		GameRegistry.register(block);
-		GameRegistry.register(new ItemBlock(block), block.getRegistryName());
+		GameRegistry.register(new ItemBlock(block).setRegistryName(name));
+
+		return block;
 	}
 
 }
