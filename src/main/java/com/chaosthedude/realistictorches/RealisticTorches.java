@@ -8,14 +8,10 @@ import com.chaosthedude.realistictorches.events.MovingLightHandler;
 import com.chaosthedude.realistictorches.handler.LightSourceHandler;
 import com.chaosthedude.realistictorches.handler.RecipeHandler;
 import com.chaosthedude.realistictorches.util.Util;
+import com.chaosthedude.realistictorches.worldgen.TorchGenerator;
 
-import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.RenderItem;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -23,17 +19,15 @@ import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.registry.GameData;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.oredict.OreDictionary;
 
 @Mod(modid = RealisticTorches.MODID, name = RealisticTorches.NAME, version = RealisticTorches.VERSION, acceptedMinecraftVersions = "[1.10,1.10.2]")
 
 public class RealisticTorches {
 	public static final String MODID = "RealisticTorches";
 	public static final String NAME = "Realistic Torches";
-	public static final String VERSION = "1.5.6";
+	public static final String VERSION = "1.6.0";
 
 	public static final Logger logger = LogManager.getLogger(MODID);
 
@@ -44,6 +38,8 @@ public class RealisticTorches {
 
 		ConfigHandler.loadConfig(event.getSuggestedConfigurationFile());
 		ConfigHandler.printConfigInfo();
+		
+		GameRegistry.registerWorldGenerator(new TorchGenerator(), 0);
 	}
 
 	@EventHandler
@@ -57,7 +53,6 @@ public class RealisticTorches {
 		}
 
 		MinecraftForge.EVENT_BUS.register(new MovingLightHandler());
-
 	}
 
 	@EventHandler
