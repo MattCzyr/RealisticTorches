@@ -26,6 +26,7 @@ public class ConfigHandler {
 	public static boolean registerLightSourceBlocks = true;
 	public static boolean matchboxCreatesFire = false;
 	public static boolean generateLitTorches = true;
+	public static boolean vanillaTorchDropsUnlit = false;
 
 	public static String[] lightSourceItems = {
 			"minecraft:lava_bucket",
@@ -78,9 +79,12 @@ public class ConfigHandler {
 
 		comment = "Set this to true to enable matchboxes lighting fires in the world like flint and steel.";
 		matchboxCreatesFire = loadBool("matchbox.createsFire", comment, matchboxCreatesFire);
-		
+
 		comment = "Set this to false to disable vanilla torches being replaced with lit torches during world generation.";
 		generateLitTorches = loadBool("world.generateLitTorches", comment, generateLitTorches);
+
+		comment = "Set this to true to enable vanilla torches dropping unlit torches when harvested.";
+		vanillaTorchDropsUnlit = loadBool("torch.vanilla.dropUnlit", comment, vanillaTorchDropsUnlit);
 
 		comment = "A list of items that will emit light when held, if handheldLight.enabled is set to true.";
 		lightSourceItems = loadStringArray("lightSources.items", comment, "light_sources", lightSourceItems);
