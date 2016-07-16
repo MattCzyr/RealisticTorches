@@ -4,7 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.chaosthedude.realistictorches.config.ConfigHandler;
-import com.chaosthedude.realistictorches.events.MovingLightHandler;
+import com.chaosthedude.realistictorches.events.RealisticTorchesEvents;
 import com.chaosthedude.realistictorches.handler.LightSourceHandler;
 import com.chaosthedude.realistictorches.handler.RecipeHandler;
 import com.chaosthedude.realistictorches.util.Util;
@@ -27,7 +27,7 @@ import net.minecraftforge.fml.relauncher.Side;
 public class RealisticTorches {
 	public static final String MODID = "RealisticTorches";
 	public static final String NAME = "Realistic Torches";
-	public static final String VERSION = "1.6.0";
+	public static final String VERSION = "1.6.2";
 
 	public static final Logger logger = LogManager.getLogger(MODID);
 
@@ -38,7 +38,7 @@ public class RealisticTorches {
 
 		ConfigHandler.loadConfig(event.getSuggestedConfigurationFile());
 		ConfigHandler.printConfigInfo();
-		
+
 		GameRegistry.registerWorldGenerator(new TorchGenerator(), 0);
 	}
 
@@ -52,7 +52,7 @@ public class RealisticTorches {
 			Util.registerModels();
 		}
 
-		MinecraftForge.EVENT_BUS.register(new MovingLightHandler());
+		MinecraftForge.EVENT_BUS.register(new RealisticTorchesEvents());
 	}
 
 	@EventHandler
