@@ -11,14 +11,9 @@ public class RealisticTorchesItems {
 	public static ItemMatchbox matchbox;
 	public static Item glowstoneCrystal;
 
-	public static void init() {
-		matchbox = new ItemMatchbox();
-		glowstoneCrystal = new Item().setUnlocalizedName(RealisticTorches.MODID + "_GlowstoneCrystal").setCreativeTab(CreativeTabs.MATERIALS);
-	}
-
 	public static void register() {
 		matchbox = registerItem(new ItemMatchbox(), ItemMatchbox.NAME);
-		glowstoneCrystal = registerItem(new Item(), "GlowstoneCrystal");
+		glowstoneCrystal = registerItem(new Item().setUnlocalizedName(RealisticTorches.MODID + "_GlowstoneCrystal").setCreativeTab(CreativeTabs.MATERIALS), "GlowstoneCrystal");
 	}
 
 	protected static <T extends Item> T registerItem(T itemType, String name) {
