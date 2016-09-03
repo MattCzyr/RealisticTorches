@@ -10,14 +10,18 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockMovingLightSource extends BlockAir implements ITileEntityProvider {
 
 	public static final String NAME = "MovingLightSource";
+
+	private EntityPlayer player;
 
 	public BlockMovingLightSource() {
 		super();
@@ -25,9 +29,20 @@ public class BlockMovingLightSource extends BlockAir implements ITileEntityProvi
 		setTickRandomly(false);
 		setLightLevel(0.9F);
 	}
+	
+	@Override
+	public boolean isReplaceable(IBlockAccess world, BlockPos pos) {
+		return false;
+	}
 
 	@Override
-	public TileEntity createNewTileEntity(World worldIn, int meta) {
-		return new TEMovingLightSource();
+	public TileEntity createNewTileEntity(World world, int meta) {
+		return new TEMovingLightSource().setPlayer(player);
 	}
+
+	public BlockMovingLightSource setPlayer(EntityPlayer player) {
+		this.player = player;
+		return this;
+	}
+
 }

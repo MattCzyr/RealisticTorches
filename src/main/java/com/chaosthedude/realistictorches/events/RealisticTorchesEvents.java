@@ -1,6 +1,7 @@
 package com.chaosthedude.realistictorches.events;
 
 import com.chaosthedude.realistictorches.RealisticTorchesBlocks;
+import com.chaosthedude.realistictorches.blocks.BlockMovingLightSource;
 import com.chaosthedude.realistictorches.config.ConfigHandler;
 import com.chaosthedude.realistictorches.handler.LightSourceHandler;
 
@@ -27,11 +28,12 @@ public class RealisticTorchesEvents {
 		final int blockZ = MathHelper.floor_double(event.player.posZ);
 		final BlockPos pos = new BlockPos(blockX, blockY + 1, blockZ);
 
-		if (event.player.worldObj.getBlockState(pos) != RealisticTorchesBlocks.movingLightSource && event.player.worldObj.isAirBlock(pos)) {
-			event.player.worldObj.setBlockState(pos, RealisticTorchesBlocks.movingLightSource.getDefaultState());
+		if (event.player.worldObj.isAirBlock(pos)) {
+			final BlockMovingLightSource lightSource = RealisticTorchesBlocks.movingLightSource;
+			event.player.worldObj.setBlockState(pos, lightSource.setPlayer(event.player).getDefaultState());
 		}
 	}
-	
+
 	@SubscribeEvent
 	public void onBlockHarvest(HarvestDropsEvent event) {
 		if (ConfigHandler.vanillaTorchDropsUnlit && event.getState().getBlock() == Blocks.TORCH) {
