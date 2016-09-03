@@ -1,5 +1,8 @@
 package com.chaosthedude.realistictorches;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.chaosthedude.realistictorches.blocks.BlockMovingLightSource;
 import com.chaosthedude.realistictorches.blocks.BlockTorchLit;
 import com.chaosthedude.realistictorches.blocks.BlockTorchSmoldering;
@@ -9,10 +12,11 @@ import com.chaosthedude.realistictorches.blocks.te.TETorch;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class RealisticTorchesBlocks {
+	
+	public static Map<String, Block> registry = new HashMap<String, Block>();
 
 	public static BlockTorchUnlit torchUnlit;
 	public static BlockTorchLit torchLit;
@@ -34,6 +38,7 @@ public class RealisticTorchesBlocks {
 		block.setRegistryName(name);
 		GameRegistry.register(block);
 		GameRegistry.register(new ItemBlock(block).setRegistryName(name));
+		registry.put(name, block);
 
 		return block;
 	}
