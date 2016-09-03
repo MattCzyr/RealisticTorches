@@ -1,5 +1,8 @@
 package com.chaosthedude.realistictorches;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.chaosthedude.realistictorches.items.ItemMatchbox;
 
 import net.minecraft.creativetab.CreativeTabs;
@@ -7,6 +10,8 @@ import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class RealisticTorchesItems {
+	
+	public static Map<String, Item> registry = new HashMap<String, Item>();
 
 	public static ItemMatchbox matchbox;
 	public static Item glowstoneCrystal;
@@ -20,6 +25,7 @@ public class RealisticTorchesItems {
 		T item = itemType;
 		item.setRegistryName(name);
 		GameRegistry.register(item);
+		registry.put(name, item);
 
 		return item;
 	}
