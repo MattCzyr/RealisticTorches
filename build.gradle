@@ -10,25 +10,29 @@ buildscript {
         classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
     }
 }
-
 apply plugin: 'net.minecraftforge.gradle.forge'
 
 /*
+2.1 snapshot
 plugins {
     id "net.minecraftforge.gradle.forge" version "2.0.2"
 }
 */
 
-version = "1.10.2-1.6.2"
+version = "1.10.2-1.6.3"
 group= "com.chaosthedude.realistictorches"
 archivesBaseName = "RealisticTorches"
 
+sourceCompatibility = targetCompatibility = "1.6"
+compileJava {
+    sourceCompatibility = targetCompatibility = "1.6"
+}
+
 minecraft {
-    version = "1.10.2-12.18.0.2006-1.10.0"
+    version = "1.10.2-12.18.1.2076"
     runDir = "run"
 
     mappings = "snapshot_20160518"
-    // makeObfSourceJar = false
 }
 
 dependencies {
