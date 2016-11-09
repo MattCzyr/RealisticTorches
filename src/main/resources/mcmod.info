@@ -2,8 +2,8 @@
 {
   "modid": "RealisticTorches",
   "name": "Realistic Torches",
-  "description": "A lightweight mod that adds some realism to torches, increasing the difficulty of the early game.",
-  "version": "1.6.3",
+  "description": "Increases the difficulty of the early game by adding realism mechanics to torches.",
+  "version": "1.6.4",
   "mcversion": "1.10.2",
   "url": "http://www.curse.com/mc-mods/minecraft/235729-realistic-torches",
   "updateUrl": "",
