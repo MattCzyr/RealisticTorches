@@ -19,7 +19,7 @@ plugins {
 }
 */
 
-version = "1.10.2-1.6.3"
+version = "1.10.2-1.6.4"
 group= "com.chaosthedude.realistictorches"
 archivesBaseName = "RealisticTorches"
 
