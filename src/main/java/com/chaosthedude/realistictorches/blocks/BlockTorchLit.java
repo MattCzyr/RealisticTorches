@@ -4,36 +4,29 @@ import java.util.Random;
 
 import com.chaosthedude.realistictorches.RealisticTorches;
 import com.chaosthedude.realistictorches.RealisticTorchesBlocks;
-import com.chaosthedude.realistictorches.RealisticTorchesItems;
-import com.chaosthedude.realistictorches.blocks.te.TETorch;
 import com.chaosthedude.realistictorches.config.ConfigHandler;
 import com.chaosthedude.realistictorches.handler.TorchHandler;
 
 import net.minecraft.block.BlockTorch;
-import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class BlockTorchLit extends BlockTorch implements ITileEntityProvider {
+public class BlockTorchLit extends BlockTorch {
 
 	public static final String NAME = "TorchLit";
 
 	public BlockTorchLit() {
 		setUnlocalizedName(RealisticTorches.MODID + "_" + NAME);
 		setLightLevel(0.9375F);
-		setTickRandomly(false);
+		setTickRandomly(true);
 		setCreativeTab(CreativeTabs.DECORATIONS);
 	}
 
@@ -44,6 +37,11 @@ public class BlockTorchLit extends BlockTorch implements ITileEntityProvider {
 		} else if (ConfigHandler.torchBurnout > 0) {
 			world.scheduleUpdate(pos, this, (int) (ConfigHandler.torchBurnout * 0.9));
 		}
+	}
+
+	@Override
+	public void randomTick(World world, BlockPos pos, IBlockState state, Random random) {
+		TorchHandler.updateTorch(world, pos);
 	}
 
 	@Override
@@ -63,11 +61,6 @@ public class BlockTorchLit extends BlockTorch implements ITileEntityProvider {
 		}
 
 		return null;
-	}
-
-	@Override
-	public TileEntity createNewTileEntity(World world, int meta) {
-		return new TETorch();
 	}
 
 }

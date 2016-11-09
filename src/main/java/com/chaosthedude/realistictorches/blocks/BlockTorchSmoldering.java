@@ -4,38 +4,31 @@ import java.util.Random;
 
 import com.chaosthedude.realistictorches.RealisticTorches;
 import com.chaosthedude.realistictorches.RealisticTorchesBlocks;
-import com.chaosthedude.realistictorches.RealisticTorchesItems;
-import com.chaosthedude.realistictorches.blocks.te.TETorch;
 import com.chaosthedude.realistictorches.config.ConfigHandler;
 import com.chaosthedude.realistictorches.handler.TorchHandler;
 
 import net.minecraft.block.BlockTorch;
-import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockTorchSmoldering extends BlockTorch implements ITileEntityProvider {
+public class BlockTorchSmoldering extends BlockTorch {
 
 	public static final String NAME = "TorchSmoldering";
 
 	public BlockTorchSmoldering() {
 		setUnlocalizedName(RealisticTorches.MODID + "_" + NAME);
 		setLightLevel(0.65F);
-		setTickRandomly(false);
+		setTickRandomly(true);
 		setCreativeTab(null);
 	}
 
@@ -46,6 +39,11 @@ public class BlockTorchSmoldering extends BlockTorch implements ITileEntityProvi
 		} else if (ConfigHandler.torchBurnout > 0) {
 			world.scheduleUpdate(pos, this, (int) (ConfigHandler.torchBurnout / 10));
 		}
+	}
+	
+	@Override
+	public void randomTick(World world, BlockPos pos, IBlockState state, Random random) {
+		TorchHandler.updateTorch(world, pos);
 	}
 
 	@Override
@@ -90,11 +88,6 @@ public class BlockTorchSmoldering extends BlockTorch implements ITileEntityProvi
 			}
 			pos.spawnParticle(EnumParticleTypes.FLAME, d0, d1, d2, 0.0D, 0.0D, 0.0D, new int[0]);
 		}
-	}
-
-	@Override
-	public TileEntity createNewTileEntity(World world, int meta) {
-		return new TETorch();
 	}
 
 }

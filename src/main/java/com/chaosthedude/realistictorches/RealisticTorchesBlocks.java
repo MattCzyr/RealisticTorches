@@ -8,7 +8,6 @@ import com.chaosthedude.realistictorches.blocks.BlockTorchLit;
 import com.chaosthedude.realistictorches.blocks.BlockTorchSmoldering;
 import com.chaosthedude.realistictorches.blocks.BlockTorchUnlit;
 import com.chaosthedude.realistictorches.blocks.te.TEMovingLightSource;
-import com.chaosthedude.realistictorches.blocks.te.TETorch;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
@@ -30,7 +29,6 @@ public class RealisticTorchesBlocks {
 		movingLightSource = registerBlock(new BlockMovingLightSource(), BlockMovingLightSource.NAME);
 
 		GameRegistry.registerTileEntity(TEMovingLightSource.class, TEMovingLightSource.NAME);
-		GameRegistry.registerTileEntity(TETorch.class, TETorch.NAME);
 	}
 
 	protected static <T extends Block> T registerBlock(T blockType, String name) {
