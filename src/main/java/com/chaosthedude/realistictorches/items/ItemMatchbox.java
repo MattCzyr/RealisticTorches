@@ -24,11 +24,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemMatchbox extends Item {
 
-	public static final String NAME = "Matchbox";
+	public static final String NAME = "matchbox";
 
 	public ItemMatchbox() {
 		super();
-		setUnlocalizedName(RealisticTorches.MODID + "_" + NAME);
+		setUnlocalizedName(RealisticTorches.MODID + "." + NAME);
 		setMaxStackSize(1);
 		setMaxDamage(ConfigHandler.matchboxDurability - 1);
 		setCreativeTab(CreativeTabs.TOOLS);
@@ -36,14 +36,14 @@ public class ItemMatchbox extends Item {
 	}
 
 	@Override
-	public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+	public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		if (!ConfigHandler.matchboxCreatesFire) {
 			return EnumActionResult.FAIL;
 		}
 
 		pos = pos.offset(facing);
 
-		if (!player.canPlayerEdit(pos, facing, stack)) {
+		if (!player.canPlayerEdit(pos, facing, player.getHeldItem(hand))) {
 			return EnumActionResult.FAIL;
 		} else {
 			if (world.isAirBlock(pos)) {
@@ -51,7 +51,7 @@ public class ItemMatchbox extends Item {
 				world.setBlockState(pos, Blocks.FIRE.getDefaultState(), 11);
 			}
 
-			stack.damageItem(1, player);
+			player.getHeldItem(hand).damageItem(1, player);
 			return EnumActionResult.SUCCESS;
 		}
 	}
