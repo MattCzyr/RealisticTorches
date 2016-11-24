@@ -2,9 +2,8 @@ package com.chaosthedude.realistictorches.worldgen;
 
 import java.util.Random;
 
-import com.chaosthedude.realistictorches.RealisticTorchesBlocks;
+import com.chaosthedude.realistictorches.blocks.RealisticTorchesBlocks;
 import com.chaosthedude.realistictorches.config.ConfigHandler;
-import com.chaosthedude.realistictorches.handler.TorchHandler;
 
 import net.minecraft.block.BlockTorch;
 import net.minecraft.block.state.IBlockState;
