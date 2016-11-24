@@ -1,7 +1,7 @@
 package com.chaosthedude.realistictorches.events;
 
-import com.chaosthedude.realistictorches.RealisticTorchesBlocks;
 import com.chaosthedude.realistictorches.blocks.BlockMovingLightSource;
+import com.chaosthedude.realistictorches.blocks.RealisticTorchesBlocks;
 import com.chaosthedude.realistictorches.config.ConfigHandler;
 import com.chaosthedude.realistictorches.handler.LightSourceHandler;
 

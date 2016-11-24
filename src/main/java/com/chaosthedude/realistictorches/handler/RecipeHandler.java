@@ -3,9 +3,9 @@ package com.chaosthedude.realistictorches.handler;
 import java.util.List;
 
 import com.chaosthedude.realistictorches.RealisticTorches;
-import com.chaosthedude.realistictorches.RealisticTorchesBlocks;
-import com.chaosthedude.realistictorches.RealisticTorchesItems;
+import com.chaosthedude.realistictorches.blocks.RealisticTorchesBlocks;
 import com.chaosthedude.realistictorches.config.ConfigHandler;
+import com.chaosthedude.realistictorches.items.RealisticTorchesItems;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -43,21 +43,17 @@ public class RecipeHandler {
 
 	public static void removeRecipe(ItemStack s) {
 		int recipeCount = 0;
-		List<IRecipe> recipeList = CraftingManager.getInstance().getRecipeList();
+		final List<IRecipe> recipeList = CraftingManager.getInstance().getRecipeList();
 		for (int i = 0; i < recipeList.size(); i++) {
-			IRecipe currentRecipe = recipeList.get(i);
-			ItemStack output = currentRecipe.getRecipeOutput();
+			final IRecipe currentRecipe = recipeList.get(i);
+			final ItemStack output = currentRecipe.getRecipeOutput();
 			if (output != null && output.getItem() == s.getItem()) {
 				recipeList.remove(i);
 				recipeCount++;
 			}
 		}
 
-		if (recipeCount == 1) {
-			RealisticTorches.logger.info("Removed " + recipeCount + " torch recipe.");
-		} else {
-			RealisticTorches.logger.info("Removed " + recipeCount + " torch recipes.");
-		}
+		RealisticTorches.logger.info("Removed " + recipeCount + " torch recipe" + (recipeCount > 1 ? "s." : "."));
 	}
 
 }

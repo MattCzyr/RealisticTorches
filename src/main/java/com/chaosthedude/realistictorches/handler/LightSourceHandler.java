@@ -19,8 +19,7 @@ public class LightSourceHandler {
 	public static void registerLightSources() {
 		int lightSourceBlocks = 0;
 		if (ConfigHandler.registerLightSourceBlocks) {
-			for (Object b : Block.REGISTRY) {
-				Block block = (Block) b;
+			for (Block block : Block.REGISTRY) {
 				if (block.getLightValue(block.getDefaultState()) > ConfigHandler.lightSourceRegistryThreshold) {
 					lightSources.add(Item.getItemFromBlock(block));
 					lightSourceBlocks++;
@@ -28,7 +27,7 @@ public class LightSourceHandler {
 			}
 		} else {
 			for (String blockName : ConfigHandler.lightSourceItems) {
-				Block block = (Block) Block.getBlockFromName(blockName);
+				final Block block = (Block) Block.getBlockFromName(blockName);
 				if (block != null) {
 					lightSources.add(Item.getItemFromBlock(block));
 					lightSourceBlocks++;
@@ -38,7 +37,7 @@ public class LightSourceHandler {
 
 		int lightSourceItems = 0;
 		for (String itemName : ConfigHandler.lightSourceItems) {
-			Item item = (Item) Item.REGISTRY.getObject(new ResourceLocation(itemName));
+			final Item item = Item.REGISTRY.getObject(new ResourceLocation(itemName));
 			if (item != null) {
 				lightSources.add(item);
 				lightSourceItems++;

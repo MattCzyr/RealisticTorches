@@ -1,12 +1,8 @@
-package com.chaosthedude.realistictorches;
+package com.chaosthedude.realistictorches.blocks;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
-import com.chaosthedude.realistictorches.blocks.BlockMovingLightSource;
-import com.chaosthedude.realistictorches.blocks.BlockTorchLit;
-import com.chaosthedude.realistictorches.blocks.BlockTorchSmoldering;
-import com.chaosthedude.realistictorches.blocks.BlockTorchUnlit;
 import com.chaosthedude.realistictorches.blocks.te.TEMovingLightSource;
 
 import net.minecraft.block.Block;
@@ -15,7 +11,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class RealisticTorchesBlocks {
 	
-	public static Map<String, Block> registry = new HashMap<String, Block>();
+	public static final List<Block> REGISTRY = new ArrayList<Block>();
 
 	public static BlockTorchUnlit torchUnlit;
 	public static BlockTorchLit torchLit;
@@ -36,7 +32,7 @@ public class RealisticTorchesBlocks {
 		block.setRegistryName(name);
 		GameRegistry.register(block);
 		GameRegistry.register(new ItemBlock(block).setRegistryName(name));
-		registry.put(name, block);
+		REGISTRY.add(block);
 
 		return block;
 	}
