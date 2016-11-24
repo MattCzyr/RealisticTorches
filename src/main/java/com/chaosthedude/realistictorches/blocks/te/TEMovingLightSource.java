@@ -6,7 +6,6 @@ import javax.annotation.Nullable;
 
 import com.chaosthedude.realistictorches.blocks.BlockMovingLightSource;
 import com.chaosthedude.realistictorches.handler.LightSourceHandler;
-import com.chaosthedude.realistictorches.util.Util;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -15,7 +14,7 @@ import net.minecraft.util.ITickable;
 
 public class TEMovingLightSource extends TileEntity implements ITickable {
 
-	public static final String NAME = "TEMovingLightSource";
+	public static final String NAME = "te_moving_light_source";
 
 	private UUID playerUUID;
 
@@ -71,7 +70,7 @@ public class TEMovingLightSource extends TileEntity implements ITickable {
 			return worldObj.getPlayerEntityByUUID(playerUUID);
 		}
 
-		return Util.getClosestPlayer(worldObj, pos, 2.0D);
+		return worldObj.getClosestPlayer(pos.getX(), pos.getY(), pos.getZ(), 2.0D, false);
 	}
 
 }

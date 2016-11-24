@@ -19,14 +19,13 @@ import net.minecraft.world.World;
 
 public class BlockMovingLightSource extends BlockAir implements ITileEntityProvider {
 
-	public static final String NAME = "MovingLightSource";
+	public static final String NAME = "moving_light_source";
 
 	private EntityPlayer player;
 
 	public BlockMovingLightSource() {
 		super();
-		setUnlocalizedName(RealisticTorches.MODID + "_" + NAME);
-		setTickRandomly(false);
+		setUnlocalizedName(RealisticTorches.MODID + "." + NAME);
 		setLightLevel(0.9F);
 	}
 	
