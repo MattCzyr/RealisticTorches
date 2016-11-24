@@ -1,6 +1,6 @@
 {
 	"parent": "item/generated",
 	"textures": {
-		"layer0": "RealisticTorches:items/Matchbox"
+		"layer0": "realistictorches:items/matchbox"
 	}
 }

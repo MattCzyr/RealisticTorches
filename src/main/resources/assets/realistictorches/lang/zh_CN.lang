@@ -1,9 +1,12 @@
-# Realistic Torches Language File - SIMPLIFIED CHINESE
+# Realistic Torches - Language File
+# CHINA - SIMPLIFIED CHINESE
 
-tile.RealisticTorches_TorchUnlit.name=熄灭火炬
-tile.RealisticTorches_TorchLit.name=点燃火炬
-tile.RealisticTorches_TorchSmoldering.name=阴燃火炬
-tile.RealisticTorches_MovingLightSource.name=移动光源
+# BLOCKS
+tile.realistictorches.torch_unlit.name=熄灭火炬
+tile.realistictorches.torch_lit.name=点燃火炬
+tile.realistictorches.torch_smoldering.name=阴燃火炬
+tile.realistictorches.moving_light_source.name=移动光源
 
-item.RealisticTorches_Matchbox.name=火柴盒
-item.RealisticTorches_GlowstoneCrystal.name=荧石水晶
+# ITEMS
+item.realistictorches.matchbox.name=火柴盒
+item.realistictorches.glowstone_crystal.name=荧石水晶

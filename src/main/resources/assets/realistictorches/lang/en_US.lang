@@ -1,9 +1,12 @@
-# Realistic Torches Language File - UNITED STATES ENGLISH
+# Realistic Torches - Language File
+# UNITED STATES - ENGLISH
 
-tile.RealisticTorches_TorchUnlit.name=Unlit Torch
-tile.RealisticTorches_TorchLit.name=Lit Torch
-tile.RealisticTorches_TorchSmoldering.name=Smoldering Torch
-tile.RealisticTorches_MovingLightSource.name=Moving Light Source
+# BLOCKS
+tile.realistictorches.torch_unlit.name=Unlit Torch
+tile.realistictorches.torch_lit.name=Lit Torch
+tile.realistictorches.torch_smoldering.name=Smoldering Torch
+tile.realistictorches.moving_light_source.name=Moving Light Source
 
-item.RealisticTorches_Matchbox.name=Matchbox
-item.RealisticTorches_GlowstoneCrystal.name=Glowstone Crystal
+# ITEMS
+item.realistictorches.matchbox.name=Matchbox
+item.realistictorches.glowstone_crystal.name=Glowstone Crystal

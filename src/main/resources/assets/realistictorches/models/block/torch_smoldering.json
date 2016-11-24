@@ -1,0 +1,6 @@
+{
+    "parent": "block/torch",
+    "textures": {
+        "torch": "realistictorches:blocks/torch_smoldering"
+    }
+}

@@ -1,9 +1,12 @@
-# Realistic Torches Language File - BRAZILIAN PORTUGEUSE
+# Realistic Torches - Language File
+# BRAZIL - PORTUGEUSE
 
-tile.RealisticTorches_TorchUnlit.name=Tocha Apagada
-tile.RealisticTorches_TorchLit.name=Tocha Iluminada
-tile.RealisticTorches_TorchSmoldering.name=Tocha Latente
-tile.RealisticTorches_MovingLightSource.name=Fonte de Luz em Movimento
+# BLOCKS
+tile.realistictorches.torch_unlit.name=Tocha Apagada
+tile.realistictorches.torch_lit.name=Tocha Iluminada
+tile.realistictorches.torch_smoldering.name=Tocha Latente
+tile.realistictorches.moving_light_source.name=Fonte de Luz em Movimento
 
-item.RealisticTorches_Matchbox.name=Caixa de Fósforo
-item.RealisticTorches_GlowstoneCrystal.name=Cristal de Pedra Luminosa
+# ITEMS
+item.realistictorches.matchbox.name=Caixa de Fósforo
+item.realistictorches.glowstone_crystal.name=Cristal de Pedra Luminosa
