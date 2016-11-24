@@ -3,11 +3,13 @@ package com.chaosthedude.realistictorches;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.chaosthedude.realistictorches.blocks.RealisticTorchesBlocks;
 import com.chaosthedude.realistictorches.config.ConfigHandler;
 import com.chaosthedude.realistictorches.events.RealisticTorchesEvents;
 import com.chaosthedude.realistictorches.handler.LightSourceHandler;
 import com.chaosthedude.realistictorches.handler.RecipeHandler;
-import com.chaosthedude.realistictorches.util.Util;
+import com.chaosthedude.realistictorches.items.RealisticTorchesItems;
+import com.chaosthedude.realistictorches.proxy.CommonProxy;
 import com.chaosthedude.realistictorches.worldgen.TorchGenerator;
 
 import net.minecraft.init.Blocks;
@@ -16,25 +18,31 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
+import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.relauncher.Side;
 
-@Mod(modid = RealisticTorches.MODID, name = RealisticTorches.NAME, version = RealisticTorches.VERSION, acceptedMinecraftVersions = "[1.10,1.10.2]")
+@Mod(modid = RealisticTorches.MODID, name = RealisticTorches.NAME, version = RealisticTorches.VERSION, acceptedMinecraftVersions = "[1.11]")
 
 public class RealisticTorches {
-	public static final String MODID = "RealisticTorches";
+
+	public static final String MODID = "realistictorches";
 	public static final String NAME = "Realistic Torches";
 	public static final String VERSION = "1.6.4";
 
 	public static final Logger logger = LogManager.getLogger(MODID);
+	
+	@SidedProxy(clientSide = "com.chaosthedude.realistictorches.proxy.ClientProxy", serverSide = "com.chaosthedude.realistictorches.proxy.CommonProxy")
+	public static CommonProxy proxy;
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		RealisticTorchesBlocks.register();
 		RealisticTorchesItems.register();
+
+		proxy.registerModels();
 
 		ConfigHandler.loadConfig(event.getSuggestedConfigurationFile());
 		ConfigHandler.printConfigInfo();
@@ -47,10 +55,6 @@ public class RealisticTorches {
 		RecipeHandler.removeRecipe(new ItemStack(Blocks.TORCH));
 		RecipeHandler.registerRecipes();
 		RecipeHandler.registerOres();
-
-		if (event.getSide() == Side.CLIENT) {
-			Util.registerModels();
-		}
 
 		MinecraftForge.EVENT_BUS.register(new RealisticTorchesEvents());
 	}
