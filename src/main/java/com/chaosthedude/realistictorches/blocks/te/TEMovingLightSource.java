@@ -52,8 +52,7 @@ public class TEMovingLightSource extends TileEntity implements ITickable {
 
 	public boolean shouldKill() {
 		final EntityPlayer player = findLightSourceCreator();
-		return player == null || player.getHeldEquipment() == null || player.getDistance(pos.getX(), pos.getY(), pos.getZ()) > 2.0D
-				|| !LightSourceHandler.containsLightSource(player.getHeldEquipment());
+		return player == null || player.getDistance(pos.getX(), pos.getY(), pos.getZ()) > 2.0D || !LightSourceHandler.containsLightSource(player.getHeldEquipment());
 	}
 
 	public TEMovingLightSource setPlayer(EntityPlayer player) {
