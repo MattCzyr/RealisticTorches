@@ -22,12 +22,10 @@ public class TorchGenerator implements IWorldGenerator {
 			for (int x = 0; x < 16; x++) {
 				for (int y = 0; y < world.getHeight(); y++) {
 					for (int z = 0; z < 16; z++) {
-						int worldX = chunkX * 16 + x;
-						int worldZ = chunkZ * 16 + z;
-						BlockPos pos = new BlockPos(worldX, y, worldZ);
+						final BlockPos pos = new BlockPos(chunkX * 16 + x, y, chunkZ * 16 + z);
 						if (world.getBlockState(pos).getBlock() == Blocks.TORCH) {
-							BlockTorch torch = (BlockTorch) world.getBlockState(pos).getBlock();
-							IBlockState state = RealisticTorchesBlocks.torchLit.getStateFromMeta(torch.getMetaFromState(world.getBlockState(pos)));
+							final BlockTorch torch = (BlockTorch) world.getBlockState(pos).getBlock();
+							final IBlockState state = RealisticTorchesBlocks.torchLit.getStateFromMeta(torch.getMetaFromState(world.getBlockState(pos)));
 							world.setBlockState(pos, state);
 						}
 					}
