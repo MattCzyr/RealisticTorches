@@ -1,0 +1,236 @@
+---------------------------------------------
+ VERSION 2.0.0 - 1.11
+---------------------------------------------
+1.11:
+  UPDATES:
+  - Updated to MC 1.11 (Forge #2153)
+
+
+---------------------------------------------
+ VERSION 1.6.4 - 1.10.2
+---------------------------------------------
+1.10.2:
+  FIXES:
+  - Lit and Smoldering Torches no longer use tile entities
+
+
+---------------------------------------------
+ VERSION 1.6.3 - 1.10.2, 1.7.10
+---------------------------------------------
+1.10.2, 1.7.10:
+  FIXES:
+  - Fix ClassCastException when using moving light source
+
+1.10.2:
+  UPDATES:
+  - Updated to Forge #2076
+
+
+---------------------------------------------
+ VERSION 1.6.2 - 1.10.2, 1.9.4, 1.7.10
+---------------------------------------------
+1.10.2, 1.9.4, 1.7.10:
+  FEATURES:
+  - Vanilla torches can now drop unlit torches when harvested. Disabled by default in the config file.
+
+
+---------------------------------------------
+ VERSION 1.6.1 - 1.10.2
+---------------------------------------------
+1.10.2:
+  FIXES:
+  - Fixed Glowstone Crystal not being registered properly
+
+
+---------------------------------------------
+ VERSION 1.6.0 - 1.10.2, 1.9.4, 1.7.10
+---------------------------------------------
+1.10.2, 1.9.4, 1.7.10:
+  FEATURES:
+  - Vanilla torches will be replaced with Lit Torches during world generation. Can be disabled in the config file.
+
+
+---------------------------------------------
+ VERSION 1.5.6 - 1.10.2, 1.10, 1.9.4, 1.8.9
+---------------------------------------------
+1.9.4, 1.8.9:
+  FIXES:
+  - Fixed IllegalArgumentException when breaking Lit or Smoldering Torches under certain conditions
+
+1.10.2:
+  UPDATES:
+  - Updated to MC 1.10.2 (Forge #2006)
+	
+1.10:
+  UPDATES:
+  - Updated to MC 1.10 (Forge #1986)
+
+
+---------------------------------------------
+ VERSION 1.5.5 - 1.9.4, 1.8.9, 1.7.10
+---------------------------------------------
+1.9.4, 1.8.9, 1.7.10:
+  FEATURES:
+  - Added Polish localization (courtesy of hamster1701)
+  FIXES:
+  - Fixed recipes for the vanilla torch not being removed under certain conditions
+  - Fixed ore dictionary recipes not being registered correctly
+  - Fixed startup spam due to missing model
+  - Fixed Portuguese localization (courtesy of Haurid)
+
+1.9.4:
+  UPDATES:
+  - Updated to MC 1.9.4 (Forge #1909)
+
+1.7.10:
+  UPDATES:
+  - Updated to Forge #1614
+
+
+---------------------------------------------
+ VERSION 1.5.4 - 1.9, 1.8.9, 1.7.10
+---------------------------------------------
+1.9, 1.8.9, 1.7.10:
+  FEATURES:
+  - Added a config field to specify the threshold above which all blocks with higher light values  will be registered as handheld light sources
+  - Added a config option to disable the automatic registry of light emitting blocks as handheld light sources
+  - Added a config field to register specified blocks as handheld light sources if the option to disable automatic registry is enabled
+  - Added a config field to register specified items as handheld light sources
+  - Added a config option to enable Matchboxes being used as a Flint and Steel alternative at an increased durability cost
+
+1.9:
+  FIXES:
+  - Fixed item models
+
+
+---------------------------------------------
+ VERSION 1.5.3 - 1.9
+---------------------------------------------
+1.9:
+  UPDATES:
+  - Updated to Forge #1811
+	FEATURES:
+  - Added German localization (courtesy of Tails32)
+
+
+---------------------------------------------
+ VERSION 1.5.2 - 1.9, 1.8.9, 1.7.10
+---------------------------------------------
+1.9, 1.8.9, 1.7.10:
+  FEATURES:
+  - Overhauled config to give everything a uniform style
+  FIXES:
+  - Vanilla torches no longer drop an Unlit Torch when broken.
+
+
+---------------------------------------------
+ VERSION 1.5.1 - 1.8.9, 1.7.10
+---------------------------------------------
+1.8.9, 1.7.10:
+  FIXES:
+  - Fixed lag spike when attempting to light or place a torch in rain
+
+
+---------------------------------------------
+ VERSION 1.5.0 - 1.8.9, 1.8.8, 1.8, 1.7.10
+---------------------------------------------
+1.8.9, 1.8.8, 1.8, 1.7.10:
+  FEATURES:
+  - Lit Torches and Smoldering Torches are now tile entities and will be extinguished (turned into Unlit Torches) when rained on.
+  - A list of handheld light sources is now compiled during initialization. This is now used to determine what blocks should emit light when held (rather than a hardcoded list).
+  FIXES:
+  - Optimized handheld light
+
+1.8.9:
+  UPDATES:
+	- Updated to MC 1.8.9 (Forge #1663)
+
+
+------------------------------------------
+ VERSION 1.4.0 - 1.8.8
+------------------------------------------
+1.8.8:
+  UPDATES:
+  - Updated to MC 1.8.8 (Forge #1600)
+
+
+------------------------------------------
+ VERSION 1.3.1 - 1.8, 1.7.10
+------------------------------------------
+1.8, 1.7.10:
+  FEATURES:
+  - Added a config option for unlimited matchbox uses
+  FIXES:
+  - Fixed Matchbox duplication
+
+
+------------------------------------------
+ VERSION 1.3.0 - 1.8, 1.7.10
+------------------------------------------
+1.8, 1.7.10:
+  FIXES:
+  - Fixed NPE related to handheld light sources
+
+
+------------------------------------------
+ VERSION 1.2.1 - 1.8, 1.7.10
+------------------------------------------
+1.8, 1.7.10:
+  FEATURES:
+  - Added a config option to register both Lit Torches and vanilla Torches in the Ore Dictionary under "blockTorch"
+
+
+------------------------------------------
+ VERSION 1.2.0 - 1.8, 1.7.10
+------------------------------------------
+1.8, 1.7.10:
+  FEATURES:
+  - Added a new item, Glowstone Crystal
+  - Vanilla torches (permanently lit) can now be crafted with a Glowstone Crystal
+
+
+------------------------------------------
+ VERSION 1.1.0 - 1.8, 1.7.10
+------------------------------------------
+1.8, 1.7.10:
+  FEATURES:
+  - Added localization for Chinese, Japanese, and Korean
+  - Torches placed in the world can no longer be lit while being rained on
+
+
+------------------------------------------
+VERSION 1.0.3 - 1.8, 1.7.10
+------------------------------------------
+1.8, 1.7.10:
+  FIXES:
+  - Fixed torches not being removed from inventory after being placed
+
+
+------------------------------------------
+VERSION: 1.0.2 - 1.8, 1.7.10
+------------------------------------------
+1.8, 1.7.10:
+  FEATURES:
+  - Added localization for Russian and Italian
+  - Updated translations
+  - Added config option to enable unlit torch particles
+
+
+------------------------------------------
+VERSION: 1.0.1 - 1.8, 1.7.10
+------------------------------------------
+1.8, 1.7.10:
+  FIXES:
+  - Fixed a duplication glitch
+
+
+------------------------------------------
+VERSION: 1.0.0 - 1.8, 1.7.10
+------------------------------------------
+1.8:
+  UPDATES:
+  - Initial release for MC 1.8 (Forge #1450)
+
+1.7.10:
+  UPDATES:
+	- Initial release for MC 1.7.10 (Forge #1448)
