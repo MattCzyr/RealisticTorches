@@ -65,7 +65,7 @@ public class RealisticTorches {
 			RecipeHandler.removeRecipe(new ItemStack(Blocks.TORCH));
 		}
 
-		GameRegistry.addRecipe(new ItemStack(Blocks.TORCH), "x", "y", 'x', RealisticTorchesItems.glowstoneCrystal, 'y', Items.STICK);
+		GameRegistry.addRecipe(new ItemStack(Blocks.TORCH, 4), "x", "y", 'x', RealisticTorchesItems.glowstoneCrystal, 'y', Items.STICK);
 
 		LightSourceHandler.registerLightSources();
 	}
