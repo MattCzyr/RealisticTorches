@@ -4,12 +4,15 @@ import java.util.Random;
 
 import com.chaosthedude.realistictorches.RealisticTorches;
 import com.chaosthedude.realistictorches.config.ConfigHandler;
+import com.chaosthedude.realistictorches.items.RealisticTorchesItems;
 
+import net.minecraft.block.BlockTorch;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
@@ -25,6 +28,19 @@ public class BlockTorchLit extends BlockRealisticTorch {
 		setTickRandomly(true);
 		setLit(true);
 		setCreativeTab(CreativeTabs.DECORATIONS);
+	}
+
+	@Override
+	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float side, float hitX, float hitY) {
+		if (player.getHeldItem(hand).getItem() == RealisticTorchesItems.glowstonePaste) {
+			world.setBlockState(pos, getState(world, pos, (BlockTorch) Blocks.TORCH));
+			if (!player.isCreative()) {
+				player.getHeldItem(hand).func_190918_g(1);
+			}
+			return true;
+		}
+
+		return super.onBlockActivated(world, pos, state, player, hand, facing, side, hitX, hitY);
 	}
 
 	@Override
@@ -54,7 +70,7 @@ public class BlockTorchLit extends BlockRealisticTorch {
 
 		return null;
 	}
-	
+
 	@Override
 	public void extinguish(World world, BlockPos pos, boolean extinguishFully) {
 		playExtinguishSound(world, pos);

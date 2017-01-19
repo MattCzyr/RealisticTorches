@@ -4,11 +4,13 @@ import java.util.Random;
 
 import com.chaosthedude.realistictorches.RealisticTorches;
 import com.chaosthedude.realistictorches.config.ConfigHandler;
+import com.chaosthedude.realistictorches.items.RealisticTorchesItems;
 
+import net.minecraft.block.BlockTorch;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
@@ -26,6 +28,19 @@ public class BlockTorchSmoldering extends BlockRealisticTorch {
 		setLightLevel(0.65F);
 		setTickRandomly(true);
 		setCreativeTab(null);
+	}
+
+	@Override
+	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float side, float hitX, float hitY) {
+		if (player.getHeldItem(hand).getItem() == RealisticTorchesItems.glowstonePaste) {
+			world.setBlockState(pos, getState(world, pos, (BlockTorch) Blocks.TORCH));
+			if (!player.isCreative()) {
+				player.getHeldItem(hand).func_190918_g(1);
+			}
+			return true;
+		}
+
+		return super.onBlockActivated(world, pos, state, player, hand, facing, side, hitX, hitY);
 	}
 
 	@Override
@@ -55,7 +70,7 @@ public class BlockTorchSmoldering extends BlockRealisticTorch {
 
 		return null;
 	}
-	
+
 	@Override
 	public void extinguish(World world, BlockPos pos, boolean extinguishFully) {
 		playExtinguishSound(world, pos);
@@ -74,24 +89,24 @@ public class BlockTorchSmoldering extends BlockRealisticTorch {
 	@SideOnly(Side.CLIENT)
 	public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand) {
 		final EnumFacing facing = state.getValue(FACING);
-		final double d0 = (double) pos.getX() + 0.5D;
-		final double d1 = (double) pos.getY() + 0.7D;
-		final double d2 = (double) pos.getZ() + 0.5D;
-		final double d3 = 0.22D;
-		final double d4 = 0.27D;
+		final double x = (double) pos.getX() + 0.5D;
+		final double y = (double) pos.getY() + 0.7D;
+		final double z = (double) pos.getZ() + 0.5D;
+		final double mod1 = 0.22D;
+		final double mod2 = 0.27D;
 		final int r = rand.nextInt(4);
 
 		if (facing.getAxis().isHorizontal()) {
-			EnumFacing facing1 = facing.getOpposite();
-			world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0 + d4 * (double) facing1.getFrontOffsetX(), d1 + d3, d2 + d4 * (double) facing1.getFrontOffsetZ(), 0.0D, 0.0D, 0.0D, new int[0]);
+			final EnumFacing opposite = facing.getOpposite();
+			world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, x + mod2 * (double) opposite.getFrontOffsetX(), y + mod1, z + mod2 * (double) opposite.getFrontOffsetZ(), 0.0D, 0.0D, 0.0D);
 			if (r == 2) {
-				world.spawnParticle(EnumParticleTypes.FLAME, d0 + d4 * (double) facing1.getFrontOffsetX(), d1 + d3, d2 + d4 * (double) facing1.getFrontOffsetZ(), 0.0D, 0.0D, 0.0D, new int[0]);
+				world.spawnParticle(EnumParticleTypes.FLAME, x + mod2 * (double) opposite.getFrontOffsetX(), y + mod1, z + mod2 * (double) opposite.getFrontOffsetZ(), 0.0D, 0.0D, 0.0D);
 			}
 		} else {
 			if (r == 2) {
-				world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0, d1, d2, 0.0D, 0.0D, 0.0D, new int[0]);
+				world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, x, y, z, 0.0D, 0.0D, 0.0D);
 			}
-			world.spawnParticle(EnumParticleTypes.FLAME, d0, d1, d2, 0.0D, 0.0D, 0.0D, new int[0]);
+			world.spawnParticle(EnumParticleTypes.FLAME, x, y, z, 0.0D, 0.0D, 0.0D);
 		}
 	}
 

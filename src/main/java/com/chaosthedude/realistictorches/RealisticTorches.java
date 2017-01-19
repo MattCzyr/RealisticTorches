@@ -30,10 +30,10 @@ public class RealisticTorches {
 
 	public static final String MODID = "realistictorches";
 	public static final String NAME = "Realistic Torches";
-	public static final String VERSION = "2.0.0";
+	public static final String VERSION = "2.1.0";
 
 	public static final Logger logger = LogManager.getLogger(MODID);
-	
+
 	@SidedProxy(clientSide = "com.chaosthedude.realistictorches.proxy.ClientProxy", serverSide = "com.chaosthedude.realistictorches.proxy.CommonProxy")
 	public static CommonProxy proxy;
 
@@ -54,7 +54,6 @@ public class RealisticTorches {
 	public void init(FMLInitializationEvent event) {
 		RecipeHandler.removeRecipe(new ItemStack(Blocks.TORCH));
 		RecipeHandler.registerRecipes();
-		RecipeHandler.registerOres();
 
 		MinecraftForge.EVENT_BUS.register(new RealisticTorchesEvents());
 	}
@@ -65,7 +64,7 @@ public class RealisticTorches {
 			RecipeHandler.removeRecipe(new ItemStack(Blocks.TORCH));
 		}
 
-		GameRegistry.addRecipe(new ItemStack(Blocks.TORCH, 4), "x", "y", 'x', RealisticTorchesItems.glowstoneCrystal, 'y', Items.STICK);
+		RecipeHandler.registerVanillaRecipes();
 
 		LightSourceHandler.registerLightSources();
 	}
