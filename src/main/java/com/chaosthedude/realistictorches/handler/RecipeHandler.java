@@ -31,7 +31,15 @@ public class RecipeHandler {
 		GameRegistry.addShapedRecipe(new ItemStack(RealisticTorchesItems.glowstoneCrystal, 1), " G ", "GCG", " G ", 'G', Items.GLOWSTONE_DUST, 'C', Items.COAL);
 		GameRegistry.addShapedRecipe(new ItemStack(RealisticTorchesItems.glowstoneCrystal, 1), " G ", "GCG", " G ", 'G', Items.GLOWSTONE_DUST, 'C', new ItemStack(Items.COAL, 1, 1));
 
+		GameRegistry.addShapelessRecipe(new ItemStack(RealisticTorchesItems.glowstonePaste, 4), Items.GLOWSTONE_DUST, Items.SUGAR, Items.WATER_BUCKET);
+
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(RealisticTorchesItems.matchbox, 1), "PPP", "SSS", 'P', Items.PAPER, 'S', "slabWood"));
+	}
+
+	public static void registerVanillaRecipes() {
+		GameRegistry.addRecipe(new ItemStack(Blocks.TORCH, 4), "G", "S", 'G', RealisticTorchesItems.glowstoneCrystal, 'S', Items.STICK);
+		GameRegistry.addShapelessRecipe(new ItemStack(Blocks.TORCH, 1), RealisticTorchesBlocks.torchLit, RealisticTorchesItems.glowstonePaste);
+		GameRegistry.addShapelessRecipe(new ItemStack(Blocks.TORCH, 1), RealisticTorchesBlocks.torchSmoldering, RealisticTorchesItems.glowstonePaste);
 	}
 
 	public static void registerOres() {
@@ -42,8 +50,8 @@ public class RecipeHandler {
 	}
 
 	public static void removeRecipe(ItemStack s) {
-		int recipeCount = 0;
 		final List<IRecipe> recipeList = CraftingManager.getInstance().getRecipeList();
+		int recipeCount = 0;
 		for (int i = 0; i < recipeList.size(); i++) {
 			final IRecipe currentRecipe = recipeList.get(i);
 			final ItemStack output = currentRecipe.getRecipeOutput();
