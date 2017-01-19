@@ -7,11 +7,14 @@ import com.chaosthedude.realistictorches.blocks.RealisticTorchesBlocks;
 import com.chaosthedude.realistictorches.config.ConfigHandler;
 import com.chaosthedude.realistictorches.items.RealisticTorchesItems;
 
+import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
@@ -46,6 +49,20 @@ public class RecipeHandler {
 		if (ConfigHandler.oreDictionaryEnabled) {
 			OreDictionary.registerOre("blockTorch", RealisticTorchesBlocks.torchLit);
 			OreDictionary.registerOre("blockTorch", Blocks.TORCH);
+		}
+	}
+
+	public static void removeRecipes() {
+		for (String name : ConfigHandler.removeRecipes) {
+			final Block block = Block.getBlockFromName(name);
+			if (block != null) {
+				removeRecipe(new ItemStack(block));
+			} else {
+				final Item item = Item.REGISTRY.getObject(new ResourceLocation(name));
+				if (item != null) {
+					removeRecipe(new ItemStack(item));
+				}
+			}
 		}
 	}
 

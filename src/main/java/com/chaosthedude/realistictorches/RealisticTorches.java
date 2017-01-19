@@ -14,6 +14,7 @@ import com.chaosthedude.realistictorches.worldgen.TorchGenerator;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -60,10 +61,7 @@ public class RealisticTorches {
 
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
-		if (ConfigHandler.removeRecipesEnabled) {
-			RecipeHandler.removeRecipe(new ItemStack(Blocks.TORCH));
-		}
-
+		RecipeHandler.removeRecipes();
 		RecipeHandler.registerVanillaRecipes();
 
 		LightSourceHandler.registerLightSources();

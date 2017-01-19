@@ -19,7 +19,6 @@ public class ConfigHandler {
 	public static int lightSourceRegistryThreshold = 1;
 
 	public static boolean handheldLightEnabled = true;
-	public static boolean removeRecipesEnabled = true;
 	public static boolean unlitParticlesEnabled = false;
 	public static boolean oreDictionaryEnabled = false;
 	public static boolean noRelightEnabled = false;
@@ -33,10 +32,15 @@ public class ConfigHandler {
 			"minecraft:glowstone_dust",
 			"minecraft:blaze_powder",
 			"minecraft:blaze_rod",
-			"RealisticTorches:GlowstoneCrystal"
+			"realistictorches:glowstone_crystal"
 	};
 
 	public static String[] lightSourceBlocks = {};
+
+	public static String[] removeRecipes = {
+			"minecraft:torch",
+			"tconstruct:stone_torch"
+	};
 
 	public static void loadConfig(File configFile) {
 		config = new Configuration(configFile);
@@ -61,9 +65,6 @@ public class ConfigHandler {
 
 		comment = "Set this to false to disable certain blocks and items emitting light when held.";
 		handheldLightEnabled = loadBool("handheldLight.enabled", comment, handheldLightEnabled);
-
-		comment = "Set this to false to disable the removal of other mods' recipes for the vanilla torch.";
-		removeRecipesEnabled = loadBool("recipes.removeModded", comment, removeRecipesEnabled);
 
 		comment = "Set this to true to enable unlit torch particles.";
 		unlitParticlesEnabled = loadBool("unlitTorch.particles", comment, unlitParticlesEnabled);
@@ -91,6 +92,9 @@ public class ConfigHandler {
 
 		comment = "A list of blocks that will emit light when held, if handheldLight.enabled is set to true. This list will be used ONLY if handheldLight.registerBlocks is set to false.";
 		lightSourceBlocks = loadStringArray("lightSources.blocks", comment, "light_sources", lightSourceBlocks);
+
+		comment = "A list blocks and items of remove the recipes of.";
+		removeRecipes = loadStringArray("recipes.removeRecipes", comment, "remove_recipes", removeRecipes);
 
 		if (config.hasChanged()) {
 			config.save();
