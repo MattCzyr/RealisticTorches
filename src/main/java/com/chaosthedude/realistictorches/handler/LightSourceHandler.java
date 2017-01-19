@@ -27,7 +27,7 @@ public class LightSourceHandler {
 			}
 		} else {
 			for (String blockName : ConfigHandler.lightSourceItems) {
-				final Block block = (Block) Block.getBlockFromName(blockName);
+				final Block block = Block.getBlockFromName(blockName);
 				if (block != null) {
 					lightSources.add(Item.getItemFromBlock(block));
 					lightSourceBlocks++;
