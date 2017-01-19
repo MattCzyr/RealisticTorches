@@ -10,7 +10,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class RealisticTorchesBlocks {
-	
+
 	public static final List<Block> REGISTRY = new ArrayList<Block>();
 
 	public static BlockTorchUnlit torchUnlit;

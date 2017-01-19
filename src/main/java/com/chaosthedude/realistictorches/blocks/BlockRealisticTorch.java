@@ -16,7 +16,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class BlockRealisticTorch extends BlockTorch {
-	
+
 	private boolean isLit;
 
 	@Override
@@ -61,7 +61,7 @@ public class BlockRealisticTorch extends BlockTorch {
 	public void playExtinguishSound(World world, BlockPos pos) {
 		world.playSound(null, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 1.0F, world.rand.nextFloat() * 0.1F + 0.9F);
 	}
-	
+
 	public BlockRealisticTorch setLit(boolean lit) {
 		isLit = lit;
 		return this;

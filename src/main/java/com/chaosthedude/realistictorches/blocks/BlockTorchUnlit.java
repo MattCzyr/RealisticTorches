@@ -34,17 +34,17 @@ public class BlockTorchUnlit extends BlockRealisticTorch {
 		}
 
 		final EnumFacing facing = state.getValue(FACING);
-		final double d0 = (double) pos.getX() + 0.5D;
-		final double d1 = (double) pos.getY() + 0.7D;
-		final double d2 = (double) pos.getZ() + 0.5D;
-		final double d3 = 0.22D;
-		final double d4 = 0.27D;
+		final double x = (double) pos.getX() + 0.5D;
+		final double y = (double) pos.getY() + 0.7D;
+		final double z = (double) pos.getZ() + 0.5D;
+		final double mod1 = 0.22D;
+		final double mod2 = 0.27D;
 
 		if (facing.getAxis().isHorizontal()) {
 			final EnumFacing opposite = facing.getOpposite();
-			world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0 + d4 * (double) opposite.getFrontOffsetX(), d1 + d3, d2 + d4 * (double) opposite.getFrontOffsetZ(), 0.0D, 0.0D, 0.0D, new int[0]);
+			world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, x + mod2 * (double) opposite.getFrontOffsetX(), y + mod1, z + mod2 * (double) opposite.getFrontOffsetZ(), 0.0D, 0.0D, 0.0D);
 		} else {
-			world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0, d1, d2, 0.0D, 0.0D, 0.0D, new int[0]);
+			world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, x, y, z, 0.0D, 0.0D, 0.0D);
 		}
 	}
 

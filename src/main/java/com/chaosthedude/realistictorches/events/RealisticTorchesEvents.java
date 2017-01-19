@@ -16,10 +16,11 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 
 public class RealisticTorchesEvents {
-	
+
 	@SubscribeEvent(priority = EventPriority.LOW, receiveCanceled = true)
 	public void movingLightHandler(PlayerTickEvent event) {
-		if (!ConfigHandler.handheldLightEnabled || event.phase != TickEvent.Phase.START || event.player.worldObj.isRemote || event.player.getHeldEquipment() == null || !LightSourceHandler.containsLightSource(event.player.getHeldEquipment())) {
+		if (!ConfigHandler.handheldLightEnabled || event.phase != TickEvent.Phase.START || event.player.worldObj.isRemote || event.player.getHeldEquipment() == null
+				|| !LightSourceHandler.containsLightSource(event.player.getHeldEquipment())) {
 			return;
 		}
 
@@ -40,7 +41,7 @@ public class RealisticTorchesEvents {
 			event.getDrops().clear();
 			event.setDropChance(1.0F);
 			event.getDrops().add(new ItemStack(RealisticTorchesBlocks.torchUnlit));
-	 	 }
+		}
 	}
 
 }

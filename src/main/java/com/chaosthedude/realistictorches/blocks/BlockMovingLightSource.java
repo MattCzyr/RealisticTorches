@@ -28,7 +28,7 @@ public class BlockMovingLightSource extends BlockAir implements ITileEntityProvi
 		setUnlocalizedName(RealisticTorches.MODID + "." + NAME);
 		setLightLevel(0.9F);
 	}
-	
+
 	@Override
 	public boolean isReplaceable(IBlockAccess world, BlockPos pos) {
 		return false;
