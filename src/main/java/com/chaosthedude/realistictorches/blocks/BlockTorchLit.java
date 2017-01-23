@@ -45,10 +45,12 @@ public class BlockTorchLit extends BlockRealisticTorch {
 
 	@Override
 	public void onBlockAdded(World world, BlockPos pos, IBlockState state) {
-		if (world.isRainingAt(pos)) {
-			extinguish(world, pos, true);
-		} else if (ConfigHandler.torchBurnout > 0) {
-			world.scheduleUpdate(pos, this, (int) (ConfigHandler.torchBurnout * 0.9));
+		if (canBurnout()) {
+			if (world.isRainingAt(pos)) {
+				extinguish(world, pos, true);
+			} else {
+				world.scheduleUpdate(pos, this, (int) (ConfigHandler.torchBurnout * 0.9));
+			}
 		}
 	}
 

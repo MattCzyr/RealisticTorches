@@ -45,7 +45,7 @@ public class BlockRealisticTorch extends BlockTorch {
 	}
 
 	public void updateTorch(World world, BlockPos pos) {
-		if (world.isRainingAt(pos) && isLit()) {
+		if (canBurnout() && world.isRainingAt(pos) && isLit()) {
 			world.setBlockState(pos, getState(world, pos, RealisticTorchesBlocks.torchUnlit), 2);
 		}
 	}
@@ -69,6 +69,10 @@ public class BlockRealisticTorch extends BlockTorch {
 
 	public boolean isLit() {
 		return isLit;
+	}
+	
+	public boolean canBurnout() {
+		return ConfigHandler.torchBurnout > 0;
 	}
 
 }
