@@ -35,7 +35,7 @@ public class BlockTorchLit extends BlockRealisticTorch {
 		if (player.getHeldItem(hand).getItem() == RealisticTorchesItems.glowstonePaste) {
 			world.setBlockState(pos, getState(world, pos, (BlockTorch) Blocks.TORCH));
 			if (!player.isCreative()) {
-				player.getHeldItem(hand).func_190918_g(1);
+				player.getHeldItem(hand).shrink(1);
 			}
 			return true;
 		}

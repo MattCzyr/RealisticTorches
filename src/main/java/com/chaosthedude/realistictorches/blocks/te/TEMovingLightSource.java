@@ -24,9 +24,9 @@ public class TEMovingLightSource extends TileEntity implements ITickable {
 
 	@Override
 	public void update() {
-		if (shouldKill() && worldObj.getBlockState(pos).getBlock() instanceof BlockMovingLightSource) {
-			worldObj.setBlockToAir(pos);
-			worldObj.removeTileEntity(pos);
+		if (shouldKill() && world.getBlockState(pos).getBlock() instanceof BlockMovingLightSource) {
+			world.setBlockToAir(pos);
+			world.removeTileEntity(pos);
 		}
 	}
 
@@ -66,10 +66,10 @@ public class TEMovingLightSource extends TileEntity implements ITickable {
 	@Nullable
 	public EntityPlayer findLightSourceCreator() {
 		if (playerUUID != null) {
-			return worldObj.getPlayerEntityByUUID(playerUUID);
+			return world.getPlayerEntityByUUID(playerUUID);
 		}
 
-		return worldObj.getClosestPlayer(pos.getX(), pos.getY(), pos.getZ(), 2.0D, false);
+		return world.getClosestPlayer(pos.getX(), pos.getY(), pos.getZ(), 2.0D, false);
 	}
 
 }

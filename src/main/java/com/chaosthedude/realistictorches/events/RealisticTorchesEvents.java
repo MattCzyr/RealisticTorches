@@ -19,19 +19,19 @@ public class RealisticTorchesEvents {
 
 	@SubscribeEvent(priority = EventPriority.LOW, receiveCanceled = true)
 	public void movingLightHandler(PlayerTickEvent event) {
-		if (!ConfigHandler.handheldLightEnabled || event.phase != TickEvent.Phase.START || event.player.worldObj.isRemote || event.player.getHeldEquipment() == null
+		if (!ConfigHandler.handheldLightEnabled || event.phase != TickEvent.Phase.START || event.player.world.isRemote || event.player.getHeldEquipment() == null
 				|| !LightSourceHandler.containsLightSource(event.player.getHeldEquipment())) {
 			return;
 		}
 
-		final int blockX = MathHelper.floor_double(event.player.posX);
-		final int blockY = MathHelper.floor_double(event.player.posY - 0.2D - event.player.getYOffset());
-		final int blockZ = MathHelper.floor_double(event.player.posZ);
+		final int blockX = MathHelper.floor(event.player.posX);
+		final int blockY = MathHelper.floor(event.player.posY - 0.2D - event.player.getYOffset());
+		final int blockZ = MathHelper.floor(event.player.posZ);
 		final BlockPos pos = new BlockPos(blockX, blockY + 1, blockZ);
 
-		if (event.player.worldObj.isAirBlock(pos)) {
+		if (event.player.world.isAirBlock(pos)) {
 			final BlockMovingLightSource lightSource = RealisticTorchesBlocks.movingLightSource;
-			event.player.worldObj.setBlockState(pos, lightSource.setPlayer(event.player).getDefaultState());
+			event.player.world.setBlockState(pos, lightSource.setPlayer(event.player).getDefaultState());
 		}
 	}
 

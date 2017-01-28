@@ -54,7 +54,7 @@ public class LightSourceHandler {
 	public static boolean containsLightSource(Iterable<ItemStack> items) {
 		if (items != null) {
 			for (ItemStack stack : items) {
-				if (!stack.func_190926_b() && isLightSource(stack.getItem())) {
+				if (!stack.isEmpty() && isLightSource(stack.getItem())) {
 					return true;
 				}
 			}

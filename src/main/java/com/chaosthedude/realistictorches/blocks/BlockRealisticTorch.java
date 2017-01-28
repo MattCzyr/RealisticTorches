@@ -30,7 +30,7 @@ public class BlockRealisticTorch extends BlockTorch {
 
 	public boolean lightTorch(World world, BlockPos pos, EntityPlayer player, ItemStack heldItem) {
 		if (world.getBlockState(pos).getBlock() instanceof BlockRealisticTorch) {
-			if (!heldItem.func_190926_b() && (heldItem.getItem() == Items.FLINT_AND_STEEL || (ConfigHandler.matchboxCreatesFire && heldItem.getItem() == RealisticTorchesItems.matchbox)) && (!ConfigHandler.noRelightEnabled || !isLit())) {
+			if (!heldItem.isEmpty() && (heldItem.getItem() == Items.FLINT_AND_STEEL || (ConfigHandler.matchboxCreatesFire && heldItem.getItem() == RealisticTorchesItems.matchbox)) && (!ConfigHandler.noRelightEnabled || !isLit())) {
 				heldItem.damageItem(1, player);
 				playIgniteSound(world, pos);
 				if (!world.isRainingAt(pos)) {
