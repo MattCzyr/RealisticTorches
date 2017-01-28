@@ -34,7 +34,7 @@ public class RecipeHandler {
 		GameRegistry.addShapedRecipe(new ItemStack(RealisticTorchesItems.glowstoneCrystal, 1), " G ", "GCG", " G ", 'G', Items.GLOWSTONE_DUST, 'C', Items.COAL);
 		GameRegistry.addShapedRecipe(new ItemStack(RealisticTorchesItems.glowstoneCrystal, 1), " G ", "GCG", " G ", 'G', Items.GLOWSTONE_DUST, 'C', new ItemStack(Items.COAL, 1, 1));
 
-		GameRegistry.addShapelessRecipe(new ItemStack(RealisticTorchesItems.glowstonePaste, 4), Items.GLOWSTONE_DUST, Items.SUGAR, Items.WATER_BUCKET);
+		GameRegistry.addShapelessRecipe(new ItemStack(RealisticTorchesItems.glowstonePaste), Items.GLOWSTONE_DUST, Items.CLAY_BALL, Items.WATER_BUCKET);
 
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(RealisticTorchesItems.matchbox, 1), "PPP", "SSS", 'P', Items.PAPER, 'S', "slabWood"));
 	}
