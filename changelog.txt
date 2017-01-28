@@ -1,4 +1,19 @@
 ---------------------------------------------
+ VERSION 2.1.0 - 1.11.2, 1.11
+---------------------------------------------
+1.11.2, 1.11:
+  FEATURES:
+  - Added Glowstone Paste item as an alternative means of creating vanilla torches
+  - Added "recipes to remove" config field to replace toggleable "remove recipes" field
+  FIXES:
+  - Fixed Matchbox localization
+  - Fixed vanilla torch recipe output resulting in only one torch
+1.11.2:
+  UPDATES:
+  - Updated to MC 1.11.2 (Forge #2226)
+
+
+---------------------------------------------
  VERSION 2.0.0 - 1.11
 ---------------------------------------------
 1.11:
