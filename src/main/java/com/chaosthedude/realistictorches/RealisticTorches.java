@@ -40,13 +40,13 @@ public class RealisticTorches {
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
+		ConfigHandler.loadConfig(event.getSuggestedConfigurationFile());
+		ConfigHandler.printConfigInfo();
+		
 		RealisticTorchesBlocks.register();
 		RealisticTorchesItems.register();
 
 		proxy.registerModels();
-
-		ConfigHandler.loadConfig(event.getSuggestedConfigurationFile());
-		ConfigHandler.printConfigInfo();
 
 		GameRegistry.registerWorldGenerator(new TorchGenerator(), 0);
 	}
