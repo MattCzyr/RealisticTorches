@@ -1,0 +1,19 @@
+{
+  "result": {
+    "item": "minecraft:torch",
+    "count": 4
+  },
+  "pattern": [
+    "G",
+    "S"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "S": {
+      "item": "minecraft:stick"
+    },
+    "G": {
+      "item": "realistictorches:glowstone_crystal"
+    }
+  }
+}

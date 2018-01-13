@@ -13,8 +13,6 @@ import com.chaosthedude.realistictorches.proxy.CommonProxy;
 import com.chaosthedude.realistictorches.worldgen.TorchGenerator;
 
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -25,7 +23,7 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-@Mod(modid = RealisticTorches.MODID, name = RealisticTorches.NAME, version = RealisticTorches.VERSION, acceptedMinecraftVersions = "[1.11.2]")
+@Mod(modid = RealisticTorches.MODID, name = RealisticTorches.NAME, version = RealisticTorches.VERSION, acceptedMinecraftVersions = "[1.12.2]")
 
 public class RealisticTorches {
 
@@ -42,6 +40,7 @@ public class RealisticTorches {
 	public void preInit(FMLPreInitializationEvent event) {
 		RealisticTorchesBlocks.register();
 		RealisticTorchesItems.register();
+		RecipeHandler.registerOres();
 
 		proxy.registerModels();
 
@@ -54,16 +53,12 @@ public class RealisticTorches {
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
 		RecipeHandler.removeRecipe(new ItemStack(Blocks.TORCH));
-		RecipeHandler.registerRecipes();
-
 		MinecraftForge.EVENT_BUS.register(new RealisticTorchesEvents());
 	}
 
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
 		RecipeHandler.removeRecipes();
-		RecipeHandler.registerVanillaRecipes();
-
 		LightSourceHandler.registerLightSources();
 	}
 

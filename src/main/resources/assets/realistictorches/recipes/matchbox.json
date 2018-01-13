@@ -1,0 +1,14 @@
+{
+  "result": {
+    "item": "realistictorches:matchbox"
+  },
+  "ingredients": [
+    {
+      "item": "realistictorches:matchbox"
+    },
+    {
+      "item": "realistictorches:matchbox"
+    }
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

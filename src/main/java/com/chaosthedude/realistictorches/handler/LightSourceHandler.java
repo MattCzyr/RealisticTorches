@@ -10,7 +10,8 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.registry.GameData;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class LightSourceHandler {
 
@@ -20,7 +21,9 @@ public class LightSourceHandler {
 		int lightSourceBlocks = 0;
 		if (ConfigHandler.registerLightSourceBlocks) {
 			for (Block block : Block.REGISTRY) {
-				if (block.getLightValue(block.getDefaultState()) > ConfigHandler.lightSourceRegistryThreshold) {
+				// NOTE: Oddly while this function takes three parameters to make it "position aware", the last two are
+				//       not used...
+				if (block.getLightValue(block.getDefaultState(), null, null) > ConfigHandler.lightSourceRegistryThreshold) {
 					lightSources.add(Item.getItemFromBlock(block));
 					lightSourceBlocks++;
 				}

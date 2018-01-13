@@ -1,0 +1,15 @@
+{
+  "result": {
+    "item": "realistictorches:torch_lit"
+  },
+  "ingredients": [
+    {
+      "item": "realistictorches:torch_unlit"
+    },
+    {
+      "item": "realistictorches:matchbox",
+      "data": 32767
+    }
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

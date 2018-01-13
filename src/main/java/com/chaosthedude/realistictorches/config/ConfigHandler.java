@@ -17,6 +17,7 @@ public class ConfigHandler {
 	public static int torchBurnout = 72000;
 	public static int matchboxDurability = 64;
 	public static int lightSourceRegistryThreshold = 1;
+	public static int handheldLightRecalcTicks = 20;
 
 	public static boolean handheldLightEnabled = true;
 	public static boolean unlitParticlesEnabled = false;
@@ -65,6 +66,10 @@ public class ConfigHandler {
 
 		comment = "Set this to false to disable certain blocks and items emitting light when held.";
 		handheldLightEnabled = loadBool("handheldLight.enabled", comment, handheldLightEnabled);
+
+		comment = "Set to the number of ticks between which handheld lights should cause lighting updated. Lower values cause more updates and more choppy frames";
+		handheldLightRecalcTicks = loadInt("handheldLight.recalcTicks", comment, handheldLightRecalcTicks);
+		if(handheldLightRecalcTicks < 1) handheldLightRecalcTicks = 1;
 
 		comment = "Set this to true to enable unlit torch particles.";
 		unlitParticlesEnabled = loadBool("unlitTorch.particles", comment, unlitParticlesEnabled);

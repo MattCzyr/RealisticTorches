@@ -29,7 +29,10 @@ public class RealisticTorchesEvents {
 		final int blockZ = MathHelper.floor(event.player.posZ);
 		final BlockPos pos = new BlockPos(blockX, blockY + 1, blockZ);
 
-		if (event.player.world.isAirBlock(pos)) {
+		if (event.player.world.isAirBlock(pos)
+				&& !(event.player.world.getBlockState(pos).getBlock() instanceof BlockMovingLightSource)
+				&& event.player.world.getTotalWorldTime() % ConfigHandler.handheldLightRecalcTicks == 0) {
+
 			final BlockMovingLightSource lightSource = RealisticTorchesBlocks.movingLightSource;
 			event.player.world.setBlockState(pos, lightSource.setPlayer(event.player).getDefaultState());
 		}

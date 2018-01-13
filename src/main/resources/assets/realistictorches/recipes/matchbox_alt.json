@@ -1,0 +1,19 @@
+{
+  "result": {
+    "item": "realistictorches:matchbox"
+  },
+  "pattern": [
+    "PPP",
+    "SSS"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "P": {
+      "item": "minecraft:paper"
+    },
+    "S": {
+      "item": "minecraft:wooden_slab",
+      "data": 32767
+    }
+  }
+}
