@@ -21,9 +21,7 @@ public class LightSourceHandler {
 		int lightSourceBlocks = 0;
 		if (ConfigHandler.registerLightSourceBlocks) {
 			for (Block block : Block.REGISTRY) {
-				// NOTE: Oddly while this function takes three parameters to make it "position aware", the last two are
-				//       not used...
-				if (block.getLightValue(block.getDefaultState(), null, null) > ConfigHandler.lightSourceRegistryThreshold) {
+				if (block.getLightValue(block.getDefaultState()) > ConfigHandler.lightSourceRegistryThreshold) {
 					lightSources.add(Item.getItemFromBlock(block));
 					lightSourceBlocks++;
 				}
