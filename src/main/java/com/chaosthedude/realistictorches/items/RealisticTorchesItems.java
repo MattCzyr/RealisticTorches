@@ -7,7 +7,7 @@ import com.chaosthedude.realistictorches.RealisticTorches;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 public class RealisticTorchesItems {
 
@@ -26,7 +26,7 @@ public class RealisticTorchesItems {
 	protected static <T extends Item> T registerItem(T itemType, String name) {
 		T item = itemType;
 		item.setRegistryName(name);
-		GameRegistry.register(item);
+		ForgeRegistries.ITEMS.register(item);
 		REGISTRY.add(item);
 
 		return item;

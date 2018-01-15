@@ -1,0 +1,20 @@
+{
+  "result": {
+    "item": "realistictorches:torch_unlit",
+    "count": 4
+  },
+  "pattern": [
+    "C",
+    "S"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "C": {
+      "item": "minecraft:coal",
+      "data": 0
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  }
+}

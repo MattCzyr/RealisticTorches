@@ -1,0 +1,23 @@
+{
+  "conditions": [{
+    "type": "minecraft:item_exists",
+    "item": "mineFactoryReloaded:sugarcharcoal"
+  }],
+  "result": {
+    "item": "realistictorches:glowstone_crystal"
+  },
+  "pattern": [
+    " G ",
+    "GCG",
+    " G "
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "C": {
+      "item": "mineFactoryReloaded:sugarcharcoal"
+    },
+    "G": {
+      "item": "minecraft:glowstone_dust"
+    }
+  }
+}

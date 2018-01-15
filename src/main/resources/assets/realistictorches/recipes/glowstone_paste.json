@@ -1,0 +1,17 @@
+{
+  "result": {
+    "item": "realistictorches:glowstone_paste"
+  },
+  "ingredients": [
+    {
+      "item": "minecraft:glowstone_dust"
+    },
+    {
+      "item": "minecraft:clay_ball"
+    },
+    {
+      "item": "minecraft:water_bucket"
+    }
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

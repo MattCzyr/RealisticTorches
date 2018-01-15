@@ -1,0 +1,14 @@
+{
+  "result": {
+    "item": "minecraft:torch"
+  },
+  "ingredients": [
+    {
+      "item": "realistictorches:torch_smoldering"
+    },
+    {
+      "item": "realistictorches:glowstone_paste"
+    }
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

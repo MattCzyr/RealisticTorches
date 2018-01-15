@@ -7,6 +7,7 @@ import com.chaosthedude.realistictorches.blocks.te.TEMovingLightSource;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class RealisticTorchesBlocks {
@@ -30,8 +31,8 @@ public class RealisticTorchesBlocks {
 	protected static <T extends Block> T registerBlock(T blockType, String name) {
 		T block = blockType;
 		block.setRegistryName(name);
-		GameRegistry.register(block);
-		GameRegistry.register(new ItemBlock(block).setRegistryName(name));
+		ForgeRegistries.BLOCKS.register(block);
+		ForgeRegistries.ITEMS.register(new ItemBlock(block).setRegistryName(name));
 		REGISTRY.add(block);
 
 		return block;
