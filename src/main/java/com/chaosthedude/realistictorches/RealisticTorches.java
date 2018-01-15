@@ -52,7 +52,6 @@ public class RealisticTorches {
 
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
-		RecipeHandler.removeRecipe(new ItemStack(Blocks.TORCH));
 		MinecraftForge.EVENT_BUS.register(new RealisticTorchesEvents());
 	}
 

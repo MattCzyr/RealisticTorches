@@ -33,7 +33,7 @@ public class RecipeHandler {
 		int recipeCount = 0;
 		for (IRecipe currentRecipe: ForgeRegistries.RECIPES) {
 			final ItemStack output = currentRecipe.getRecipeOutput();
-			if (output != null && output.getItem() == s.getItem()) {
+			if (output != null && output.getItem() == s.getItem() && !currentRecipe.getRegistryName().toString().contains(RealisticTorches.MODID)) {
 				// Per http://www.minecraftforge.net/forum/topic/59153-112-removing-vanilla-recipes/#comment-274722
 				// it is recommended to replace recipes with a "null recipe" rather than removing them.
 				ForgeRegistries.RECIPES.register(new NullReplacementRecipe(currentRecipe));
