@@ -25,8 +25,7 @@ public class TEMovingLightSource extends TileEntity implements ITickable {
 
 	@Override
 	public void update() {
-		// PERF: Moving light sources are *expensive* to recalculate, so don't do it every tick...
-		if(world.getTotalWorldTime() % ConfigHandler.handheldLightRecalcTicks == 0) {
+		if(world.getTotalWorldTime() % ConfigHandler.handheldLightUpdateTicks == 0) {
 			if (shouldKill() && world.getBlockState(pos).getBlock() instanceof BlockMovingLightSource) {
 				world.setBlockToAir(pos);
 				world.removeTileEntity(pos);
