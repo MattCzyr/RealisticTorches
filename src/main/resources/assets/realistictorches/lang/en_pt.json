@@ -1,0 +1,12 @@
+{
+    "_comment": "Realistic Torches - Language File",
+    "_comment": "PIRATE - ENGLISH",
+
+    "_comment": "BLOCKS",
+    "block.realistictorches.torch": "Rod o' Flames",
+
+    "_comment": "ITEMS",
+    "item.realistictorches.matchbox": "Ye Box o' Fire Sticks",
+    "item.realistictorches.glowstone_crystal": "Lightgem",
+    "item.realistictorches.glowstone_paste": "Glowin' Goo"
+}

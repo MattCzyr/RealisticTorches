@@ -1,0 +1,12 @@
+{
+    "_comment": "Realistic Torches - Language File",
+    "_comment": "JAPAN - JAPANESE",
+
+    "_comment": "BLOCKS",
+    "block.realistictorches.torch": "点灯トーチ",
+
+    "_comment": "ITEMS",
+    "item.realistictorches.matchbox": "マッチボックス",
+    "item.realistictorches.glowstone_crystal": "グロウストーン クリスタル",
+    "item.realistictorches.glowstone_paste": "グロウストーン ペースト"
+}

@@ -1,0 +1,12 @@
+{
+    "_comment": "Realistic Torches - Language File",
+    "_comment": "ITALY - ITALIAN",
+
+    "_comment": "BLOCKS",
+    "block.realistictorches.torch": "Torcia",
+
+    "_comment": "ITEMS",
+    "item.realistictorches.matchbox": "Scatola per fiammiferi",
+    "item.realistictorches.glowstone_crystal": "Pietraluce Cristallo",
+    "item.realistictorches.glowstone_paste": "Pietraluce Colla"
+}

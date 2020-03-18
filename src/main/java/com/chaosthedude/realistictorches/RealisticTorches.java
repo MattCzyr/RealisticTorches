@@ -3,62 +3,41 @@ package com.chaosthedude.realistictorches;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.chaosthedude.realistictorches.blocks.RealisticTorchesBlocks;
 import com.chaosthedude.realistictorches.config.ConfigHandler;
-import com.chaosthedude.realistictorches.events.RealisticTorchesEvents;
-import com.chaosthedude.realistictorches.handler.LightSourceHandler;
-import com.chaosthedude.realistictorches.handler.RecipeHandler;
-import com.chaosthedude.realistictorches.items.RealisticTorchesItems;
-import com.chaosthedude.realistictorches.proxy.CommonProxy;
-import com.chaosthedude.realistictorches.worldgen.TorchGenerator;
+import com.chaosthedude.realistictorches.worldgen.TorchFeature;
 
-import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.gen.GenerationStage;
+import net.minecraft.world.gen.feature.ConfiguredFeature;
+import net.minecraft.world.gen.feature.IFeatureConfig;
+import net.minecraft.world.gen.feature.NoFeatureConfig;
+import net.minecraft.world.gen.placement.IPlacementConfig;
+import net.minecraft.world.gen.placement.Placement;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.FMLPaths;
+import net.minecraftforge.registries.ForgeRegistries;
 
-@Mod(modid = RealisticTorches.MODID, name = RealisticTorches.NAME, version = RealisticTorches.VERSION, acceptedMinecraftVersions = "[1.12.2]")
-
+@Mod(RealisticTorches.MODID)
 public class RealisticTorches {
 
-	public static final String MODID = "realistictorches";
-	public static final String NAME = "Realistic Torches";
-	public static final String VERSION = "2.1.1";
+    public static final Logger LOGGER = LogManager.getLogger();
+    public static final String MODID = "realistictorches";
 
-	public static final Logger logger = LogManager.getLogger(MODID);
+    public RealisticTorches() {
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ConfigHandler.COMMON_CONFIG);
+        ConfigHandler.loadConfig(ConfigHandler.COMMON_CONFIG, FMLPaths.CONFIGDIR.get().resolve("realistictorches.toml"));
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
+        MinecraftForge.EVENT_BUS.register(this);
+    }
 
-	@SidedProxy(clientSide = "com.chaosthedude.realistictorches.proxy.ClientProxy", serverSide = "com.chaosthedude.realistictorches.proxy.CommonProxy")
-	public static CommonProxy proxy;
-
-	@EventHandler
-	public void preInit(FMLPreInitializationEvent event) {
-		RealisticTorchesBlocks.register();
-		RealisticTorchesItems.register();
-		RecipeHandler.registerOres();
-
-		proxy.registerModels();
-
-		ConfigHandler.loadConfig(event.getSuggestedConfigurationFile());
-		ConfigHandler.printConfigInfo();
-
-		GameRegistry.registerWorldGenerator(new TorchGenerator(), 0);
-	}
-
-	@EventHandler
-	public void init(FMLInitializationEvent event) {
-		MinecraftForge.EVENT_BUS.register(new RealisticTorchesEvents());
-	}
-
-	@EventHandler
-	public void postInit(FMLPostInitializationEvent event) {
-		RecipeHandler.removeRecipes();
-		LightSourceHandler.registerLightSources();
-	}
+    public void setup(final FMLCommonSetupEvent event) {
+        ConfiguredFeature<?> torchFeature = Biome.createDecoratedFeature(new TorchFeature(NoFeatureConfig::deserialize), IFeatureConfig.NO_FEATURE_CONFIG, Placement.NOPE , IPlacementConfig.NO_PLACEMENT_CONFIG);
+        ForgeRegistries.BIOMES.forEach(biome -> biome.addFeature(GenerationStage.Decoration.TOP_LAYER_MODIFICATION, torchFeature));
+    }
 
 }

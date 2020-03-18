@@ -1,0 +1,11 @@
+{
+    "_comment": "Realistic Torches - Language File",
+    "_comment": "FRANCE - FRENCH",
+
+    "_comment": "BLOCKS",
+    "block.realistictorches.torch": "Torche allumé",
+
+    "_comment": "ITEMS",
+    "item.realistictorches.matchbox": "Boîte d'allumettes",
+    "item.realistictorches.glowstone_crystal": "Pierre lumineuse colle"
+}

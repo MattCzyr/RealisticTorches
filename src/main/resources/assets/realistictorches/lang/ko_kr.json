@@ -1,0 +1,12 @@
+{
+    "_comment": "Realistic Torches - Language File",
+    "_comment": "KOREA - KOREAN",
+
+    "_comment": "BLOCKS",
+    "block.realistictorches.torch": "조명 토치",
+
+    "_comment": "ITEMS",
+    "item.realistictorches.matchbox": "성냥갑",
+    "item.realistictorches.glowstone_crystal": "발광석 결정",
+    "item.realistictorches.glowstone_paste": "발광석 반죽"
+}

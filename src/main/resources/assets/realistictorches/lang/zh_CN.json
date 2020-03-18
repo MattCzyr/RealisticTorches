@@ -1,0 +1,12 @@
+{
+    "_comment": "Realistic Torches - Language File",
+    "_comment": "CHINA - SIMPLIFIED CHINESE",
+
+    "_comment": "BLOCKS",
+    "block.realistictorches.torch": "点燃火炬",
+
+    "_comment": "ITEMS",
+    "item.realistictorches.matchbox": "火柴盒",
+    "item.realistictorches.glowstone_crystal": "荧石水晶",
+    "item.realistictorches.glowstone_paste": "辉光石膏"
+}

@@ -1,0 +1,12 @@
+{
+    "_comment": "Realistic Torches - Language File",
+    "_comment": "POLAND - POLISH",
+
+    "_comment": "BLOCKS",
+    "block.realistictorches.torch": "Płonąca Pochodnia",
+
+    "_comment": "ITEMS",
+    "item.realistictorches.matchbox": "Pudełko Zapałek",
+    "item.realistictorches.glowstone_crystal": "Kryształ Jasnogłazu",
+    "item.realistictorches.glowstone_paste": "Kryształ Papka"
+}

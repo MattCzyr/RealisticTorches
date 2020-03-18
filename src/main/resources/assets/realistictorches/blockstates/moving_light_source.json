@@ -1,6 +1,0 @@
-{
-    "variants": {
-        "inventory": { "model": "realistictorches:moving_light_source", "transform": "forge:default-block" },      
-        "normal": { "model": "realistictorches:moving_light_source" }
-    }
-}

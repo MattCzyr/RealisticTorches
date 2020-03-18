@@ -1,0 +1,12 @@
+{
+    "_comment": "Realistic Torches - Language File",
+    "_comment": "GERMANY - GERMAN",
+
+    "_comment": "BLOCKS",
+    "block.realistictorches.torch": "Fackel",
+
+    "_comment": "ITEMS",
+    "item.realistictorches.matchbox": "Zündholzschachtel",
+    "item.realistictorches.glowstone_crystal": "Glowstonekristall",
+    "item.realistictorches.glowstone_paste": "Glowstonekleister"
+}

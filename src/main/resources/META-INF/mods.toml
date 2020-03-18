@@ -1,0 +1,24 @@
+modLoader="javafml"
+loaderVersion="[28,)"
+issueTrackerURL="https://github.com/MattCzyr/RealisticTorches/issues"
+[[mods]]
+    modId="realistictorches"
+    version="${file.jarVersion}"
+    displayName="Realistic Torches"
+    displayURL="https://www.curseforge.com/minecraft/mc-mods/realistic-torches"
+    authors="ChaosTheDude"
+    description='''
+    Increases the difficulty of the early game by adding realism mechanics to torches.
+    '''
+[[dependencies.realistictorches]]
+    modId="forge"
+    mandatory=true
+    versionRange="[28,)"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.realistictorches]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.14.4]"
+    ordering="NONE"
+    side="BOTH"

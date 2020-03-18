@@ -1,0 +1,7 @@
+{
+    "variants": {
+        "litstate=2": { "model": "realistictorches:block/torch_lit" },
+        "litstate=1": { "model": "realistictorches:block/torch_smoldering"},
+        "litstate=0": { "model": "realistictorches:block/torch_unlit"}
+    }
+}

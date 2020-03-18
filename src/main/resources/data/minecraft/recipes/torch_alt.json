@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "realistictorches:torch"
+    },
+    {
+      "item": "realistictorches:glowstone_paste"
+    }
+  ],
+  "result": {
+    "item": "minecraft:torch"
+  }
+}

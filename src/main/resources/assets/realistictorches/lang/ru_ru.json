@@ -1,0 +1,12 @@
+{
+    "_comment": "Realistic Torches - Language File",
+    "_comment": "RUSSIA - RUSSIAN",
+
+    "_comment": "BLOCKS",
+    "block.realistictorches.torch": "Горящий факел",
+
+    "_comment": "ITEMS",
+    "item.realistictorches.matchbox": "Коробка спичек",
+    "item.realistictorches.glowstone_crystal": "Кристалл светокамня",
+    "item.realistictorches.glowstone_paste": "Паста из светокамня"
+}

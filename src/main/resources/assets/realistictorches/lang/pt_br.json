@@ -1,0 +1,12 @@
+{
+    "_comment": "Realistic Torches - Language File",
+    "_comment": "BRAZIL - PORTUGEUSE",
+
+    "_comment": "BLOCKS",
+    "block.realistictorches.torch": "Tocha Iluminada",
+
+    "_comment": "ITEMS",
+    "item.realistictorches.matchbox": "Caixa de Fósforo",
+    "item.realistictorches.glowstone_crystal": "Cristal de Pedra Luminosa",
+    "item.realistictorches.glowstone_paste": "Lodo de Pedra Luminosa"
+}
