@@ -26,20 +26,19 @@ public class TorchFeature extends Feature<NoFeatureConfig> {
 
     @Override
     public boolean place(IWorld world, ChunkGenerator<? extends GenerationSettings> generator, Random rand, BlockPos pos, NoFeatureConfig config) {
-        BlockPos.MutableBlockPos mutablePos = new BlockPos.MutableBlockPos();
         int startX = pos.getX();
         int startZ = pos.getZ();
         if (ConfigHandler.generateLitTorches.get()) {
             for (int x = 0; x < 16; x++) {
                 for (int y = 0; y < world.getMaxHeight(); y++) {
                     for (int z = 0; z < 16; z++) {
-                        mutablePos.setPos(startX + x, y, startZ + z);
-                        if (world.getBlockState(mutablePos).getBlock() == Blocks.TORCH) {
-                            world.setBlockState(mutablePos, RealisticTorchesBlocks.TORCH.getDefaultState().with(RealisticTorchBlock.getLitState(), RealisticTorchBlock.LIT).with(RealisticTorchBlock.getBurnTime(), RealisticTorchBlock.getInitialBurnTime()), 3);
-                            world.getPendingBlockTicks().scheduleTick(mutablePos, world.getBlockState(mutablePos).getBlock(), world.getBlockState(mutablePos).getBlock().tickRate(world));
-                        } else if (world.getBlockState(mutablePos).getBlock() == Blocks.WALL_TORCH) {
-                            world.setBlockState(mutablePos, RealisticTorchesBlocks.WALL_TORCH.getDefaultState().with(RealisticWallTorchBlock.getLitState(), RealisticTorchBlock.LIT).with(RealisticWallTorchBlock.getBurnTime(), RealisticWallTorchBlock.getInitialBurnTime()).with(BlockStateProperties.HORIZONTAL_FACING, world.getBlockState(mutablePos).get(BlockStateProperties.HORIZONTAL_FACING)), 3);
-                            world.getPendingBlockTicks().scheduleTick(mutablePos, world.getBlockState(mutablePos).getBlock(), world.getBlockState(mutablePos).getBlock().tickRate(world));
+                        BlockPos replacePos = new BlockPos(startX + x, y, startZ + z);
+                        if (world.getBlockState(replacePos).getBlock() == Blocks.TORCH) {
+                            world.setBlockState(replacePos, RealisticTorchesBlocks.TORCH.getDefaultState().with(RealisticTorchBlock.getLitState(), RealisticTorchBlock.LIT).with(RealisticTorchBlock.getBurnTime(), RealisticTorchBlock.getInitialBurnTime()), 3);
+                            world.getPendingBlockTicks().scheduleTick(replacePos, world.getBlockState(replacePos).getBlock(), world.getBlockState(replacePos).getBlock().tickRate(world));
+                        } else if (world.getBlockState(replacePos).getBlock() == Blocks.WALL_TORCH) {
+                            world.setBlockState(replacePos, RealisticTorchesBlocks.WALL_TORCH.getDefaultState().with(RealisticWallTorchBlock.getLitState(), RealisticTorchBlock.LIT).with(RealisticWallTorchBlock.getBurnTime(), RealisticWallTorchBlock.getInitialBurnTime()).with(BlockStateProperties.HORIZONTAL_FACING, world.getBlockState(replacePos).get(BlockStateProperties.HORIZONTAL_FACING)), 3);
+                            world.getPendingBlockTicks().scheduleTick(replacePos, world.getBlockState(replacePos).getBlock(), world.getBlockState(replacePos).getBlock().tickRate(world));
                         }
                     }
                 }

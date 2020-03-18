@@ -1,7 +1,14 @@
 ---------------------------------------------
- VERSION 3.0.0 - 1.14.4
+ VERSION 3.0.0 - 1.15.2, 1.14.4
 ---------------------------------------------
-1.12.2:
+1.15.2, 1.14.4:
+  FEATURES:
+  - Removed moving light sources and some config options that did not adapt well to newer versions of Minecraft
+  - Condensed the lit, smoldering, and unlit torch blocks into one single block (realistictorches:torch) with properties to determine its state
+1.15.2:
+  UPDATES:
+  - Updated to MC 1.15.2 (Forge 31.1.25)
+1.14.4:
   UPDATES:
   - Updated to MC 1.14.4 (Forge 28.2.3)
 

@@ -54,7 +54,6 @@ public class ConfigHandler {
 
         configData.load();
         spec.setConfig(configData);
-
     }
 
 }

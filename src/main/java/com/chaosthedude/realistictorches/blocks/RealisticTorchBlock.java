@@ -14,6 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
@@ -21,6 +22,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 
 public class RealisticTorchBlock extends TorchBlock {
 	
@@ -57,7 +59,7 @@ public class RealisticTorchBlock extends TorchBlock {
     }
 
     @Override
-    public boolean onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
     	if (player.getHeldItem(hand).getItem() == Items.FLINT_AND_STEEL ||
     			player.getHeldItem(hand).getItem() == RealisticTorchesItems.MATCHBOX) {
             playLightingSound(world, pos);
@@ -71,7 +73,7 @@ public class RealisticTorchBlock extends TorchBlock {
             } else {
                 changeToLit(world, pos, state);
             }
-            return true;
+            return ActionResultType.SUCCESS;
         }
         return super.onBlockActivated(state, world, pos, player, hand, hit);
     }
@@ -82,7 +84,7 @@ public class RealisticTorchBlock extends TorchBlock {
     }
 
     @Override
-    public void tick(BlockState state, World world, BlockPos pos, Random random) {
+    public void tick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         if (!world.isRemote() && initialBurnTime > 0 && state.get(LITSTATE) > UNLIT) {
         	if (world.isRainingAt(pos)) {
                 playExtinguishSound(world, pos);
