@@ -33,7 +33,7 @@ public class TorchFeature extends Feature<NoFeatureConfig> {
     }
 
     public static final Feature<NoFeatureConfig> TORCH_FEATURE = new TorchFeature(NoFeatureConfig.field_236558_a_);
-    public static final ConfiguredFeature<?, ?> TORCH_CONFIGURED_FEATURE = new TorchFeature(NoFeatureConfig.field_236558_a_).withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(Placement.NOPE.configure(IPlacementConfig.NO_PLACEMENT_CONFIG));
+    public static final ConfiguredFeature<?, ?> TORCH_CONFIGURED_FEATURE = TORCH_FEATURE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(Placement.NOPE.configure(IPlacementConfig.NO_PLACEMENT_CONFIG));
 
     @Override
     public boolean generate(ISeedReader world, ChunkGenerator generator, Random rand, BlockPos pos, NoFeatureConfig config) {
@@ -59,11 +59,6 @@ public class TorchFeature extends Feature<NoFeatureConfig> {
             }
         }
         return true;
-    }
-
-
-    public static ConfiguredFeature<?, ?> createAndRegisterConfiguredFeature(String name, ConfiguredFeature<?, ?> configuredFeature) {
-        return configuredFeature;
     }
 
     @Mod.EventBusSubscriber(modid = RealisticTorches.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
