@@ -29,6 +29,7 @@ import net.minecraft.world.World;
 public class RealisticWallTorchBlock extends RealisticTorchBlock {
 
 	public static final String NAME = "torch_wall";
+	public static final int TICK_RATE = 1200;
 
 	public static final DirectionProperty HORIZONTAL_FACING = HorizontalBlock.HORIZONTAL_FACING;
 
@@ -56,14 +57,14 @@ public class RealisticWallTorchBlock extends RealisticTorchBlock {
 	public void changeToLit(World world, BlockPos pos, BlockState state) {
 		world.setBlockState(pos, RealisticTorchesBlocks.WALL_TORCH.getDefaultState().with(LITSTATE, LIT)
 				.with(BURNTIME, initialBurnTime).with(HORIZONTAL_FACING, state.get(HORIZONTAL_FACING)));
-		world.getPendingBlockTicks().scheduleTick(pos, this, this.tickRate(world));
+		world.getPendingBlockTicks().scheduleTick(pos, this, TICK_RATE);
 	}
 
 	@Override
 	public void changeToSmoldering(World world, BlockPos pos, BlockState state, int newBurnTime) {
 		world.setBlockState(pos, RealisticTorchesBlocks.WALL_TORCH.getDefaultState().with(LITSTATE, SMOLDERING)
 				.with(BURNTIME, newBurnTime).with(HORIZONTAL_FACING, state.get(HORIZONTAL_FACING)));
-		world.getPendingBlockTicks().scheduleTick(pos, this, this.tickRate(world));
+		world.getPendingBlockTicks().scheduleTick(pos, this, TICK_RATE);
 	}
 
 	@Override
@@ -73,7 +74,7 @@ public class RealisticWallTorchBlock extends RealisticTorchBlock {
     	} else {
 			world.setBlockState(pos, RealisticTorchesBlocks.WALL_TORCH.getDefaultState().with(HORIZONTAL_FACING,
 					state.get(HORIZONTAL_FACING)));
-			world.getPendingBlockTicks().scheduleTick(pos, this, tickRate(world));
+			world.getPendingBlockTicks().scheduleTick(pos, this, TICK_RATE);
     	}
 	}
 
@@ -85,7 +86,7 @@ public class RealisticWallTorchBlock extends RealisticTorchBlock {
 
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-		return WallTorchBlock.func_220289_j(state);
+		return WallTorchBlock.getShapeForState(state);
 	}
 
 	@Override
