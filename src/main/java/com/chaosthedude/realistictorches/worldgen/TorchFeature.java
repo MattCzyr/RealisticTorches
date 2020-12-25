@@ -1,5 +1,6 @@
 package com.chaosthedude.realistictorches.worldgen;
 
+import com.chaosthedude.realistictorches.RealisticTorches;
 import com.chaosthedude.realistictorches.blocks.RealisticTorchBlock;
 import com.chaosthedude.realistictorches.blocks.RealisticTorchesBlocks;
 import com.chaosthedude.realistictorches.blocks.RealisticWallTorchBlock;
@@ -7,12 +8,21 @@ import com.chaosthedude.realistictorches.config.ConfigHandler;
 import com.mojang.serialization.Codec;
 import net.minecraft.block.Blocks;
 import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.WorldGenRegistries;
 import net.minecraft.world.ISeedReader;
-import net.minecraft.world.IWorld;
 import net.minecraft.world.gen.ChunkGenerator;
+import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.IFeatureConfig;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
+import net.minecraft.world.gen.placement.IPlacementConfig;
+import net.minecraft.world.gen.placement.Placement;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 
 import java.util.Random;
 
@@ -21,6 +31,9 @@ public class TorchFeature extends Feature<NoFeatureConfig> {
     public TorchFeature(Codec<NoFeatureConfig> config) {
         super(config);
     }
+
+    public static final Feature<NoFeatureConfig> TORCH_FEATURE = new TorchFeature(NoFeatureConfig.field_236558_a_);
+    public static final ConfiguredFeature<?, ?> TORCH_CONFIGURED_FEATURE = new TorchFeature(NoFeatureConfig.field_236558_a_).withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(Placement.NOPE.configure(IPlacementConfig.NO_PLACEMENT_CONFIG));
 
     @Override
     public boolean generate(ISeedReader world, ChunkGenerator generator, Random rand, BlockPos pos, NoFeatureConfig config) {
@@ -46,5 +59,20 @@ public class TorchFeature extends Feature<NoFeatureConfig> {
             }
         }
         return true;
+    }
+
+
+    public static ConfiguredFeature<?, ?> createAndRegisterConfiguredFeature(String name, ConfiguredFeature<?, ?> configuredFeature) {
+        return configuredFeature;
+    }
+
+    @Mod.EventBusSubscriber(modid = RealisticTorches.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
+    public static class ModEvents {
+
+        @SubscribeEvent
+        public static void registerFeatures(RegistryEvent.Register<Feature<?>> event) {
+            event.getRegistry().register(TORCH_FEATURE.setRegistryName(new ResourceLocation(RealisticTorches.MODID, "torch_feature")));
+            Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, new ResourceLocation(RealisticTorches.MODID, "torch_feature"), TORCH_CONFIGURED_FEATURE);
+        }
     }
 }

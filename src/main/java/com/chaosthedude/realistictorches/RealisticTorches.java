@@ -1,5 +1,6 @@
 package com.chaosthedude.realistictorches;
 
+import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import org.apache.logging.log4j.LogManager;
@@ -21,16 +22,15 @@ import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
-import net.minecraftforge.registries.ForgeRegistries;
 
 @Mod(RealisticTorches.MODID)
 public class RealisticTorches {
 
     public static final Logger LOGGER = LogManager.getLogger();
     public static final String MODID = "realistictorches";
+
 
     public RealisticTorches() {
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ConfigHandler.COMMON_CONFIG);
@@ -50,7 +50,7 @@ public class RealisticTorches {
 
         @SubscribeEvent
         public static void setup(final BiomeLoadingEvent event) {
-            event.getGeneration().withFeature(GenerationStage.Decoration.TOP_LAYER_MODIFICATION, new TorchFeature(NoFeatureConfig.field_236558_a_).withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(Placement.NOPE.configure(IPlacementConfig.NO_PLACEMENT_CONFIG)));
+            event.getGeneration().withFeature(GenerationStage.Decoration.TOP_LAYER_MODIFICATION, TorchFeature.TORCH_CONFIGURED_FEATURE);
         }
     }
 }
