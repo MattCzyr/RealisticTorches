@@ -3,10 +3,7 @@ package com.chaosthedude.realistictorches.items;
 import com.chaosthedude.realistictorches.config.ConfigHandler;
 
 import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.FireBlock;
-import net.minecraft.block.NetherPortalBlock;
+import net.minecraft.block.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
@@ -20,6 +17,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
+import net.minecraft.world.World;
 
 public class MatchboxItem extends Item {
 
@@ -35,58 +33,38 @@ public class MatchboxItem extends Item {
 			return ActionResultType.FAIL;
 		}
 
-		PlayerEntity player = context.getPlayer();
-		IWorld world = context.getWorld();
-		BlockPos pos = context.getPos();
-		BlockPos offsetPos = pos.offset(context.getFace());
-		if (canPlaceFire(world.getBlockState(offsetPos), world, offsetPos)) {
-			world.playSound(player, offsetPos, SoundEvents.ITEM_FLINTANDSTEEL_USE, SoundCategory.BLOCKS, 1.0F,
-					random.nextFloat() * 0.4F + 0.8F);
-			BlockState blockstate1 = ((FireBlock) Blocks.FIRE).getStateForPlacement(world, offsetPos);
-			world.setBlockState(offsetPos, blockstate1, 11);
-			ItemStack itemstack = context.getItem();
-			if (player instanceof ServerPlayerEntity) {
-				CriteriaTriggers.PLACED_BLOCK.trigger((ServerPlayerEntity) player, offsetPos, itemstack);
-				itemstack.damageItem(1, player, (p) -> {
-					p.sendBreakAnimation(context.getHand());
+		PlayerEntity playerentity = context.getPlayer();
+		World world = context.getWorld();
+		BlockPos blockpos = context.getPos();
+		BlockState blockstate = world.getBlockState(blockpos);
+		if (CampfireBlock.canBeLit(blockstate)) {
+			world.playSound(playerentity, blockpos, SoundEvents.ITEM_FLINTANDSTEEL_USE, SoundCategory.BLOCKS, 1.0F, random.nextFloat() * 0.4F + 0.8F);
+			world.setBlockState(blockpos, blockstate.with(BlockStateProperties.LIT, Boolean.TRUE), 11);
+			if (playerentity != null) {
+				context.getItem().damageItem(1, playerentity, (player) -> {
+					player.sendBreakAnimation(context.getHand());
 				});
 			}
 
-			return ActionResultType.SUCCESS;
+			return ActionResultType.func_233537_a_(world.isRemote());
 		} else {
-			BlockState blockstate = world.getBlockState(pos);
-			if (isUnlitCampfire(blockstate)) {
-				world.playSound(player, pos, SoundEvents.ITEM_FLINTANDSTEEL_USE, SoundCategory.BLOCKS, 1.0F,
-						random.nextFloat() * 0.4F + 0.8F);
-				world.setBlockState(pos, blockstate.with(BlockStateProperties.LIT, Boolean.valueOf(true)), 11);
-				if (player != null) {
-					context.getItem().damageItem(1, player, (p) -> {
-						p.sendBreakAnimation(context.getHand());
+			BlockPos blockpos1 = blockpos.offset(context.getFace());
+			if (AbstractFireBlock.canLightBlock(world, blockpos1, context.getPlacementHorizontalFacing())) {
+				world.playSound(playerentity, blockpos1, SoundEvents.ITEM_FLINTANDSTEEL_USE, SoundCategory.BLOCKS, 1.0F, random.nextFloat() * 0.4F + 0.8F);
+				BlockState blockstate1 = AbstractFireBlock.getFireForPlacement(world, blockpos1);
+				world.setBlockState(blockpos1, blockstate1, 11);
+				ItemStack itemstack = context.getItem();
+				if (playerentity instanceof ServerPlayerEntity) {
+					CriteriaTriggers.PLACED_BLOCK.trigger((ServerPlayerEntity)playerentity, blockpos1, itemstack);
+					itemstack.damageItem(1, playerentity, (player) -> {
+						player.sendBreakAnimation(context.getHand());
 					});
 				}
 
-				return ActionResultType.SUCCESS;
+				return ActionResultType.func_233537_a_(world.isRemote());
 			} else {
 				return ActionResultType.FAIL;
 			}
 		}
-	}
-
-	public static boolean isUnlitCampfire(BlockState state) {
-		return state.getBlock() == Blocks.CAMPFIRE && !state.get(BlockStateProperties.WATERLOGGED)
-				&& !state.get(BlockStateProperties.LIT);
-	}
-
-	public static boolean canPlaceFire(BlockState state, IWorld world, BlockPos pos) {
-		BlockState blockstate = ((FireBlock) Blocks.FIRE).getStateForPlacement(world, pos);
-		boolean flag = false;
-		for (Direction direction : Direction.Plane.HORIZONTAL) {
-			BlockPos framePos = pos.offset(direction);
-			if (world.getBlockState(framePos).isPortalFrame(world, framePos)
-					&& ((NetherPortalBlock) Blocks.NETHER_PORTAL).isPortal(world, pos) != null) {
-				flag = true;
-			}
-		}
-		return state.isAir() && (blockstate.isValidPosition(world, pos) || flag);
 	}
 }

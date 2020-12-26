@@ -1,5 +1,6 @@
 modLoader="javafml"
-loaderVersion="[31,)"
+loaderVersion="[34,)"
+license = "Creative Commons Attribution-NonCommercial ShareAlike 4.0 International License"
 issueTrackerURL="https://github.com/MattCzyr/RealisticTorches/issues"
 [[mods]]
     modId="realistictorches"
@@ -14,12 +15,6 @@ issueTrackerURL="https://github.com/MattCzyr/RealisticTorches/issues"
 [[dependencies.realistictorches]]
     modId="forge"
     mandatory=true
-    versionRange="[31,)"
-    ordering="NONE"
-    side="BOTH"
-[[dependencies.examplemod]]
-    modId="minecraft"
-    mandatory=true
-    versionRange="[1.15.2]"
+    versionRange="[34,)"
     ordering="NONE"
     side="BOTH"
