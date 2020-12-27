@@ -1,6 +1,6 @@
 modLoader="javafml"
-loaderVersion="[34,)"
-license = "Creative Commons Attribution-NonCommercial ShareAlike 4.0 International License"
+loaderVersion="[35,)"
+license = "CC BY-NC-SA 4.0"
 issueTrackerURL="https://github.com/MattCzyr/RealisticTorches/issues"
 [[mods]]
     modId="realistictorches"
@@ -15,6 +15,6 @@ issueTrackerURL="https://github.com/MattCzyr/RealisticTorches/issues"
 [[dependencies.realistictorches]]
     modId="forge"
     mandatory=true
-    versionRange="[34,)"
+    versionRange="[35,)"
     ordering="NONE"
     side="BOTH"
