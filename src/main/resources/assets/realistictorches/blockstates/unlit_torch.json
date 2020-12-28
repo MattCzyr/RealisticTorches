@@ -1,7 +1,9 @@
 {
     "variants": {
-        "litstate=2": { "model": "realistictorches:block/torch_lit" },
-        "litstate=1": { "model": "realistictorches:block/torch_smoldering"},
-        "litstate=0": { "model": "realistictorches:block/torch_unlit"}
+        "facing=up": { "model": "realistictorches:block/lit_torch" },
+        "facing=east": { "model": "realistictorches:block/lit_wall_torch" },
+        "facing=south": { "model": "realistictorches:block/lit_wall_torch", "y": 90 },
+        "facing=west": { "model": "realistictorches:block/lit_wall_torch", "y": 180 },
+        "facing=north": { "model": "realistictorches:block/lit_wall_torch", "y": 270 }
     }
 }

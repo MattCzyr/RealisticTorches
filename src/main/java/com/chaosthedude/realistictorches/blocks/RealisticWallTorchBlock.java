@@ -1,7 +1,5 @@
 package com.chaosthedude.realistictorches.blocks;
 
-import java.util.Random;
-
 import javax.annotation.Nullable;
 
 import com.chaosthedude.realistictorches.config.ConfigHandler;
@@ -12,7 +10,6 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.HorizontalBlock;
 import net.minecraft.block.WallTorchBlock;
 import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.particles.ParticleTypes;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.util.Direction;
@@ -28,7 +25,6 @@ import net.minecraft.world.World;
 
 public class RealisticWallTorchBlock extends RealisticTorchBlock {
 
-	public static final String NAME = "torch_wall";
 	public static final int TICK_RATE = 1200;
 
 	public static final DirectionProperty HORIZONTAL_FACING = HorizontalBlock.HORIZONTAL_FACING;
@@ -39,31 +35,14 @@ public class RealisticWallTorchBlock extends RealisticTorchBlock {
 	}
 
 	@Override
-	public void animateTick(BlockState state, World world, BlockPos pos, Random random) {
-		if (state.get(LITSTATE) == LIT || (state.get(LITSTATE) == SMOLDERING && world.getRandom().nextInt(2) == 1)) {
-			Direction direction = state.get(HORIZONTAL_FACING);
-			double d0 = (double) pos.getX() + 0.5D;
-			double d1 = (double) pos.getY() + 0.7D;
-			double d2 = (double) pos.getZ() + 0.5D;
-			Direction direction1 = direction.getOpposite();
-			world.addParticle(ParticleTypes.SMOKE, d0 + 0.27D * (double) direction1.getXOffset(), d1 + 0.22D,
-					d2 + 0.27D * (double) direction1.getZOffset(), 0.0D, 0.0D, 0.0D);
-			world.addParticle(ParticleTypes.FLAME, d0 + 0.27D * (double) direction1.getXOffset(), d1 + 0.22D,
-					d2 + 0.27D * (double) direction1.getZOffset(), 0.0D, 0.0D, 0.0D);
-		}
-	}
-
-	@Override
 	public void changeToLit(World world, BlockPos pos, BlockState state) {
-		world.setBlockState(pos, RealisticTorchesBlocks.WALL_TORCH.getDefaultState().with(LITSTATE, LIT)
-				.with(BURNTIME, initialBurnTime).with(HORIZONTAL_FACING, state.get(HORIZONTAL_FACING)));
+		world.setBlockState(pos, RealisticTorchesBlocks.LIT_WALL_TORCH.getDefaultState().with(BURNTIME, initialBurnTime).with(HORIZONTAL_FACING, state.get(HORIZONTAL_FACING)));
 		world.getPendingBlockTicks().scheduleTick(pos, this, TICK_RATE);
 	}
 
 	@Override
 	public void changeToSmoldering(World world, BlockPos pos, BlockState state, int newBurnTime) {
-		world.setBlockState(pos, RealisticTorchesBlocks.WALL_TORCH.getDefaultState().with(LITSTATE, SMOLDERING)
-				.with(BURNTIME, newBurnTime).with(HORIZONTAL_FACING, state.get(HORIZONTAL_FACING)));
+		world.setBlockState(pos, RealisticTorchesBlocks.SMOLDERING_WALL_TORCH.getDefaultState().with(BURNTIME, newBurnTime).with(HORIZONTAL_FACING, state.get(HORIZONTAL_FACING)));
 		world.getPendingBlockTicks().scheduleTick(pos, this, TICK_RATE);
 	}
 
@@ -72,8 +51,7 @@ public class RealisticWallTorchBlock extends RealisticTorchBlock {
 		if (ConfigHandler.noRelightEnabled.get()) {
     		world.setBlockState(pos, Blocks.AIR.getDefaultState());
     	} else {
-			world.setBlockState(pos, RealisticTorchesBlocks.WALL_TORCH.getDefaultState().with(HORIZONTAL_FACING,
-					state.get(HORIZONTAL_FACING)));
+			world.setBlockState(pos, RealisticTorchesBlocks.UNLIT_WALL_TORCH.getDefaultState().with(HORIZONTAL_FACING, state.get(HORIZONTAL_FACING)));
 			world.getPendingBlockTicks().scheduleTick(pos, this, TICK_RATE);
     	}
 	}

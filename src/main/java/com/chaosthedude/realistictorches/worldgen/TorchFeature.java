@@ -1,11 +1,12 @@
 package com.chaosthedude.realistictorches.worldgen;
 
+import java.util.Random;
+
 import com.chaosthedude.realistictorches.RealisticTorches;
-import com.chaosthedude.realistictorches.blocks.RealisticTorchBlock;
 import com.chaosthedude.realistictorches.blocks.RealisticTorchesBlocks;
-import com.chaosthedude.realistictorches.blocks.RealisticWallTorchBlock;
 import com.chaosthedude.realistictorches.config.ConfigHandler;
 import com.mojang.serialization.Codec;
+
 import net.minecraft.block.Blocks;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.ResourceLocation;
@@ -23,8 +24,6 @@ import net.minecraft.world.gen.placement.Placement;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-
-import java.util.Random;
 
 public class TorchFeature extends Feature<NoFeatureConfig> {
 
@@ -45,13 +44,13 @@ public class TorchFeature extends Feature<NoFeatureConfig> {
             for (int x = 0; x < 16; x++) {
                 for (int y = 0; y < world.getHeight(); y++) {
                     for (int z = 0; z < 16; z++) {
-                        //Use mutable instead which saves ram usage as you are not creating a new object each time and instead changing the existing object.
+                        // Use mutable instead which saves ram usage as you are not creating a new object each time and instead changing the existing object.
                         replacePos.setPos(startX, 0, startZ).move(x, y, z);
                         if (world.getBlockState(replacePos).getBlock() == Blocks.TORCH) {
-                            world.setBlockState(replacePos, RealisticTorchesBlocks.TORCH.getDefaultState().with(RealisticTorchBlock.getLitState(), RealisticTorchBlock.LIT).with(RealisticTorchBlock.getBurnTime(), RealisticTorchBlock.getInitialBurnTime()), 3);
+                            world.setBlockState(replacePos, RealisticTorchesBlocks.UNLIT_TORCH.getDefaultState(), 3);
                             world.getPendingBlockTicks().scheduleTick(replacePos, world.getBlockState(replacePos).getBlock(), 1200);
                         } else if (world.getBlockState(replacePos).getBlock() == Blocks.WALL_TORCH) {
-                            world.setBlockState(replacePos, RealisticTorchesBlocks.WALL_TORCH.getDefaultState().with(RealisticWallTorchBlock.getLitState(), RealisticTorchBlock.LIT).with(RealisticWallTorchBlock.getBurnTime(), RealisticWallTorchBlock.getInitialBurnTime()).with(BlockStateProperties.HORIZONTAL_FACING, world.getBlockState(replacePos).get(BlockStateProperties.HORIZONTAL_FACING)), 3);
+                            world.setBlockState(replacePos, RealisticTorchesBlocks.UNLIT_WALL_TORCH.getDefaultState().with(BlockStateProperties.HORIZONTAL_FACING, world.getBlockState(replacePos).get(BlockStateProperties.HORIZONTAL_FACING)), 3);
                             world.getPendingBlockTicks().scheduleTick(replacePos, world.getBlockState(replacePos).getBlock(), 1200);
                         }
                     }

@@ -1,0 +1,9 @@
+{
+    "variants": {
+        "facing=up": { "model": "realistictorches:block/unlit_torch" },
+        "facing=east": { "model": "realistictorches:block/unlit_wall_torch" },
+        "facing=south": { "model": "realistictorches:block/unlit_wall_torch", "y": 90 },
+        "facing=west": { "model": "realistictorches:block/unlit_wall_torch", "y": 180 },
+        "facing=north": { "model": "realistictorches:block/unlit_wall_torch", "y": 270 }
+    }
+}

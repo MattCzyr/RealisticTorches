@@ -34,8 +34,12 @@ public class RealisticTorches {
     }
     
     private void clientSetup(final FMLClientSetupEvent event) {
-        RenderTypeLookup.setRenderLayer(RealisticTorchesBlocks.TORCH, RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(RealisticTorchesBlocks.WALL_TORCH, RenderType.getCutout());
+    	RenderTypeLookup.setRenderLayer(RealisticTorchesBlocks.UNLIT_TORCH, RenderType.getCutout());
+    	RenderTypeLookup.setRenderLayer(RealisticTorchesBlocks.SMOLDERING_TORCH, RenderType.getCutout());
+    	RenderTypeLookup.setRenderLayer(RealisticTorchesBlocks.LIT_TORCH, RenderType.getCutout());
+    	RenderTypeLookup.setRenderLayer(RealisticTorchesBlocks.UNLIT_WALL_TORCH, RenderType.getCutout());
+    	RenderTypeLookup.setRenderLayer(RealisticTorchesBlocks.SMOLDERING_WALL_TORCH, RenderType.getCutout());
+    	RenderTypeLookup.setRenderLayer(RealisticTorchesBlocks.LIT_WALL_TORCH, RenderType.getCutout());
     }
 
 

@@ -1,7 +1,5 @@
 package com.chaosthedude.realistictorches.blocks;
 
-import java.util.Random;
-
 import com.chaosthedude.realistictorches.config.ConfigHandler;
 import com.chaosthedude.realistictorches.items.RealisticTorchesItems;
 
@@ -21,43 +19,18 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
 
 public class RealisticTorchBlock extends TorchBlock {
 	
-	public static final String NAME = "torch";
     public static final int TICK_RATE = 1200;
 
     protected static int initialBurnTime = ConfigHandler.torchBurnoutTime.get();
     protected static final IntegerProperty BURNTIME = IntegerProperty.create("burntime", 0, initialBurnTime);
-    protected static final IntegerProperty LITSTATE = IntegerProperty.create("litstate", 0, 2);
-    
-    public static final int LIT = 2;
-    public static final int SMOLDERING = 1;
-    public static final int UNLIT = 0;
 
     public RealisticTorchBlock() {
         super(Block.Properties.from(Blocks.TORCH), ParticleTypes.FLAME);
-        setDefaultState(this.getDefaultState().with(LITSTATE, 0).with(BURNTIME, 0));
-    }
-
-    @Override
-    public int getLightValue(BlockState state, IBlockReader world, BlockPos pos) {
-        if (state.get(LITSTATE) == LIT) {
-            return 14;
-        } else if (state.get(LITSTATE) == SMOLDERING) {
-            return 12;
-        }
-        return 0;
-    }
-
-    @Override
-    public void animateTick(BlockState state, World world, BlockPos pos, Random random) {
-        if (state.get(LITSTATE) == LIT || (state.get(LITSTATE) == SMOLDERING && world.getRandom().nextInt(2) == 1)) {
-        	super.animateTick(state, world, pos, random);
-        }
+        setDefaultState(this.getDefaultState().with(BURNTIME, 0));
     }
 
     @Override
@@ -80,32 +53,6 @@ public class RealisticTorchBlock extends TorchBlock {
         return super.onBlockActivated(state, world, pos, player, hand, hit);
     }
 
-
-    @Override
-    public void tick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-        if (!world.isRemote() && initialBurnTime > 0 && state.get(LITSTATE) > UNLIT) {
-        	if (world.isRainingAt(pos)) {
-                playExtinguishSound(world, pos);
-                changeToUnlit(world, pos, state);
-                return;
-            }
-            int newBurnTime = state.get(BURNTIME) - 1;
-            if (newBurnTime <= 0) {
-                playExtinguishSound(world, pos);
-                changeToUnlit(world, pos, state);
-                world.notifyNeighborsOfStateChange(pos, this);
-            } else if (state.get(LITSTATE) == LIT && (newBurnTime <= initialBurnTime / 10 || newBurnTime <= 1)) {
-            	changeToSmoldering(world, pos, state, newBurnTime);
-            	world.notifyNeighborsOfStateChange(pos, this);
-            } else {
-	            world.setBlockState(pos, state.with(BURNTIME, newBurnTime));
-	            world.getPendingBlockTicks().scheduleTick(pos, this, TICK_RATE);
-            }
-        }
-    }
-
-
-
     @Override
     public void onReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
         if (!isMoving && state.getBlock() != newState.getBlock()) {
@@ -113,20 +60,15 @@ public class RealisticTorchBlock extends TorchBlock {
         }
         super.onReplaced(state, world, pos, newState, isMoving);
     }
-
+    
     @Override
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
         super.fillStateContainer(builder);
         builder.add(BURNTIME);
-        builder.add(LITSTATE);
     }
     
     public static IntegerProperty getBurnTime() {
         return BURNTIME;
-    }
-
-    public static IntegerProperty getLitState() {
-        return LITSTATE;
     }
 
     public static int getInitialBurnTime() {
@@ -134,12 +76,12 @@ public class RealisticTorchBlock extends TorchBlock {
     }
 
     public void changeToLit(World world, BlockPos pos, BlockState state) {
-        world.setBlockState(pos, RealisticTorchesBlocks.TORCH.getDefaultState().with(LITSTATE, LIT).with(BURNTIME, initialBurnTime));
+        world.setBlockState(pos, RealisticTorchesBlocks.LIT_TORCH.getDefaultState().with(BURNTIME, initialBurnTime));
         world.getPendingBlockTicks().scheduleTick(pos, this, TICK_RATE);
     }
 
     public void changeToSmoldering(World world, BlockPos pos, BlockState state, int newBurnTime) {
-        world.setBlockState(pos, RealisticTorchesBlocks.TORCH.getDefaultState().with(LITSTATE, SMOLDERING).with(BURNTIME, newBurnTime));
+        world.setBlockState(pos, RealisticTorchesBlocks.SMOLDERING_TORCH.getDefaultState().with(BURNTIME, newBurnTime));
         world.getPendingBlockTicks().scheduleTick(pos, this, TICK_RATE);
     }
 
@@ -147,7 +89,7 @@ public class RealisticTorchBlock extends TorchBlock {
     	if (ConfigHandler.noRelightEnabled.get()) {
     		world.setBlockState(pos, Blocks.AIR.getDefaultState());
     	} else {
-	        world.setBlockState(pos, RealisticTorchesBlocks.TORCH.getDefaultState());
+	        world.setBlockState(pos, RealisticTorchesBlocks.UNLIT_TORCH.getDefaultState());
 	        world.getPendingBlockTicks().scheduleTick(pos, this, TICK_RATE);
     	}
     }

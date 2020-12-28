@@ -13,14 +13,33 @@ import net.minecraftforge.registries.ObjectHolder;
 @ObjectHolder(RealisticTorches.MODID)
 public class RealisticTorchesBlocks {
 
-    @ObjectHolder(RealisticTorchBlock.NAME) public static final Block TORCH = null;
-    @ObjectHolder(RealisticWallTorchBlock.NAME) public static final Block WALL_TORCH = null;
+	@ObjectHolder(UnlitTorchBlock.NAME)
+    public static final UnlitTorchBlock UNLIT_TORCH = null;
+    
+    @ObjectHolder(SmolderingTorchBlock.NAME)
+    public static final SmolderingTorchBlock SMOLDERING_TORCH = null;
+    
+    @ObjectHolder(LitTorchBlock.NAME)
+    public static final LitTorchBlock LIT_TORCH = null;
+    
+    @ObjectHolder(UnlitWallTorchBlock.NAME)
+    public static final UnlitWallTorchBlock UNLIT_WALL_TORCH = null;
+    
+    @ObjectHolder(SmolderingWallTorchBlock.NAME)
+    public static final SmolderingWallTorchBlock SMOLDERING_WALL_TORCH = null;
+    
+    @ObjectHolder(LitWallTorchBlock.NAME)
+    public static final LitWallTorchBlock LIT_WALL_TORCH = null;
 
     @SubscribeEvent
     public static void registerBlocks(final RegistryEvent.Register<Block> blockRegistry) {
         blockRegistry.getRegistry().registerAll(
-            new RealisticTorchBlock().setRegistryName(new ResourceLocation(RealisticTorches.MODID, RealisticTorchBlock.NAME)),
-            new RealisticWallTorchBlock().setRegistryName(new ResourceLocation(RealisticTorches.MODID, RealisticWallTorchBlock.NAME))
+        		new UnlitTorchBlock().setRegistryName(new ResourceLocation(RealisticTorches.MODID, UnlitTorchBlock.NAME)),
+        		new SmolderingTorchBlock().setRegistryName(new ResourceLocation(RealisticTorches.MODID, SmolderingTorchBlock.NAME)),
+        		new LitTorchBlock().setRegistryName(new ResourceLocation(RealisticTorches.MODID, LitTorchBlock.NAME)),
+        		new UnlitWallTorchBlock().setRegistryName(new ResourceLocation(RealisticTorches.MODID, UnlitWallTorchBlock.NAME)),
+        		new SmolderingWallTorchBlock().setRegistryName(new ResourceLocation(RealisticTorches.MODID, SmolderingWallTorchBlock.NAME)),
+        		new LitWallTorchBlock().setRegistryName(new ResourceLocation(RealisticTorches.MODID, LitWallTorchBlock.NAME))
         );
     }
 

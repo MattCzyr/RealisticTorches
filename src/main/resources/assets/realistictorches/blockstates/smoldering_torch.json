@@ -1,0 +1,9 @@
+{
+    "variants": {
+        "facing=up": { "model": "realistictorches:block/smoldering_torch" },
+        "facing=east": { "model": "realistictorches:block/smoldering_wall_torch" },
+        "facing=south": { "model": "realistictorches:block/smoldering_wall_torch", "y": 90 },
+        "facing=west": { "model": "realistictorches:block/smoldering_wall_torch", "y": 180 },
+        "facing=north": { "model": "realistictorches:block/smoldering_wall_torch", "y": 270 }
+    }
+}
