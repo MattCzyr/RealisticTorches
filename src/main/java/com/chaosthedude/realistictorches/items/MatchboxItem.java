@@ -3,7 +3,9 @@ package com.chaosthedude.realistictorches.items;
 import com.chaosthedude.realistictorches.config.ConfigHandler;
 
 import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.block.*;
+import net.minecraft.block.AbstractFireBlock;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.CampfireBlock;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
@@ -12,11 +14,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 
 public class MatchboxItem extends Item {
@@ -66,5 +66,20 @@ public class MatchboxItem extends Item {
 				return ActionResultType.FAIL;
 			}
 		}
+	}
+	
+	@Override
+	public boolean hasContainerItem(ItemStack stack) {
+		return true;
+	}
+	
+	@Override
+	public ItemStack getContainerItem(ItemStack stack) {
+		if (stack.getDamage() + 1 > stack.getMaxDamage()) {
+			return ItemStack.EMPTY;
+		}
+		ItemStack newStack = new ItemStack(this);
+		newStack.setDamage(stack.getDamage() + 1);
+		return newStack;
 	}
 }
