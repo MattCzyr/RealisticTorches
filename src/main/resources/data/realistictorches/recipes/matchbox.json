@@ -9,7 +9,7 @@
       "item": "minecraft:paper"
     },
     "S": {
-      "item": "minecraft:oak_slab"
+      "tag": "minecraft:wooden_slabs"
     }
   },
   "result": {
