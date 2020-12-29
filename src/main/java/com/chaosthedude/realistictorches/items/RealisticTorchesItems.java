@@ -15,13 +15,11 @@ import net.minecraftforge.registries.ObjectHolder;
 @ObjectHolder(RealisticTorches.MODID)
 public class RealisticTorchesItems {
 
-    private static final Item.Properties PROPERTIES = new Item.Properties().group(ItemGroup.DECORATIONS);
-
     @ObjectHolder(LitTorchItem.NAME)
     public static final LitTorchItem LIT_TORCH = null;
     
     @ObjectHolder(UnlitTorchItem.NAME)
-    public static final UnlitTorchItem UNLIT_TORCH = null;
+    public static final Item UNLIT_TORCH = null;
     
     @ObjectHolder(MatchboxItem.NAME)
     public static final Item MATCHBOX = null;
@@ -35,8 +33,8 @@ public class RealisticTorchesItems {
     @SubscribeEvent
     public static void registerItems(final RegistryEvent.Register<Item> itemRegistry) {
         itemRegistry.getRegistry().registerAll(
-        		new LitTorchItem(PROPERTIES).setRegistryName(new ResourceLocation(RealisticTorches.MODID, LitTorchItem.NAME)),
-        		new UnlitTorchItem(PROPERTIES).setRegistryName(new ResourceLocation(RealisticTorches.MODID, UnlitTorchItem.NAME)),
+        		new UnlitTorchItem(new Item.Properties()).setRegistryName(new ResourceLocation(RealisticTorches.MODID, UnlitTorchItem.NAME)),
+        		new LitTorchItem(new Item.Properties().group(ItemGroup.DECORATIONS)).setRegistryName(new ResourceLocation(RealisticTorches.MODID, LitTorchItem.NAME)),
                 new MatchboxItem(ConfigHandler.matchboxDurability.get()).setRegistryName(new ResourceLocation(RealisticTorches.MODID, MatchboxItem.NAME)),
                 new Item(new Item.Properties().group(ItemGroup.MATERIALS)).setRegistryName(new ResourceLocation(RealisticTorches.MODID, "glowstone_paste")),
                 new Item(new Item.Properties().group(ItemGroup.MATERIALS)).setRegistryName(new ResourceLocation(RealisticTorches.MODID, "glowstone_crystal"))

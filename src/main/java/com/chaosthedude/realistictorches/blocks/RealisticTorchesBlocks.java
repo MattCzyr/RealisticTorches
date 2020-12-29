@@ -13,8 +13,11 @@ import net.minecraftforge.registries.ObjectHolder;
 @ObjectHolder(RealisticTorches.MODID)
 public class RealisticTorchesBlocks {
 
-    @ObjectHolder(RealisticTorchBlock.NAME) public static final Block TORCH = null;
-    @ObjectHolder(RealisticWallTorchBlock.NAME) public static final Block WALL_TORCH = null;
+    @ObjectHolder(RealisticTorchBlock.NAME)
+    public static final RealisticTorchBlock TORCH = null;
+    
+    @ObjectHolder(RealisticWallTorchBlock.NAME)
+    public static final RealisticWallTorchBlock WALL_TORCH = null;
 
     @SubscribeEvent
     public static void registerBlocks(final RegistryEvent.Register<Block> blockRegistry) {

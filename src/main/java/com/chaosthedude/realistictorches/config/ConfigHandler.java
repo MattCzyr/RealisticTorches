@@ -25,7 +25,7 @@ public class ConfigHandler {
         COMMON_BUILDER.comment("General Settings").push(CATEGORY_GENERAL);
         String desc;
         
-        desc = "The amount of time until a torch burns out, in seconds. Setting this to a negative value will disable torch burnout.";
+        desc = "The amount of time until a torch burns out, in minutes. Setting this to a negative value will disable torch burnout.";
         torchBurnoutTime = COMMON_BUILDER.comment(desc).defineInRange("torchBurnoutTime", 60, -1, 2880);
 
         desc = "The durability of the matchbox. Setting this to a negative value will result in unlimited uses.";

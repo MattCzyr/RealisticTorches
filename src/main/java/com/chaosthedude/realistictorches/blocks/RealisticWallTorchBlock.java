@@ -56,7 +56,7 @@ public class RealisticWallTorchBlock extends RealisticTorchBlock {
 	@Override
 	public void changeToLit(World world, BlockPos pos, BlockState state) {
 		world.setBlockState(pos, RealisticTorchesBlocks.WALL_TORCH.getDefaultState().with(LITSTATE, LIT)
-				.with(BURNTIME, initialBurnTime).with(HORIZONTAL_FACING, state.get(HORIZONTAL_FACING)));
+				.with(BURNTIME, INITIAL_BURN_TIME).with(HORIZONTAL_FACING, state.get(HORIZONTAL_FACING)));
 		world.getPendingBlockTicks().scheduleTick(pos, this, TICK_RATE);
 	}
 
