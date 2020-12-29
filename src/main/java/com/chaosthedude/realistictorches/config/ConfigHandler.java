@@ -29,7 +29,7 @@ public class ConfigHandler {
         torchBurnoutTime = COMMON_BUILDER.comment(desc).defineInRange("torchBurnoutTime", 60, -1, 2880);
 
         desc = "The durability of the matchbox. Setting this to a negative value will result in unlimited uses.";
-        matchboxDurability = COMMON_BUILDER.comment(desc).defineInRange("matchboxDurability", 64, 1, 512);
+        matchboxDurability = COMMON_BUILDER.comment(desc).defineInRange("matchboxDurability", 64, -1, 512);
 
         desc = "Determines whether vanilla torches will be replaced with lit torches during world generation.";
         generateLitTorches = COMMON_BUILDER.comment(desc).define("generateLitTorches", true);

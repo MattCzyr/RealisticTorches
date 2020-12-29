@@ -63,10 +63,9 @@ public class RealisticTorchBlock extends TorchBlock {
 
     @Override
     public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-    	if (player.getHeldItem(hand).getItem() == Items.FLINT_AND_STEEL ||
-    			player.getHeldItem(hand).getItem() == RealisticTorchesItems.MATCHBOX) {
+    	if (player.getHeldItem(hand).getItem() == Items.FLINT_AND_STEEL || player.getHeldItem(hand).getItem() == RealisticTorchesItems.MATCHBOX) {
             playLightingSound(world, pos);
-            if (!player.isCreative()) {
+            if (!player.isCreative() && (player.getHeldItem(hand).getItem() != RealisticTorchesItems.MATCHBOX || ConfigHandler.matchboxDurability.get() > 0)) {
                 ItemStack heldStack = player.getHeldItem(hand);
                 heldStack.damageItem(1, player, playerEntity -> {
                     playerEntity.sendBreakAnimation(hand);

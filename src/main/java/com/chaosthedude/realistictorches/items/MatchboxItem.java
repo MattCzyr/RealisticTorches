@@ -24,7 +24,7 @@ public class MatchboxItem extends Item {
 	public static final String NAME = "matchbox";
 
 	public MatchboxItem(int maxDamage) {
-		super(new Item.Properties().group(ItemGroup.TOOLS).maxDamage(maxDamage).defaultMaxDamage(maxDamage));
+		super(new Item.Properties().group(ItemGroup.TOOLS).maxDamage(maxDamage > 0 ? maxDamage : 0).defaultMaxDamage(maxDamage));
 	}
 
 	@Override
@@ -75,7 +75,9 @@ public class MatchboxItem extends Item {
 	
 	@Override
 	public ItemStack getContainerItem(ItemStack stack) {
-		if (stack.getDamage() + 1 > stack.getMaxDamage()) {
+		if (ConfigHandler.matchboxDurability.get() <= 0) {
+			return new ItemStack(this);
+		} else if (stack.getDamage() + 1 > stack.getMaxDamage()) {
 			return ItemStack.EMPTY;
 		}
 		ItemStack newStack = new ItemStack(this);
