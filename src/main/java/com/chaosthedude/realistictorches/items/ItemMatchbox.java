@@ -33,7 +33,9 @@ public class ItemMatchbox extends Item {
 		super();
 		setUnlocalizedName(RealisticTorches.MODID + "." + NAME);
 		setMaxStackSize(1);
-		setMaxDamage(ConfigHandler.matchboxDurability - 1);
+		if (ConfigHandler.matchboxDurability > 0) {
+			setMaxDamage(ConfigHandler.matchboxDurability - 1);
+		}
 		setCreativeTab(CreativeTabs.TOOLS);
 		setNoRepair();
 	}
@@ -66,13 +68,14 @@ public class ItemMatchbox extends Item {
 
 	@Override
 	public ItemStack getContainerItem(ItemStack stack) {
-		if (ConfigHandler.matchboxDurability > 1) {
-			ItemStack newStack = stack.copy();
-			newStack.setItemDamage(stack.getItemDamage() + 1);
-			return newStack;
+		if (ConfigHandler.matchboxDurability <= 0) {
+			return new ItemStack(this);
+		} else if (stack.getItemDamage() + 1 > stack.getMaxDamage()) {
+			return ItemStack.EMPTY;
 		}
-
-		return stack;
+		ItemStack newStack = new ItemStack(this);
+		newStack.setItemDamage(stack.getItemDamage() + 1);
+		return newStack;
 	}
 
 	@SideOnly(Side.CLIENT)
