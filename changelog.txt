@@ -1,10 +1,24 @@
 ---------------------------------------------
+ VERSION 3.1.0 - 1.16.4
+---------------------------------------------
+1.16.4
+  FEATURES:
+  - Brought back the lit torch crafting recipe that was missing in recent versions
+  - Matchbox recipe now uses tag for any variant of wooden slabs
+  FIXES:
+  - Fixed discrepancy in config that stated burnout time is measured in seconds (actually measured in minutes)
+  - Fixed issue that caused infinite matchbox durability config option to have no effect
+  UPDATES:
+  - Updated to MC 1.16.4 (Forge 35.1.28)
+
+
+---------------------------------------------
  VERSION 3.0.0 - 1.15.2, 1.14.4
 ---------------------------------------------
 1.15.2, 1.14.4:
   FEATURES:
   - Removed moving light sources and some config options that did not adapt well to newer versions of Minecraft
-  - Condensed the lit, smoldering, and unlit torch blocks into one single block (realistictorches:torch) with properties to determine its state
+  - Condensed the lit, smoldering, and unlit torch blocks into one single block with properties to determine its state
 1.15.2:
   UPDATES:
   - Updated to MC 1.15.2 (Forge 31.1.25)
