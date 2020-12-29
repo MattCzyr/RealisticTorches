@@ -46,7 +46,7 @@ public class BlockRealisticTorch extends BlockTorch {
 
 	public void updateTorch(World world, BlockPos pos) {
 		if (canBurnout() && world.isRainingAt(pos) && isLit()) {
-			world.setBlockState(pos, getState(world, pos, RealisticTorchesBlocks.torchUnlit), 2);
+			extinguish(world, pos, true);
 		}
 	}
 

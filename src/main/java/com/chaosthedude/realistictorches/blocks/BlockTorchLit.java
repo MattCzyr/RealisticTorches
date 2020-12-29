@@ -12,7 +12,6 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
@@ -78,8 +77,10 @@ public class BlockTorchLit extends BlockRealisticTorch {
 		playExtinguishSound(world, pos);
 		if (!extinguishFully) {
 			world.setBlockState(pos, getState(world, pos, RealisticTorchesBlocks.torchSmoldering), 2);
-		} else {
+		} else if (!ConfigHandler.noRelightEnabled) {
 			world.setBlockState(pos, getState(world, pos, RealisticTorchesBlocks.torchUnlit), 2);
+		} else {
+			world.setBlockToAir(pos);
 		}
 	}
 
