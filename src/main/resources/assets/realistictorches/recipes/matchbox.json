@@ -2,13 +2,18 @@
   "result": {
     "item": "realistictorches:matchbox"
   },
-  "ingredients": [
-    {
-      "item": "realistictorches:matchbox"
-    },
-    {
-      "item": "realistictorches:matchbox"
-    }
+  "pattern": [
+    "PPP",
+    "SSS"
   ],
-  "type": "minecraft:crafting_shapeless"
+  "type": "forge:ore_shaped",
+  "key": {
+    "P": {
+      "item": "minecraft:paper"
+    },
+    "S": {
+      "type": "forge:ore_dict",
+      "ore": "slabWood"
+    }
+  }
 }
