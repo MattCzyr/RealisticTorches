@@ -56,41 +56,41 @@ public class ConfigHandler {
 		String comment;
 
 		comment = "The amount of time until a torch burns out, in ticks (20 ticks = 1 second). Setting this to a negative value will disable torch burnout.";
-		torchBurnout = loadInt("torch.burnoutTime", comment, torchBurnout);
+		torchBurnout = loadInt("torch.burnoutTime", comment, "general", torchBurnout);
 
 		comment = "The durability of the matchbox. Setting this to a negative value will result in unlimited uses.";
-		matchboxDurability = loadInt("matchbox.durability", comment, matchboxDurability);
+		matchboxDurability = loadInt("matchbox.durability", comment, "general", matchboxDurability);
 
 		comment = "The threshold for which all blocks with a light level above will be registered as handheld light sources. Acceptable values are between 0 and 15, inclusive.";
-		lightSourceRegistryThreshold = loadInt("handheldLight.registry.threshold", comment, lightSourceRegistryThreshold);
+		lightSourceRegistryThreshold = loadInt("handheldLight.registry.threshold", comment, "light_sources", lightSourceRegistryThreshold);
 
 		comment = "Set this to false to disable certain blocks and items emitting light when held.";
-		handheldLightEnabled = loadBool("handheldLight.enabled", comment, handheldLightEnabled);
+		handheldLightEnabled = loadBool("handheldLight.enabled", comment, "light_sources", handheldLightEnabled);
 
 		comment = "The number of ticks between handheld light updates. Lower values cause more updates and can result in framerate issues.";
-		handheldLightUpdateTicks = loadInt("handheldLight.updateTicks", comment, handheldLightUpdateTicks);
+		handheldLightUpdateTicks = loadInt("handheldLight.updateTicks", comment, "light_sources", handheldLightUpdateTicks);
 		if(handheldLightUpdateTicks < 1) handheldLightUpdateTicks = 1;
 
 		comment = "Set this to true to enable unlit torch particles.";
-		unlitParticlesEnabled = loadBool("unlitTorch.particles", comment, unlitParticlesEnabled);
+		unlitParticlesEnabled = loadBool("unlitTorch.particles", comment, "general", unlitParticlesEnabled);
 
 		comment = "Set this to true to register both the lit torch and the vanilla torch in the Ore Dictionary under blockTorch.";
-		oreDictionaryEnabled = loadBool("torch.oreDictionary", comment, oreDictionaryEnabled);
+		oreDictionaryEnabled = loadBool("torch.oreDictionary", comment, "general", oreDictionaryEnabled);
 
 		comment = "Set this to true to make lit torches disappear after they are extinguished, rather than turning into unlit torches.";
-		noRelightEnabled = loadBool("torch.noRelight", comment, noRelightEnabled);
+		noRelightEnabled = loadBool("torch.noRelight", comment, "general", noRelightEnabled);
 
 		comment = "Set this to false to disable light emitting blocks from automatically being registered as handheld light sources.";
-		registerLightSourceBlocks = loadBool("handheldLight.registerBlocks", comment, registerLightSourceBlocks);
+		registerLightSourceBlocks = loadBool("handheldLight.registerBlocks", comment, "light_sources", registerLightSourceBlocks);
 
 		comment = "Set this to true to enable matchboxes lighting fires in the world like flint and steel.";
-		matchboxCreatesFire = loadBool("matchbox.createsFire", comment, matchboxCreatesFire);
+		matchboxCreatesFire = loadBool("matchbox.createsFire", comment, "general", matchboxCreatesFire);
 
 		comment = "Set this to false to disable vanilla torches being replaced with lit torches during world generation.";
-		generateLitTorches = loadBool("world.generateLitTorches", comment, generateLitTorches);
+		generateLitTorches = loadBool("world.generateLitTorches", comment, "general", generateLitTorches);
 
 		comment = "Set this to true to enable vanilla torches dropping unlit torches when harvested.";
-		vanillaTorchDropsUnlit = loadBool("torch.vanilla.dropUnlit", comment, vanillaTorchDropsUnlit);
+		vanillaTorchDropsUnlit = loadBool("torch.vanilla.dropUnlit", comment, "general", vanillaTorchDropsUnlit);
 
 		comment = "A list of items that will emit light when held, if handheldLight.enabled is set to true.";
 		lightSourceItems = loadStringArray("lightSources.items", comment, "light_sources", lightSourceItems);
@@ -106,8 +106,8 @@ public class ConfigHandler {
 		}
 	}
 
-	public static int loadInt(String name, String comment, int def) {
-		Property prop = config.get(Configuration.CATEGORY_GENERAL, name, def);
+	public static int loadInt(String name, String comment, String category, int def) {
+		Property prop = config.get(category, name, def);
 		prop.setComment(comment);
 		int val = prop.getInt(def);
 		if (val == 0) {
@@ -118,8 +118,8 @@ public class ConfigHandler {
 		return val;
 	}
 
-	public static boolean loadBool(String name, String comment, boolean def) {
-		Property prop = config.get(Configuration.CATEGORY_GENERAL, name, def);
+	public static boolean loadBool(String name, String comment, String category, boolean def) {
+		Property prop = config.get(category, name, def);
 		prop.setComment(comment);
 		return prop.getBoolean(def);
 	}
