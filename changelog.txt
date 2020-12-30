@@ -1,10 +1,23 @@
 ---------------------------------------------
+ VERSION 2.1.2 - 1.12.2
+---------------------------------------------
+1.12.2:
+  FEATURES:
+  - Matchbox recipe now uses ore dictionary for any variant of wooden slabs
+  - Sorted some config options into categories
+  FIXES:
+  - Fixed issue that caused matchbox durability to not reflect the value set in the config
+  - Fixed issue that prevented torches from disappearing when rained on if no relight is enabled in the config
+
+
+---------------------------------------------
  VERSION 3.1.0 - 1.16.4
 ---------------------------------------------
 1.16.4
   FEATURES:
   - Brought back the lit torch crafting recipe that was missing in recent versions
   - Matchbox recipe now uses tag for any variant of wooden slabs
+  - Updated glowstone crystal and glowstone paste textures to reflect new vanilla textures
   FIXES:
   - Fixed discrepancy in config that stated burnout time is measured in seconds (actually measured in minutes)
   - Fixed issue that caused infinite matchbox durability config option to have no effect
