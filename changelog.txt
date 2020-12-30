@@ -1,4 +1,45 @@
 ---------------------------------------------
+ VERSION 2.1.2 - 1.12.2
+---------------------------------------------
+1.12.2:
+  FEATURES:
+  - Matchbox recipe now uses ore dictionary for any variant of wooden slabs
+  FIXES:
+  - Fixed issue that caused matchbox durability to not reflect the value set in the config
+  - Fixed issue that prevented torches from disappearing when rained on if no relight is enabled in the config
+
+
+---------------------------------------------
+ VERSION 3.1.0 - 1.16.4
+---------------------------------------------
+1.16.4
+  FEATURES:
+  - Brought back the lit torch crafting recipe that was missing in recent versions
+  - Matchbox recipe now uses tag for any variant of wooden slabs
+  - Updated glowstone crystal and glowstone paste textures to reflect new vanilla textures
+  FIXES:
+  - Fixed discrepancy in config that stated burnout time is measured in seconds (actually measured in minutes)
+  - Fixed issue that caused infinite matchbox durability config option to have no effect
+  UPDATES:
+  - Updated to MC 1.16.4 (Forge 35.1.28)
+
+
+---------------------------------------------
+ VERSION 3.0.0 - 1.15.2, 1.14.4
+---------------------------------------------
+1.15.2, 1.14.4:
+  FEATURES:
+  - Removed moving light sources and some config options that did not adapt well to newer versions of Minecraft
+  - Condensed the lit, smoldering, and unlit torch blocks into one single block with properties to determine its state
+1.15.2:
+  UPDATES:
+  - Updated to MC 1.15.2 (Forge 31.1.25)
+1.14.4:
+  UPDATES:
+  - Updated to MC 1.14.4 (Forge 28.2.3)
+
+
+---------------------------------------------
  VERSION 2.1.1 - 1.12.2
 ---------------------------------------------
 1.12.2:
