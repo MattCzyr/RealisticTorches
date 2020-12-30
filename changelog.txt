@@ -4,6 +4,7 @@
 1.12.2:
   FEATURES:
   - Matchbox recipe now uses ore dictionary for any variant of wooden slabs
+  - Sorted some config options into categories
   FIXES:
   - Fixed issue that caused matchbox durability to not reflect the value set in the config
   - Fixed issue that prevented torches from disappearing when rained on if no relight is enabled in the config
