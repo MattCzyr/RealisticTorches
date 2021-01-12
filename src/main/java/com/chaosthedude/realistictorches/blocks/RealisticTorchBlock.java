@@ -1,6 +1,7 @@
 package com.chaosthedude.realistictorches.blocks;
 
 import java.util.Random;
+import java.util.function.ToIntFunction;
 
 import com.chaosthedude.realistictorches.config.ConfigHandler;
 import com.chaosthedude.realistictorches.items.RealisticTorchesItems;
@@ -22,7 +23,6 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
@@ -40,18 +40,8 @@ public class RealisticTorchBlock extends TorchBlock {
     public static final int UNLIT = 0;
 
     public RealisticTorchBlock() {
-        super(Block.Properties.from(Blocks.TORCH), ParticleTypes.FLAME);
+        super(Block.Properties.from(Blocks.TORCH).setLightLevel(getLightValueFromState()), ParticleTypes.FLAME);
         setDefaultState(this.getDefaultState().with(LITSTATE, 0).with(BURNTIME, 0));
-    }
-
-    @Override
-    public int getLightValue(BlockState state, IBlockReader world, BlockPos pos) {
-        if (state.get(LITSTATE) == LIT) {
-            return 14;
-        } else if (state.get(LITSTATE) == SMOLDERING) {
-            return 12;
-        }
-        return 0;
     }
 
     @Override
@@ -163,5 +153,16 @@ public class RealisticTorchBlock extends TorchBlock {
     public void playExtinguishSound(World world, BlockPos pos) {
         world.playSound(null, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 1.0F, world.rand.nextFloat() * 0.1F + 0.9F);
     }
+    
+    private static ToIntFunction<BlockState> getLightValueFromState() {
+        return (state) -> {
+        	if (state.get(RealisticTorchBlock.LITSTATE) == RealisticTorchBlock.LIT) {
+                return 14;
+            } else if (state.get(RealisticTorchBlock.LITSTATE) == RealisticTorchBlock.SMOLDERING) {
+                return 12;
+            }
+            return 0;
+        };
+     }
 
 }
