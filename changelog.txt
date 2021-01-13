@@ -1,4 +1,15 @@
 ---------------------------------------------
+ VERSION 3.1.1 - 1.16.4
+---------------------------------------------
+1.16.4
+  FEATURES:
+  - Added config field to determine whether vanilla torches should drop unlit torches when broken
+  FIXES:
+  - Fixed incompatibility with Optifine that caused torches to emit light even when unlit
+  - Fixed issue that caused lit, smoldering, and unlit torches to drop nothing when broken
+
+
+---------------------------------------------
  VERSION 2.1.2 - 1.12.2
 ---------------------------------------------
 1.12.2:
