@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.chaosthedude.realistictorches.blocks.RealisticTorchesBlocks;
+import com.chaosthedude.realistictorches.conditions.RealisticTorchesConditions;
 import com.chaosthedude.realistictorches.config.ConfigHandler;
 import com.chaosthedude.realistictorches.worldgen.TorchFeature;
 
@@ -29,6 +30,7 @@ public class RealisticTorches {
     public RealisticTorches() {
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ConfigHandler.COMMON_CONFIG);
         ConfigHandler.loadConfig(ConfigHandler.COMMON_CONFIG, FMLPaths.CONFIGDIR.get().resolve("realistictorches-common.toml"));
+        RealisticTorchesConditions.init();
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
         MinecraftForge.EVENT_BUS.register(this);
     }
@@ -41,7 +43,6 @@ public class RealisticTorches {
 
     @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
     public static class ForgeEvents {
-
         @SubscribeEvent
         public static void setup(final BiomeLoadingEvent event) {
             event.getGeneration().withFeature(GenerationStage.Decoration.TOP_LAYER_MODIFICATION, TorchFeature.TORCH_CONFIGURED_FEATURE);

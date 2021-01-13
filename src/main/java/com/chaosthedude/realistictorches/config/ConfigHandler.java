@@ -20,6 +20,7 @@ public class ConfigHandler {
     public static ForgeConfigSpec.BooleanValue generateLitTorches;
     public static ForgeConfigSpec.BooleanValue noRelightEnabled;
     public static ForgeConfigSpec.BooleanValue matchboxCreatesFire;
+    public static ForgeConfigSpec.BooleanValue vanillaTorchesDropUnlit;
 
     static {
         COMMON_BUILDER.comment("General Settings").push(CATEGORY_GENERAL);
@@ -39,6 +40,9 @@ public class ConfigHandler {
 
 		desc = "Determines whether matchboxes can light fires in the world like flint and steel.";
 		matchboxCreatesFire = COMMON_BUILDER.comment(desc).define("matchboxCreatesFire", false);
+		
+		desc = "Determines whether vanilla torches drop unlit torches when broken.";
+		vanillaTorchesDropUnlit = COMMON_BUILDER.comment(desc).define("vanillaTorchesDropUnlit", true);
 		
         COMMON_BUILDER.pop();
 

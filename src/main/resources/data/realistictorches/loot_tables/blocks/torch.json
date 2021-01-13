@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "realistictorches:torch"
+          "name": "realistictorches:unlit_torch"
         }
       ],
       "conditions": [
