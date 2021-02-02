@@ -24,7 +24,7 @@ public class MatchboxItem extends Item {
 	public static final String NAME = "matchbox";
 
 	public MatchboxItem(int maxDamage) {
-		super(new Item.Properties().group(ItemGroup.TOOLS).maxDamage(maxDamage > 0 ? maxDamage : 0).defaultMaxDamage(maxDamage));
+		super(new Item.Properties().group(ItemGroup.TOOLS).maxDamage(maxDamage > 0 ? maxDamage : 0).defaultMaxDamage(maxDamage).setNoRepair());
 	}
 
 	@Override
