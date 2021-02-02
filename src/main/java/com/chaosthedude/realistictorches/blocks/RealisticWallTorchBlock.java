@@ -55,27 +55,32 @@ public class RealisticWallTorchBlock extends RealisticTorchBlock {
 
 	@Override
 	public void changeToLit(World world, BlockPos pos, BlockState state) {
-		world.setBlockState(pos, RealisticTorchesBlocks.WALL_TORCH.getDefaultState().with(LITSTATE, LIT)
-				.with(BURNTIME, INITIAL_BURN_TIME).with(HORIZONTAL_FACING, state.get(HORIZONTAL_FACING)));
-		world.getPendingBlockTicks().scheduleTick(pos, this, TICK_RATE);
+		world.setBlockState(pos, RealisticTorchesBlocks.WALL_TORCH.getDefaultState().with(LITSTATE, LIT).with(BURNTIME, getInitialBurnTime()).with(HORIZONTAL_FACING, state.get(HORIZONTAL_FACING)));
+		if (SHOULD_BURN_OUT) {
+			world.getPendingBlockTicks().scheduleTick(pos, this, TICK_RATE);
+		}
 	}
 
 	@Override
 	public void changeToSmoldering(World world, BlockPos pos, BlockState state, int newBurnTime) {
-		world.setBlockState(pos, RealisticTorchesBlocks.WALL_TORCH.getDefaultState().with(LITSTATE, SMOLDERING)
-				.with(BURNTIME, newBurnTime).with(HORIZONTAL_FACING, state.get(HORIZONTAL_FACING)));
-		world.getPendingBlockTicks().scheduleTick(pos, this, TICK_RATE);
+		if (SHOULD_BURN_OUT) {
+			world.setBlockState(pos, RealisticTorchesBlocks.WALL_TORCH.getDefaultState().with(LITSTATE, SMOLDERING)
+					.with(BURNTIME, newBurnTime).with(HORIZONTAL_FACING, state.get(HORIZONTAL_FACING)));
+			world.getPendingBlockTicks().scheduleTick(pos, this, TICK_RATE);
+		}
 	}
 
 	@Override
 	public void changeToUnlit(World world, BlockPos pos, BlockState state) {
-		if (ConfigHandler.noRelightEnabled.get()) {
-    		world.setBlockState(pos, Blocks.AIR.getDefaultState());
-    	} else {
-			world.setBlockState(pos, RealisticTorchesBlocks.WALL_TORCH.getDefaultState().with(HORIZONTAL_FACING,
-					state.get(HORIZONTAL_FACING)));
-			world.getPendingBlockTicks().scheduleTick(pos, this, TICK_RATE);
-    	}
+		if (SHOULD_BURN_OUT) {
+			if (ConfigHandler.noRelightEnabled.get()) {
+	    		world.setBlockState(pos, Blocks.AIR.getDefaultState());
+	    	} else {
+				world.setBlockState(pos, RealisticTorchesBlocks.WALL_TORCH.getDefaultState().with(HORIZONTAL_FACING,
+						state.get(HORIZONTAL_FACING)));
+				world.getPendingBlockTicks().scheduleTick(pos, this, TICK_RATE);
+	    	}
+		}
 	}
 
 	@Override

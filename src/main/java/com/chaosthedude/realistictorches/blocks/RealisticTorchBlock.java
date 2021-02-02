@@ -32,7 +32,8 @@ public class RealisticTorchBlock extends TorchBlock {
 	
     public static final int TICK_INTERVAL = 1200;
     protected static final int INITIAL_BURN_TIME = ConfigHandler.torchBurnoutTime.get();
-    protected static final IntegerProperty BURNTIME = IntegerProperty.create("burntime", 0, INITIAL_BURN_TIME);
+    protected static final boolean SHOULD_BURN_OUT = INITIAL_BURN_TIME > 0;
+    protected static final IntegerProperty BURNTIME = IntegerProperty.create("burntime", 0, SHOULD_BURN_OUT ? INITIAL_BURN_TIME : 1);
     protected static final IntegerProperty LITSTATE = IntegerProperty.create("litstate", 0, 2);
     
     public static final int LIT = 2;
@@ -73,7 +74,7 @@ public class RealisticTorchBlock extends TorchBlock {
 
     @Override
     public void tick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-        if (!world.isRemote() && INITIAL_BURN_TIME > 0 && state.get(LITSTATE) > UNLIT) {
+        if (!world.isRemote() && SHOULD_BURN_OUT && state.get(LITSTATE) > UNLIT) {
         	if (world.isRainingAt(pos)) {
                 playExtinguishSound(world, pos);
                 changeToUnlit(world, pos, state);
@@ -124,25 +125,31 @@ public class RealisticTorchBlock extends TorchBlock {
     }
 
     public static int getInitialBurnTime() {
-        return INITIAL_BURN_TIME;
+        return SHOULD_BURN_OUT ? INITIAL_BURN_TIME : 0;
     }
 
     public void changeToLit(World world, BlockPos pos, BlockState state) {
-        world.setBlockState(pos, RealisticTorchesBlocks.TORCH.getDefaultState().with(LITSTATE, LIT).with(BURNTIME, INITIAL_BURN_TIME));
-        world.getPendingBlockTicks().scheduleTick(pos, this, TICK_INTERVAL);
+    	world.setBlockState(pos, RealisticTorchesBlocks.TORCH.getDefaultState().with(LITSTATE, LIT).with(BURNTIME, getInitialBurnTime()));
+    	if (SHOULD_BURN_OUT) {
+    		world.getPendingBlockTicks().scheduleTick(pos, this, TICK_INTERVAL);
+    	}
     }
 
     public void changeToSmoldering(World world, BlockPos pos, BlockState state, int newBurnTime) {
-        world.setBlockState(pos, RealisticTorchesBlocks.TORCH.getDefaultState().with(LITSTATE, SMOLDERING).with(BURNTIME, newBurnTime));
-        world.getPendingBlockTicks().scheduleTick(pos, this, TICK_INTERVAL);
+    	if (SHOULD_BURN_OUT) {
+	        world.setBlockState(pos, RealisticTorchesBlocks.TORCH.getDefaultState().with(LITSTATE, SMOLDERING).with(BURNTIME, newBurnTime));
+	        world.getPendingBlockTicks().scheduleTick(pos, this, TICK_INTERVAL);
+    	}
     }
 
     public void changeToUnlit(World world, BlockPos pos, BlockState state) {
-    	if (ConfigHandler.noRelightEnabled.get()) {
-    		world.setBlockState(pos, Blocks.AIR.getDefaultState());
-    	} else {
-	        world.setBlockState(pos, RealisticTorchesBlocks.TORCH.getDefaultState());
-	        world.getPendingBlockTicks().scheduleTick(pos, this, TICK_INTERVAL);
+    	if (SHOULD_BURN_OUT) {
+	    	if (ConfigHandler.noRelightEnabled.get()) {
+	    		world.setBlockState(pos, Blocks.AIR.getDefaultState());
+	    	} else {
+		        world.setBlockState(pos, RealisticTorchesBlocks.TORCH.getDefaultState());
+		        world.getPendingBlockTicks().scheduleTick(pos, this, TICK_INTERVAL);
+	    	}
     	}
     }
 
