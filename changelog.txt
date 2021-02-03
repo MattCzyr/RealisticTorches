@@ -1,4 +1,14 @@
 ---------------------------------------------
+ VERSION 3.1.2 - 1.16.4
+---------------------------------------------
+1.16.4
+  FIXES:
+  - Fixed a crash that occurred after setting the torchBurnoutTime config field to a negative value to disable torch burnout
+  - Fixed a bug that allowed matchboxes to be duplicated
+  - Potentially fixed an issue that prevented the vanilla torch recipe from being overwritten under certain circumstances
+
+
+---------------------------------------------
  VERSION 3.1.1 - 1.16.4
 ---------------------------------------------
 1.16.4
