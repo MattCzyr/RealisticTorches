@@ -6,7 +6,7 @@
   ],
   "key": {
     "S": {
-      "item": "minecraft:stick"
+      "tag": "forge:rods/wooden"
     },
     "G": {
       "item": "realistictorches:glowstone_crystal"

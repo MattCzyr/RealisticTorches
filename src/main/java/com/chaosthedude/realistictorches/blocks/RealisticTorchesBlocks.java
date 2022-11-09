@@ -13,18 +13,18 @@ import net.minecraftforge.registries.ObjectHolder;
 @ObjectHolder(RealisticTorches.MODID)
 public class RealisticTorchesBlocks {
 
-    @ObjectHolder(RealisticTorchBlock.NAME)
-    public static final RealisticTorchBlock TORCH = null;
-    
-    @ObjectHolder(RealisticWallTorchBlock.NAME)
-    public static final RealisticWallTorchBlock WALL_TORCH = null;
+	@ObjectHolder(RealisticTorchBlock.NAME)
+	public static final RealisticTorchBlock TORCH = null;
 
-    @SubscribeEvent
-    public static void registerBlocks(final RegistryEvent.Register<Block> blockRegistry) {
-        blockRegistry.getRegistry().registerAll(
-            new RealisticTorchBlock().setRegistryName(new ResourceLocation(RealisticTorches.MODID, RealisticTorchBlock.NAME)),
-            new RealisticWallTorchBlock().setRegistryName(new ResourceLocation(RealisticTorches.MODID, RealisticWallTorchBlock.NAME))
-        );
-    }
+	@ObjectHolder(RealisticWallTorchBlock.NAME)
+	public static final RealisticWallTorchBlock WALL_TORCH = null;
+
+	@SubscribeEvent
+	public static void registerBlocks(final RegistryEvent.Register<Block> event) {
+		event.getRegistry().registerAll(
+				new RealisticTorchBlock().setRegistryName(new ResourceLocation(RealisticTorches.MODID, RealisticTorchBlock.NAME)),
+				new RealisticWallTorchBlock().setRegistryName(new ResourceLocation(RealisticTorches.MODID, RealisticWallTorchBlock.NAME))
+		);
+	}
 
 }

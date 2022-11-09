@@ -11,6 +11,8 @@ import net.minecraft.loot.LootContext;
 import net.minecraft.loot.conditions.ILootCondition;
 
 public class DropUnlitCondition implements ILootCondition {
+	
+	public static final String NAME = "drop_unlit";
 
 	private static final DropUnlitCondition INSTANCE = new DropUnlitCondition();
 
@@ -18,7 +20,7 @@ public class DropUnlitCondition implements ILootCondition {
 	}
 
 	@Override
-	public LootConditionType func_230419_b_() {
+	public LootConditionType getType() {
 		return RealisticTorchesConditions.DROP_UNLIT_TYPE;
 	}
 
@@ -29,13 +31,13 @@ public class DropUnlitCondition implements ILootCondition {
 
 	public static class Serializer implements ILootSerializer<DropUnlitCondition> {
 		@Override
-		public void serialize(JsonObject p_230424_1_, DropUnlitCondition p_230424_2_,
-				JsonSerializationContext p_230424_3_) {
+		public void serialize(JsonObject object, DropUnlitCondition condition, JsonSerializationContext context) {
 		}
 
 		@Override
-		public DropUnlitCondition deserialize(JsonObject obj, JsonDeserializationContext context) {
+		public DropUnlitCondition deserialize(JsonObject object, JsonDeserializationContext context) {
 			return DropUnlitCondition.INSTANCE;
 		}
 	}
+
 }

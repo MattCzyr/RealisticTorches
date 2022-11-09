@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[35,)"
+loaderVersion="[36,)"
 license = "CC BY-NC-SA 4.0"
 issueTrackerURL="https://github.com/MattCzyr/RealisticTorches/issues"
 [[mods]]
@@ -9,12 +9,18 @@ issueTrackerURL="https://github.com/MattCzyr/RealisticTorches/issues"
     displayURL="https://www.curseforge.com/minecraft/mc-mods/realistic-torches"
     authors="ChaosTheDude"
     description='''
-    Increases the difficulty of the early game by adding realism mechanics to torches.
+    Makes torches burn out after a configurable amount of time.
     '''
 
 [[dependencies.realistictorches]]
     modId="forge"
     mandatory=true
-    versionRange="[35,)"
-    ordering="NONE"
+    versionRange="[36,)"
+    ordering="AFTER"
+    side="BOTH"
+[[dependencies.realistictorches]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.16.5,)"
+    ordering="AFTER"
     side="BOTH"

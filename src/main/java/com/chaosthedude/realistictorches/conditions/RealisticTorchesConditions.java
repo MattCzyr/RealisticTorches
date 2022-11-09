@@ -9,14 +9,11 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 
 public class RealisticTorchesConditions {
-	
-	public static final LootConditionType DROP_UNLIT_TYPE = register("drop_unlit", new DropUnlitCondition.Serializer());
-	
-	public static void init() {
+
+	public static final LootConditionType DROP_UNLIT_TYPE = register(DropUnlitCondition.NAME, new DropUnlitCondition.Serializer());
+
+	public static LootConditionType register(String resourceName, ILootSerializer<? extends ILootCondition> lootSerializer) {
+		return Registry.register(Registry.LOOT_CONDITION_TYPE, new ResourceLocation(RealisticTorches.MODID, resourceName), new LootConditionType(lootSerializer));
 	}
-	
-	public static LootConditionType register(String resource_name, ILootSerializer<? extends ILootCondition> loot_serializer) {
-        return Registry.register(Registry.LOOT_CONDITION_TYPE, new ResourceLocation(RealisticTorches.MODID + ":" + resource_name), new LootConditionType(loot_serializer));
-    }
 
 }

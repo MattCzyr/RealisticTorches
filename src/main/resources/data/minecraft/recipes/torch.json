@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "S": {
+      "tag": "forge:rods/wooden"
+    },
+    "C": [
+      {
+        "item": "minecraft:coal"
+      },
+      {
+        "item": "minecraft:charcoal"
+      }
+    ]
+  },
+  "pattern": [
+    "C",
+    "S"
+  ],
+  "result": {
+    "item": "minecraft:torch"
+  },
+  "conditions": [
+    {
+      "type": "forge:false"
+    }
+  ]
+}
