@@ -4,7 +4,7 @@ import java.util.Random;
 import java.util.function.ToIntFunction;
 
 import com.chaosthedude.realistictorches.config.ConfigHandler;
-import com.chaosthedude.realistictorches.items.RealisticTorchesItems;
+import com.chaosthedude.realistictorches.registry.RealisticTorchesRegistry;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -57,9 +57,9 @@ public class RealisticTorchBlock extends TorchBlock {
 		if (level.isClientSide()) {
 			return InteractionResult.SUCCESS;
 		}
-		if (player.getItemInHand(hand).getItem() == Items.FLINT_AND_STEEL || player.getItemInHand(hand).getItem() == RealisticTorchesItems.MATCHBOX) {
+		if (player.getItemInHand(hand).getItem() == Items.FLINT_AND_STEEL || player.getItemInHand(hand).getItem() == RealisticTorchesRegistry.MATCHBOX_ITEM.get()) {
 			playLightingSound(level, pos);
-			if (!player.isCreative() && (player.getItemInHand(hand).getItem() != RealisticTorchesItems.MATCHBOX || ConfigHandler.matchboxDurability.get() > 0)) {
+			if (!player.isCreative() && (player.getItemInHand(hand).getItem() != RealisticTorchesRegistry.MATCHBOX_ITEM.get() || ConfigHandler.matchboxDurability.get() > 0)) {
 				ItemStack heldStack = player.getItemInHand(hand);
 				heldStack.hurtAndBreak(1, player, playerEntity -> {
 					playerEntity.broadcastBreakEvent(hand);
@@ -93,7 +93,7 @@ public class RealisticTorchBlock extends TorchBlock {
 				level.updateNeighborsAt(pos, this);
 			} else {
 				level.setBlock(pos, state.setValue(BURNTIME, newBurnTime), 2);
-				level.getBlockTicks().scheduleTick(pos, this, TICK_INTERVAL);
+				level.scheduleTick(pos, this, TICK_INTERVAL);
 			}
 		}
 	}
@@ -101,7 +101,7 @@ public class RealisticTorchBlock extends TorchBlock {
 	@Override
 	public void setPlacedBy(Level level, BlockPos pos, BlockState state, LivingEntity entity, ItemStack stack) {
 		super.setPlacedBy(level, pos, state, entity, stack);
-		level.getBlockTicks().scheduleTick(pos, this, TICK_INTERVAL);
+		level.scheduleTick(pos, this, TICK_INTERVAL);
 	}
 
 	@Override
@@ -132,16 +132,16 @@ public class RealisticTorchBlock extends TorchBlock {
 	}
 
 	public void changeToLit(Level Level, BlockPos pos, BlockState state) {
-		Level.setBlock(pos, RealisticTorchesBlocks.TORCH.defaultBlockState().setValue(LITSTATE, LIT).setValue(BURNTIME, getInitialBurnTime()), 2);
+		Level.setBlock(pos, RealisticTorchesRegistry.TORCH_BLOCK.get().defaultBlockState().setValue(LITSTATE, LIT).setValue(BURNTIME, getInitialBurnTime()), 2);
 		if (SHOULD_BURN_OUT) {
-			Level.getBlockTicks().scheduleTick(pos, this, TICK_INTERVAL);
+			Level.scheduleTick(pos, this, TICK_INTERVAL);
 		}
 	}
 
 	public void changeToSmoldering(Level level, BlockPos pos, BlockState state, int newBurnTime) {
 		if (SHOULD_BURN_OUT) {
-			level.setBlock(pos, RealisticTorchesBlocks.TORCH.defaultBlockState().setValue(LITSTATE, SMOLDERING).setValue(BURNTIME, newBurnTime), 2);
-			level.getBlockTicks().scheduleTick(pos, this, TICK_INTERVAL);
+			level.setBlock(pos, RealisticTorchesRegistry.TORCH_BLOCK.get().defaultBlockState().setValue(LITSTATE, SMOLDERING).setValue(BURNTIME, newBurnTime), 2);
+			level.scheduleTick(pos, this, TICK_INTERVAL);
 		}
 	}
 
@@ -150,8 +150,8 @@ public class RealisticTorchBlock extends TorchBlock {
 			if (ConfigHandler.noRelightEnabled.get()) {
 				level.setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
 			} else {
-				level.setBlock(pos, RealisticTorchesBlocks.TORCH.defaultBlockState(), 2);
-				level.getBlockTicks().scheduleTick(pos, this, TICK_INTERVAL);
+				level.setBlock(pos, RealisticTorchesRegistry.TORCH_BLOCK.get().defaultBlockState(), 2);
+				level.scheduleTick(pos, this, TICK_INTERVAL);
 			}
 		}
 	}

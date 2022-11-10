@@ -5,6 +5,7 @@ import java.util.Random;
 import javax.annotation.Nullable;
 
 import com.chaosthedude.realistictorches.config.ConfigHandler;
+import com.chaosthedude.realistictorches.registry.RealisticTorchesRegistry;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -52,17 +53,17 @@ public class RealisticWallTorchBlock extends RealisticTorchBlock {
 
 	@Override
 	public void changeToLit(Level level, BlockPos pos, BlockState state) {
-		level.setBlock(pos, RealisticTorchesBlocks.WALL_TORCH.defaultBlockState().setValue(LITSTATE, LIT).setValue(BURNTIME, getInitialBurnTime()).setValue(HORIZONTAL_FACING, state.getValue(HORIZONTAL_FACING)), 2);
+		level.setBlock(pos, RealisticTorchesRegistry.TORCH_WALL_BLOCK.get().defaultBlockState().setValue(LITSTATE, LIT).setValue(BURNTIME, getInitialBurnTime()).setValue(HORIZONTAL_FACING, state.getValue(HORIZONTAL_FACING)), 2);
 		if (SHOULD_BURN_OUT) {
-			level.getBlockTicks().scheduleTick(pos, this, TICK_RATE);
+			level.scheduleTick(pos, this, TICK_RATE);
 		}
 	}
 
 	@Override
 	public void changeToSmoldering(Level level, BlockPos pos, BlockState state, int newBurnTime) {
 		if (SHOULD_BURN_OUT) {
-			level.setBlock(pos, RealisticTorchesBlocks.WALL_TORCH.defaultBlockState().setValue(LITSTATE, SMOLDERING).setValue(BURNTIME, newBurnTime).setValue(HORIZONTAL_FACING, state.getValue(HORIZONTAL_FACING)), 2);
-			level.getBlockTicks().scheduleTick(pos, this, TICK_RATE);
+			level.setBlock(pos, RealisticTorchesRegistry.TORCH_WALL_BLOCK.get().defaultBlockState().setValue(LITSTATE, SMOLDERING).setValue(BURNTIME, newBurnTime).setValue(HORIZONTAL_FACING, state.getValue(HORIZONTAL_FACING)), 2);
+			level.scheduleTick(pos, this, TICK_RATE);
 		}
 	}
 
@@ -72,8 +73,8 @@ public class RealisticWallTorchBlock extends RealisticTorchBlock {
 			if (ConfigHandler.noRelightEnabled.get()) {
 				level.setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
 			} else {
-				level.setBlock(pos, RealisticTorchesBlocks.WALL_TORCH.defaultBlockState().setValue(HORIZONTAL_FACING, state.getValue(HORIZONTAL_FACING)), 2);
-				level.getBlockTicks().scheduleTick(pos, this, TICK_RATE);
+				level.setBlock(pos, RealisticTorchesRegistry.TORCH_WALL_BLOCK.get().defaultBlockState().setValue(HORIZONTAL_FACING, state.getValue(HORIZONTAL_FACING)), 2);
+				level.scheduleTick(pos, this, TICK_RATE);
 			}
 		}
 	}

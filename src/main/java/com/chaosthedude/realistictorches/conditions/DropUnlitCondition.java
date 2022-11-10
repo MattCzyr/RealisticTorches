@@ -1,6 +1,7 @@
 package com.chaosthedude.realistictorches.conditions;
 
 import com.chaosthedude.realistictorches.config.ConfigHandler;
+import com.chaosthedude.realistictorches.registry.RealisticTorchesRegistry;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
@@ -10,7 +11,7 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
 
 public class DropUnlitCondition implements LootItemCondition {
-	
+
 	public static final String NAME = "drop_unlit";
 
 	private static final DropUnlitCondition INSTANCE = new DropUnlitCondition();
@@ -20,7 +21,7 @@ public class DropUnlitCondition implements LootItemCondition {
 
 	@Override
 	public LootItemConditionType getType() {
-		return RealisticTorchesConditions.DROP_UNLIT_TYPE;
+		return RealisticTorchesRegistry.DROP_UNLIT_CONDITION.get();
 	}
 
 	@Override
