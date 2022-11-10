@@ -1,7 +1,5 @@
 package com.chaosthedude.realistictorches.blocks;
 
-import java.util.Random;
-
 import javax.annotation.Nullable;
 
 import com.chaosthedude.realistictorches.config.ConfigHandler;
@@ -10,6 +8,7 @@ import com.chaosthedude.realistictorches.registry.RealisticTorchesRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -39,7 +38,7 @@ public class RealisticWallTorchBlock extends RealisticTorchBlock {
 	}
 
 	@Override
-	public void animateTick(BlockState state, Level level, BlockPos pos, Random random) {
+	public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
 		if (state.getValue(LITSTATE) == LIT || (state.getValue(LITSTATE) == SMOLDERING && level.getRandom().nextInt(2) == 1)) {
 			Direction direction = state.getValue(HORIZONTAL_FACING);
 			double d0 = (double) pos.getX() + 0.5D;

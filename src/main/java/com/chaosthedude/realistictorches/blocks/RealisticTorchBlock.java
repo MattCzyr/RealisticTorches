@@ -1,6 +1,5 @@
 package com.chaosthedude.realistictorches.blocks;
 
-import java.util.Random;
 import java.util.function.ToIntFunction;
 
 import com.chaosthedude.realistictorches.config.ConfigHandler;
@@ -11,6 +10,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
@@ -46,7 +46,7 @@ public class RealisticTorchBlock extends TorchBlock {
 	}
 
 	@Override
-	public void animateTick(BlockState state, Level level, BlockPos pos, Random random) {
+	public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
 		if (state.getValue(LITSTATE) == LIT || (state.getValue(LITSTATE) == SMOLDERING && level.getRandom().nextInt(2) == 1)) {
 			super.animateTick(state, level, pos, random);
 		}
@@ -76,7 +76,7 @@ public class RealisticTorchBlock extends TorchBlock {
 	}
 
 	@Override
-	public void tick(BlockState state, ServerLevel level, BlockPos pos, Random random) {
+	public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
 		if (!level.isClientSide() && SHOULD_BURN_OUT && state.getValue(LITSTATE) > UNLIT) {
 			if (level.isRainingAt(pos)) {
 				playExtinguishSound(level, pos);

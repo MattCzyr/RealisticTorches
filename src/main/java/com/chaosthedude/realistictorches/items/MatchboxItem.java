@@ -27,12 +27,12 @@ public class MatchboxItem extends FlintAndSteelItem {
 	}
 
 	@Override
-	public boolean hasContainerItem(ItemStack stack) {
+	public boolean hasCraftingRemainingItem(ItemStack stack) {
 		return true;
 	}
 
 	@Override
-	public ItemStack getContainerItem(ItemStack stack) {
+	public ItemStack getCraftingRemainingItem(ItemStack stack) {
 		if (ConfigHandler.matchboxDurability.get() <= 0) {
 			return new ItemStack(this);
 		} else if (stack.getDamageValue() + 1 > stack.getMaxDamage()) {

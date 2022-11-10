@@ -8,13 +8,10 @@ import com.chaosthedude.realistictorches.registry.RealisticTorchesRegistry;
 
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -39,6 +36,7 @@ public class RealisticTorches {
 		RealisticTorchesRegistry.FEATURE_REGISTRY.register(eventBus);
 		RealisticTorchesRegistry.CONFIGURED_FEATURE_REGISTRY.register(eventBus);
 		RealisticTorchesRegistry.PLACED_FEATURE_REGISTRY.register(eventBus);
+		RealisticTorchesRegistry.BIOME_MODIFIER_SERIALIZERS.register(eventBus);
 		RealisticTorchesRegistry.ITEM_REGISTRY.register(eventBus);
 		RealisticTorchesRegistry.BLOCK_REGISTRY.register(eventBus);
 		RealisticTorchesRegistry.LOOT_CONDITION_REGISTRY.register(eventBus);
@@ -52,13 +50,4 @@ public class RealisticTorches {
 		ItemBlockRenderTypes.setRenderLayer(RealisticTorchesRegistry.TORCH_WALL_BLOCK.get(), RenderType.cutout());
 	}
 
-	@Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
-	public static class ForgeEvents {
-
-		@SubscribeEvent
-		public static void setup(final BiomeLoadingEvent event) {
-			event.getGeneration().addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION, RealisticTorchesRegistry.TORCH_PLACED_FEATURE.getHolder().get());
-		}
-
-	}
 }

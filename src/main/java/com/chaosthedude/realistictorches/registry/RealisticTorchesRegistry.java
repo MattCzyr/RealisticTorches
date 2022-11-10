@@ -10,7 +10,10 @@ import com.chaosthedude.realistictorches.config.ConfigHandler;
 import com.chaosthedude.realistictorches.items.LitTorchItem;
 import com.chaosthedude.realistictorches.items.MatchboxItem;
 import com.chaosthedude.realistictorches.items.UnlitTorchItem;
+import com.chaosthedude.realistictorches.worldgen.TorchBiomeModifier;
 import com.chaosthedude.realistictorches.worldgen.TorchFeature;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
@@ -22,6 +25,7 @@ import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
+import net.minecraftforge.common.world.BiomeModifier;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -39,6 +43,10 @@ public class RealisticTorchesRegistry {
 	// Placed features
 	public static final DeferredRegister<PlacedFeature> PLACED_FEATURE_REGISTRY = DeferredRegister.create(Registry.PLACED_FEATURE_REGISTRY, RealisticTorches.MODID);
 	public static final RegistryObject<PlacedFeature> TORCH_PLACED_FEATURE = PLACED_FEATURE_REGISTRY.register(TorchFeature.NAME, () -> new PlacedFeature(Holder.hackyErase(TORCH_CONFIGURED_FEATURE.getHolder().get()), new ArrayList<>()));
+
+	// Biome modifiers
+	public static final DeferredRegister<Codec<? extends BiomeModifier>> BIOME_MODIFIER_SERIALIZERS = DeferredRegister.create(ForgeRegistries.Keys.BIOME_MODIFIER_SERIALIZERS, RealisticTorches.MODID);
+	public static final RegistryObject<Codec<TorchBiomeModifier>> TORCH_BIOME_MODIFIER = BIOME_MODIFIER_SERIALIZERS.register(TorchFeature.NAME, () -> RecordCodecBuilder.create(builder -> builder.group(PlacedFeature.CODEC.fieldOf("feature").forGetter(TorchBiomeModifier::feature)).apply(builder, TorchBiomeModifier::new)));
 
 	// Blocks
 	public static final DeferredRegister<Block> BLOCK_REGISTRY = DeferredRegister.create(ForgeRegistries.BLOCKS, RealisticTorches.MODID);
