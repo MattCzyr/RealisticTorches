@@ -2,25 +2,25 @@ package com.chaosthedude.realistictorches.items;
 
 import com.chaosthedude.realistictorches.config.ConfigHandler;
 
-import net.minecraft.item.FlintAndSteelItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.util.ActionResultType;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.FlintAndSteelItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
 
 public class MatchboxItem extends FlintAndSteelItem {
 
 	public static final String NAME = "matchbox";
 
 	public MatchboxItem(int maxDamage) {
-		super(new Item.Properties().tab(ItemGroup.TAB_TOOLS).durability(maxDamage > 0 ? maxDamage : 0).defaultDurability(maxDamage).setNoRepair());
+		super(new Item.Properties().tab(CreativeModeTab.TAB_TOOLS).durability(maxDamage > 0 ? maxDamage : 0).defaultDurability(maxDamage).setNoRepair());
 	}
 
 	@Override
-	public ActionResultType useOn(ItemUseContext context) {
+	public InteractionResult useOn(UseOnContext context) {
 		if (!ConfigHandler.matchboxCreatesFire.get()) {
-			return ActionResultType.FAIL;
+			return InteractionResult.FAIL;
 		}
 
 		return super.useOn(context);

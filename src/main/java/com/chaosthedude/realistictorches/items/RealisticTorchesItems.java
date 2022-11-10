@@ -3,9 +3,9 @@ package com.chaosthedude.realistictorches.items;
 import com.chaosthedude.realistictorches.RealisticTorches;
 import com.chaosthedude.realistictorches.config.ConfigHandler;
 
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -19,10 +19,10 @@ public class RealisticTorchesItems {
 	public static final LitTorchItem LIT_TORCH = null;
 
 	@ObjectHolder(UnlitTorchItem.NAME)
-	public static final Item UNLIT_TORCH = null;
+	public static final UnlitTorchItem UNLIT_TORCH = null;
 
 	@ObjectHolder(MatchboxItem.NAME)
-	public static final Item MATCHBOX = null;
+	public static final MatchboxItem MATCHBOX = null;
 
 	@ObjectHolder("glowstone_paste")
 	public static final Item GLOWSTONE_PASTE = null;
@@ -31,13 +31,13 @@ public class RealisticTorchesItems {
 	public static final Item GLOWSTONE_CRYSTAL = null;
 
 	@SubscribeEvent
-	public static void registerItems(final RegistryEvent.Register<Item> event) {
+	public static void registerItems(RegistryEvent.Register<Item> event) {
 		event.getRegistry().registerAll(
 				new UnlitTorchItem(new Item.Properties()).setRegistryName(new ResourceLocation(RealisticTorches.MODID, UnlitTorchItem.NAME)),
-				new LitTorchItem(new Item.Properties().tab(ItemGroup.TAB_DECORATIONS)).setRegistryName(new ResourceLocation(RealisticTorches.MODID, LitTorchItem.NAME)),
+				new LitTorchItem(new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)).setRegistryName(new ResourceLocation(RealisticTorches.MODID, LitTorchItem.NAME)),
 				new MatchboxItem(ConfigHandler.matchboxDurability.get()).setRegistryName(new ResourceLocation(RealisticTorches.MODID, MatchboxItem.NAME)),
-				new Item(new Item.Properties().tab(ItemGroup.TAB_MATERIALS)).setRegistryName(new ResourceLocation(RealisticTorches.MODID, "glowstone_paste")),
-				new Item(new Item.Properties().tab(ItemGroup.TAB_MATERIALS)).setRegistryName(new ResourceLocation(RealisticTorches.MODID, "glowstone_crystal"))
+				new Item(new Item.Properties().tab(CreativeModeTab.TAB_MATERIALS)).setRegistryName(new ResourceLocation(RealisticTorches.MODID, "glowstone_paste")),
+				new Item(new Item.Properties().tab(CreativeModeTab.TAB_MATERIALS)).setRegistryName(new ResourceLocation(RealisticTorches.MODID, "glowstone_crystal"))
 		);
 	}
 

@@ -2,9 +2,9 @@ package com.chaosthedude.realistictorches.items;
 
 import com.chaosthedude.realistictorches.blocks.RealisticTorchesBlocks;
 
-import net.minecraft.item.WallOrFloorItem;
+import net.minecraft.world.item.StandingAndWallBlockItem;
 
-public class UnlitTorchItem extends WallOrFloorItem {
+public class UnlitTorchItem extends StandingAndWallBlockItem {
 
 	public static final String NAME = "unlit_torch";
 

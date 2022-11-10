@@ -5,12 +5,11 @@ import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 
-import net.minecraft.loot.ILootSerializer;
-import net.minecraft.loot.LootConditionType;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.conditions.ILootCondition;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
 
-public class DropUnlitCondition implements ILootCondition {
+public class DropUnlitCondition implements LootItemCondition {
 	
 	public static final String NAME = "drop_unlit";
 
@@ -20,7 +19,7 @@ public class DropUnlitCondition implements ILootCondition {
 	}
 
 	@Override
-	public LootConditionType getType() {
+	public LootItemConditionType getType() {
 		return RealisticTorchesConditions.DROP_UNLIT_TYPE;
 	}
 
@@ -29,7 +28,7 @@ public class DropUnlitCondition implements ILootCondition {
 		return ConfigHandler.vanillaTorchesDropUnlit.get();
 	}
 
-	public static class Serializer implements ILootSerializer<DropUnlitCondition> {
+	public static class Serializer implements net.minecraft.world.level.storage.loot.Serializer<DropUnlitCondition> {
 		@Override
 		public void serialize(JsonObject object, DropUnlitCondition condition, JsonSerializationContext context) {
 		}

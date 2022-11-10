@@ -6,31 +6,31 @@ import javax.annotation.Nullable;
 
 import com.chaosthedude.realistictorches.config.ConfigHandler;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.HorizontalBlock;
-import net.minecraft.block.WallTorchBlock;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.state.DirectionProperty;
-import net.minecraft.state.StateContainer.Builder;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.Rotation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.WallTorchBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition.Builder;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class RealisticWallTorchBlock extends RealisticTorchBlock {
 
 	public static final String NAME = "torch_wall";
 	public static final int TICK_RATE = 1200;
 
-	public static final DirectionProperty HORIZONTAL_FACING = HorizontalBlock.FACING;
+	public static final DirectionProperty HORIZONTAL_FACING = HorizontalDirectionalBlock.FACING;
 
 	public RealisticWallTorchBlock() {
 		super();
@@ -38,42 +38,42 @@ public class RealisticWallTorchBlock extends RealisticTorchBlock {
 	}
 
 	@Override
-	public void animateTick(BlockState state, World world, BlockPos pos, Random random) {
-		if (state.getValue(LITSTATE) == LIT || (state.getValue(LITSTATE) == SMOLDERING && world.getRandom().nextInt(2) == 1)) {
+	public void animateTick(BlockState state, Level level, BlockPos pos, Random random) {
+		if (state.getValue(LITSTATE) == LIT || (state.getValue(LITSTATE) == SMOLDERING && level.getRandom().nextInt(2) == 1)) {
 			Direction direction = state.getValue(HORIZONTAL_FACING);
 			double d0 = (double) pos.getX() + 0.5D;
 			double d1 = (double) pos.getY() + 0.7D;
 			double d2 = (double) pos.getZ() + 0.5D;
 			Direction direction1 = direction.getOpposite();
-			world.addParticle(ParticleTypes.SMOKE, d0 + 0.27D * (double) direction1.getStepX(), d1 + 0.22D, d2 + 0.27D * (double) direction1.getStepZ(), 0.0D, 0.0D, 0.0D);
-			world.addParticle(ParticleTypes.FLAME, d0 + 0.27D * (double) direction1.getStepX(), d1 + 0.22D, d2 + 0.27D * (double) direction1.getStepZ(), 0.0D, 0.0D, 0.0D);
+			level.addParticle(ParticleTypes.SMOKE, d0 + 0.27D * (double) direction1.getStepX(), d1 + 0.22D, d2 + 0.27D * (double) direction1.getStepZ(), 0.0D, 0.0D, 0.0D);
+			level.addParticle(ParticleTypes.FLAME, d0 + 0.27D * (double) direction1.getStepX(), d1 + 0.22D, d2 + 0.27D * (double) direction1.getStepZ(), 0.0D, 0.0D, 0.0D);
 		}
 	}
 
 	@Override
-	public void changeToLit(World world, BlockPos pos, BlockState state) {
-		world.setBlock(pos, RealisticTorchesBlocks.WALL_TORCH.defaultBlockState().setValue(LITSTATE, LIT).setValue(BURNTIME, getInitialBurnTime()).setValue(HORIZONTAL_FACING, state.getValue(HORIZONTAL_FACING)), 2);
+	public void changeToLit(Level level, BlockPos pos, BlockState state) {
+		level.setBlock(pos, RealisticTorchesBlocks.WALL_TORCH.defaultBlockState().setValue(LITSTATE, LIT).setValue(BURNTIME, getInitialBurnTime()).setValue(HORIZONTAL_FACING, state.getValue(HORIZONTAL_FACING)), 2);
 		if (SHOULD_BURN_OUT) {
-			world.getBlockTicks().scheduleTick(pos, this, TICK_RATE);
+			level.getBlockTicks().scheduleTick(pos, this, TICK_RATE);
 		}
 	}
 
 	@Override
-	public void changeToSmoldering(World world, BlockPos pos, BlockState state, int newBurnTime) {
+	public void changeToSmoldering(Level level, BlockPos pos, BlockState state, int newBurnTime) {
 		if (SHOULD_BURN_OUT) {
-			world.setBlock(pos, RealisticTorchesBlocks.WALL_TORCH.defaultBlockState().setValue(LITSTATE, SMOLDERING).setValue(BURNTIME, newBurnTime).setValue(HORIZONTAL_FACING, state.getValue(HORIZONTAL_FACING)), 2);
-			world.getBlockTicks().scheduleTick(pos, this, TICK_RATE);
+			level.setBlock(pos, RealisticTorchesBlocks.WALL_TORCH.defaultBlockState().setValue(LITSTATE, SMOLDERING).setValue(BURNTIME, newBurnTime).setValue(HORIZONTAL_FACING, state.getValue(HORIZONTAL_FACING)), 2);
+			level.getBlockTicks().scheduleTick(pos, this, TICK_RATE);
 		}
 	}
 
 	@Override
-	public void changeToUnlit(World world, BlockPos pos, BlockState state) {
+	public void changeToUnlit(Level level, BlockPos pos, BlockState state) {
 		if (SHOULD_BURN_OUT) {
 			if (ConfigHandler.noRelightEnabled.get()) {
-				world.setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
+				level.setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
 			} else {
-				world.setBlock(pos, RealisticTorchesBlocks.WALL_TORCH.defaultBlockState().setValue(HORIZONTAL_FACING, state.getValue(HORIZONTAL_FACING)), 2);
-				world.getBlockTicks().scheduleTick(pos, this, TICK_RATE);
+				level.setBlock(pos, RealisticTorchesBlocks.WALL_TORCH.defaultBlockState().setValue(HORIZONTAL_FACING, state.getValue(HORIZONTAL_FACING)), 2);
+				level.getBlockTicks().scheduleTick(pos, this, TICK_RATE);
 			}
 		}
 	}
@@ -85,21 +85,21 @@ public class RealisticWallTorchBlock extends RealisticTorchBlock {
 	}
 
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext context) {
+	public VoxelShape getShape(BlockState state, BlockGetter blockGetter, BlockPos pos, CollisionContext context) {
 		return WallTorchBlock.getShape(state);
 	}
 
 	@Override
-	public boolean canSurvive(BlockState state, IWorldReader world, BlockPos pos) {
+	public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
 		Direction direction = state.getValue(HORIZONTAL_FACING);
 		BlockPos onPos = pos.relative(direction.getOpposite());
-		BlockState onState = world.getBlockState(onPos);
-		return onState.isFaceSturdy(world, onPos, direction);
+		BlockState onState = level.getBlockState(onPos);
+		return onState.isFaceSturdy(level, onPos, direction);
 	}
 
 	@Override
 	@Nullable
-	public BlockState getStateForPlacement(BlockItemUseContext context) {
+	public BlockState getStateForPlacement(BlockPlaceContext context) {
 		BlockState blockstate = Blocks.WALL_TORCH.getStateForPlacement(context);
 		return blockstate == null ? null : defaultBlockState().setValue(HORIZONTAL_FACING, blockstate.getValue(HORIZONTAL_FACING));
 	}

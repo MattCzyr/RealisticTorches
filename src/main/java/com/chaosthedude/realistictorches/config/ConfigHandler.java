@@ -11,8 +11,8 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber
 public class ConfigHandler {
 
-	public static final String CATEGORY_GENERAL = "general";
 	private static final ForgeConfigSpec.Builder COMMON_BUILDER = new ForgeConfigSpec.Builder();
+
 	public static ForgeConfigSpec COMMON_CONFIG;
 
 	public static ForgeConfigSpec.IntValue torchBurnoutTime;
@@ -23,7 +23,8 @@ public class ConfigHandler {
 	public static ForgeConfigSpec.BooleanValue vanillaTorchesDropUnlit;
 
 	static {
-		COMMON_BUILDER.comment("General Settings").push(CATEGORY_GENERAL);
+		COMMON_BUILDER.push("general");
+
 		String desc;
 
 		desc = "The amount of time until a torch burns out, in minutes. Setting this to a negative value will disable torch burnout.";

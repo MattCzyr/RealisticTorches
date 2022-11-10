@@ -1,6 +1,9 @@
 ---------------------------------------------
- VERSION 3.1.3 - 1.16.5
+ VERSION 3.1.3 - 1.17.1, 1.16.5
 ---------------------------------------------
+1.17.1:
+  UPDATES:
+  - Updated to MC 1.17.1
 1.16.5
   UPDATES:
   - Updated to Forge 36.0.14
@@ -12,10 +15,10 @@
 ---------------------------------------------
  VERSION 3.1.2 - 1.16.5, 1.16.4
 ---------------------------------------------
-1.16.5
+1.16.5:
   UPDATES:
   - Initial release for 1.16.5
-1.16.4
+1.16.4:
   FIXES:
   - Fixed a crash that occurred after setting the torchBurnoutTime config field to a negative value to disable torch burnout
   - Fixed a bug that allowed matchboxes to be duplicated
@@ -24,7 +27,7 @@
 ---------------------------------------------
  VERSION 3.1.1 - 1.16.4
 ---------------------------------------------
-1.16.4
+1.16.4:
   FEATURES:
   - Added config field to determine whether vanilla torches should drop unlit torches when broken
   FIXES:
@@ -47,7 +50,7 @@
 ---------------------------------------------
  VERSION 3.1.0 - 1.16.4
 ---------------------------------------------
-1.16.4
+1.16.4:
   FEATURES:
   - Brought back the lit torch crafting recipe that was missing in recent versions
   - Matchbox recipe now uses tag for any variant of wooden slabs
@@ -56,7 +59,7 @@
   - Fixed discrepancy in config that stated burnout time is measured in seconds (actually measured in minutes)
   - Fixed issue that caused infinite matchbox durability config option to have no effect
   UPDATES:
-  - Updated to MC 1.16.4 (Forge 35.1.28)
+  - Updated to MC 1.16.4
 
 
 ---------------------------------------------
@@ -68,10 +71,10 @@
   - Condensed the lit, smoldering, and unlit torch blocks into one single block with properties to determine its state
 1.15.2:
   UPDATES:
-  - Updated to MC 1.15.2 (Forge 31.1.25)
+  - Updated to MC 1.15.2
 1.14.4:
   UPDATES:
-  - Updated to MC 1.14.4 (Forge 28.2.3)
+  - Updated to MC 1.14.4
 
 
 ---------------------------------------------
@@ -81,7 +84,7 @@
   FEATURES:
   - Added a config field to specify the ticks between handheld light source updates
   UPDATES:
-  - Updated to MC 1.12.2 (Forge #2589)
+  - Updated to MC 1.12.2
 
 
 ---------------------------------------------
