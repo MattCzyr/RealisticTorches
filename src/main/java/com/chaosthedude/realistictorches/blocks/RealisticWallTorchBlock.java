@@ -22,6 +22,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 
@@ -87,6 +88,11 @@ public class RealisticWallTorchBlock extends RealisticTorchBlock {
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext context) {
 		return WallTorchBlock.getShape(state);
+	}
+	
+	@Override
+	public BlockState updateShape(BlockState state, Direction facing, BlockState otherState, IWorld world, BlockPos pos, BlockPos otherPos) {
+		return facing.getOpposite() == state.getValue(HORIZONTAL_FACING) && !state.canSurvive(world, pos) ? Blocks.AIR.defaultBlockState() : state;
 	}
 
 	@Override
