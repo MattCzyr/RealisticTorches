@@ -1,6 +1,8 @@
 package com.chaosthedude.realistictorches.config;
 
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
@@ -21,6 +23,7 @@ public class ConfigHandler {
 	public static ForgeConfigSpec.BooleanValue noRelightEnabled;
 	public static ForgeConfigSpec.BooleanValue matchboxCreatesFire;
 	public static ForgeConfigSpec.BooleanValue vanillaTorchesDropUnlit;
+	public static ForgeConfigSpec.ConfigValue<List<String>> lightTorchItems;
 
 	static {
 		COMMON_BUILDER.comment("General Settings").push(CATEGORY_GENERAL);
@@ -43,6 +46,9 @@ public class ConfigHandler {
 
 		desc = "Determines whether vanilla torches drop unlit torches when broken.";
 		vanillaTorchesDropUnlit = COMMON_BUILDER.comment(desc).define("vanillaTorchesDropUnlit", true);
+		
+		desc = "The list of items that should be allowed to light torches placed in the world, besides the matchbox and flint and steel. Ex: [\"minecraft:lava_bucket\"]";
+		lightTorchItems = COMMON_BUILDER.comment(desc).define("lightTorchItems", new ArrayList<String>());
 
 		COMMON_BUILDER.pop();
 

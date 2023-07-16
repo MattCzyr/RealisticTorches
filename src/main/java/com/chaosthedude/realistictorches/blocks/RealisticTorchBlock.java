@@ -17,6 +17,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.FlintAndSteelItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -25,6 +26,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class RealisticTorchBlock extends TorchBlock {
 
@@ -57,11 +59,11 @@ public class RealisticTorchBlock extends TorchBlock {
 		if (level.isClientSide()) {
 			return InteractionResult.SUCCESS;
 		}
-		if (player.getItemInHand(hand).getItem() instanceof FlintAndSteelItem || player.getItemInHand(hand).getItem() == RealisticTorchesRegistry.MATCHBOX_ITEM.get()) {
+		ItemStack stack = player.getItemInHand(hand);
+		if (stack.getItem() == Items.FLINT_AND_STEEL || stack.getItem() == RealisticTorchesRegistry.MATCHBOX_ITEM.get() || ConfigHandler.lightTorchItems.get().contains(ForgeRegistries.ITEMS.getKey(stack.getItem()).toString())) {
 			playLightingSound(level, pos);
-			if (!player.isCreative() && (player.getItemInHand(hand).getItem() != RealisticTorchesRegistry.MATCHBOX_ITEM.get() || ConfigHandler.matchboxDurability.get() > 0)) {
-				ItemStack heldStack = player.getItemInHand(hand);
-				heldStack.hurtAndBreak(1, player, playerEntity -> {
+			if (!player.isCreative() && (stack.getItem() != RealisticTorchesRegistry.MATCHBOX_ITEM.get() || ConfigHandler.matchboxDurability.get() > 0)) {
+				stack.hurtAndBreak(1, player, playerEntity -> {
 					playerEntity.broadcastBreakEvent(hand);
 				});
 			}
