@@ -5,7 +5,7 @@
   UPDATES:
   - Updated to MC 1.19.4
   FEATURES:
-  - More flint and steel-like items can now be used to light torches
+  - Added a config field to specify which items can be used to light torches
   - Temporarily removed the generateLitTorches config option (will be brought back in a later version)
   FIXES:
   - Fixed a filename issue which prevented Chinese translations from loading
