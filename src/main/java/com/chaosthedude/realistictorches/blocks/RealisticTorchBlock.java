@@ -15,8 +15,8 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.FlintAndSteelItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -57,7 +57,7 @@ public class RealisticTorchBlock extends TorchBlock {
 		if (level.isClientSide()) {
 			return InteractionResult.SUCCESS;
 		}
-		if (player.getItemInHand(hand).getItem() == Items.FLINT_AND_STEEL || player.getItemInHand(hand).getItem() == RealisticTorchesRegistry.MATCHBOX_ITEM.get()) {
+		if (player.getItemInHand(hand).getItem() instanceof FlintAndSteelItem || player.getItemInHand(hand).getItem() == RealisticTorchesRegistry.MATCHBOX_ITEM.get()) {
 			playLightingSound(level, pos);
 			if (!player.isCreative() && (player.getItemInHand(hand).getItem() != RealisticTorchesRegistry.MATCHBOX_ITEM.get() || ConfigHandler.matchboxDurability.get() > 0)) {
 				ItemStack heldStack = player.getItemInHand(hand);
