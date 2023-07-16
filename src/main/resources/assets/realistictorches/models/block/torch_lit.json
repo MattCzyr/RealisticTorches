@@ -1,6 +1,6 @@
 {
     "parent": "block/torch",
     "textures": {
-        "torch": "realistictorches:blocks/torch_lit"
+        "torch": "realistictorches:block/torch_lit"
     }
 }

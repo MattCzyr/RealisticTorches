@@ -1,6 +1,6 @@
 {
     "parent": "block/template_torch_wall",
     "textures": {
-        "torch": "realistictorches:blocks/torch_smoldering"
+        "torch": "realistictorches:block/torch_smoldering"
     }
 }

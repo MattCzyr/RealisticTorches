@@ -15,7 +15,7 @@ import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConf
 
 public class TorchFeature extends Feature<NoneFeatureConfiguration> {
 
-	public static final String NAME = "torch_feature";
+	public static final String NAME = "replace_all_feature";
 
 	public TorchFeature(Codec<NoneFeatureConfiguration> codec) {
 		super(codec);

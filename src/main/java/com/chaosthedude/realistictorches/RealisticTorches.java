@@ -8,9 +8,12 @@ import com.chaosthedude.realistictorches.registry.RealisticTorchesRegistry;
 
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.CreativeModeTabEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -36,16 +39,30 @@ public class RealisticTorches {
 		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
 			eventBus.addListener(this::clientSetup);
 		});
+		
+		eventBus.addListener(this::buildCreativeTabContents);
 
-		RealisticTorchesRegistry.FEATURE_REGISTRY.register(eventBus);
-		RealisticTorchesRegistry.CONFIGURED_FEATURE_REGISTRY.register(eventBus);
-		RealisticTorchesRegistry.PLACED_FEATURE_REGISTRY.register(eventBus);
+		// TODO: reimplement features
+		//RealisticTorchesRegistry.FEATURE_REGISTRY.register(eventBus);
+		//RealisticTorchesRegistry.CONFIGURED_FEATURE_REGISTRY.register(eventBus);
+		//RealisticTorchesRegistry.PLACED_FEATURE_REGISTRY.register(eventBus);
 		RealisticTorchesRegistry.BIOME_MODIFIER_SERIALIZERS.register(eventBus);
 		RealisticTorchesRegistry.ITEM_REGISTRY.register(eventBus);
 		RealisticTorchesRegistry.BLOCK_REGISTRY.register(eventBus);
 		RealisticTorchesRegistry.LOOT_CONDITION_REGISTRY.register(eventBus);
 
 		MinecraftForge.EVENT_BUS.register(this);
+	}
+	
+	private void buildCreativeTabContents(CreativeModeTabEvent.BuildContents event) {
+		if (event.getTab() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
+			event.accept(new ItemStack(RealisticTorchesRegistry.MATCHBOX_ITEM.get()));
+		} else if (event.getTab() == CreativeModeTabs.FUNCTIONAL_BLOCKS) {
+			event.accept(new ItemStack(RealisticTorchesRegistry.LIT_TORCH_ITEM.get()));
+		} else if (event.getTab() == CreativeModeTabs.INGREDIENTS) {
+			event.accept(new ItemStack(RealisticTorchesRegistry.GLOWSTONE_CRYSTAL_ITEM.get()));
+			event.accept(new ItemStack(RealisticTorchesRegistry.GLOWSTONE_PASTE_ITEM.get()));
+		}
 	}
 
 	@OnlyIn(Dist.CLIENT)

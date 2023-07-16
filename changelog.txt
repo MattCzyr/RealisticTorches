@@ -1,4 +1,16 @@
 ---------------------------------------------
+ VERSION 3.2.0 - 1.19.4
+---------------------------------------------
+1.19.4:
+  UPDATES:
+  - Updated to MC 1.19.4
+  FEATURES:
+  - Temporarily removed the generateLitTorches config option (to be brought back in a later version)
+  FIXES:
+  - Fixed a filename issue which prevented Chinese translations from loading
+
+
+---------------------------------------------
  VERSION 3.1.5 - 1.19.2, 1.18.2, 1.17.1, 1.16.5
 ---------------------------------------------
 1.19.2, 1.18.2, 1.17.1, 1.16.5:

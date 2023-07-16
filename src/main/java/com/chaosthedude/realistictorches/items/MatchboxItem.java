@@ -3,7 +3,6 @@ package com.chaosthedude.realistictorches.items;
 import com.chaosthedude.realistictorches.config.ConfigHandler;
 
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.FlintAndSteelItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -14,7 +13,7 @@ public class MatchboxItem extends FlintAndSteelItem {
 	public static final String NAME = "matchbox";
 
 	public MatchboxItem(int maxDamage) {
-		super(new Item.Properties().tab(CreativeModeTab.TAB_TOOLS).durability(maxDamage > 0 ? maxDamage : 0).defaultDurability(maxDamage).setNoRepair());
+		super(new Item.Properties().durability(maxDamage > 0 ? maxDamage : 0).defaultDurability(maxDamage).setNoRepair());
 	}
 
 	@Override

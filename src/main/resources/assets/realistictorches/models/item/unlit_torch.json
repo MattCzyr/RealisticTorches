@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "realistictorches:blocks/torch_unlit"
+        "layer0": "realistictorches:block/torch_unlit"
     }
 }
