@@ -13,7 +13,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.CreativeModeTabEvent;
+import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -54,12 +54,12 @@ public class RealisticTorches {
 		MinecraftForge.EVENT_BUS.register(this);
 	}
 	
-	private void buildCreativeTabContents(CreativeModeTabEvent.BuildContents event) {
-		if (event.getTab() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
+	private void buildCreativeTabContents(BuildCreativeModeTabContentsEvent event) {
+		if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
 			event.accept(new ItemStack(RealisticTorchesRegistry.MATCHBOX_ITEM.get()));
-		} else if (event.getTab() == CreativeModeTabs.FUNCTIONAL_BLOCKS) {
+		} else if (event.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS) {
 			event.accept(new ItemStack(RealisticTorchesRegistry.LIT_TORCH_ITEM.get()));
-		} else if (event.getTab() == CreativeModeTabs.INGREDIENTS) {
+		} else if (event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
 			event.accept(new ItemStack(RealisticTorchesRegistry.GLOWSTONE_CRYSTAL_ITEM.get()));
 			event.accept(new ItemStack(RealisticTorchesRegistry.GLOWSTONE_PASTE_ITEM.get()));
 		}
