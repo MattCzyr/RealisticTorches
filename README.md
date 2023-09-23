@@ -4,7 +4,7 @@ Realistic Torches is a Minecraft mod that causes torches to burn out after a con
 
 ## Download
 
-Downloads, installation instructions, and more information can be found on [Curse](https://www.curseforge.com/minecraft/mc-mods/realistic-torches).
+Downloads and more information can be found on [CurseForge](https://www.curseforge.com/minecraft/mc-mods/realistic-torches) and [Modrinth](https://modrinth.com/mod/realistic-torches).
 
 ## Develop
 
