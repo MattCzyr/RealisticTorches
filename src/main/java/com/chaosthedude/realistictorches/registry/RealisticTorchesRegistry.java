@@ -59,6 +59,6 @@ public class RealisticTorchesRegistry {
 
 	// Loot conditions
 	public static final DeferredRegister<LootItemConditionType> LOOT_CONDITION_REGISTRY = DeferredRegister.create(Registries.LOOT_CONDITION_TYPE, RealisticTorches.MODID);
-	public static final RegistryObject<LootItemConditionType> DROP_UNLIT_CONDITION = LOOT_CONDITION_REGISTRY.register(DropUnlitCondition.NAME, () -> new LootItemConditionType(new DropUnlitCondition.Serializer()));
+	public static final RegistryObject<LootItemConditionType> DROP_UNLIT_CONDITION = LOOT_CONDITION_REGISTRY.register(DropUnlitCondition.NAME, () -> new LootItemConditionType(DropUnlitCondition.CODEC));
 
 }
