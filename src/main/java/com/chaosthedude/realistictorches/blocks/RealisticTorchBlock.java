@@ -15,7 +15,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.FlintAndSteelItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
@@ -43,7 +42,7 @@ public class RealisticTorchBlock extends TorchBlock {
 	public static final int UNLIT = 0;
 
 	public RealisticTorchBlock() {
-		super(Block.Properties.copy(Blocks.TORCH).lightLevel(getLightValueFromState()), ParticleTypes.FLAME);
+		super(ParticleTypes.FLAME, Block.Properties.ofFullCopy(Blocks.TORCH).lightLevel(getLightValueFromState()));
 		registerDefaultState(stateDefinition.any().setValue(LITSTATE, 0).setValue(BURNTIME, 0));
 	}
 
