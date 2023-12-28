@@ -1,5 +1,7 @@
 ## Version 3.2.0
-### Forge 1.20.2, 1.20.1, 1.19.4
+### Forge 1.20.4, 1.20.3, 1.20.2, 1.20.1, 1.19.4
+- Updated to Forge 1.20.4
+- Updated to Forge 1.20.3
 - Updated to Forge 1.20.2
 - Updated to Forge 1.20.1
 - Updated to Forge 1.19.4
