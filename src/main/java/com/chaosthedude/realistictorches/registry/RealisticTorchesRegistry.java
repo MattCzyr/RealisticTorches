@@ -10,7 +10,7 @@ import com.chaosthedude.realistictorches.items.MatchboxItem;
 import com.chaosthedude.realistictorches.items.UnlitTorchItem;
 import com.chaosthedude.realistictorches.worldgen.TorchBiomeModifier;
 import com.chaosthedude.realistictorches.worldgen.TorchFeature;
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.core.Direction;
@@ -41,8 +41,8 @@ public class RealisticTorchesRegistry {
 	//public static final RegistryObject<PlacedFeature> TORCH_PLACED_FEATURE = PLACED_FEATURE_REGISTRY.register(TorchFeature.NAME, () -> new PlacedFeature(Holder.hackyErase(TORCH_CONFIGURED_FEATURE.getHolder().get()), new ArrayList<>()));
 
 	// Biome modifiers
-	public static final DeferredRegister<Codec<? extends BiomeModifier>> BIOME_MODIFIER_SERIALIZERS = DeferredRegister.create(ForgeRegistries.Keys.BIOME_MODIFIER_SERIALIZERS, RealisticTorches.MODID);
-	public static final RegistryObject<Codec<TorchBiomeModifier>> TORCH_BIOME_MODIFIER = BIOME_MODIFIER_SERIALIZERS.register(TorchFeature.NAME, () -> RecordCodecBuilder.create(builder -> builder.group(PlacedFeature.CODEC.fieldOf("feature").forGetter(TorchBiomeModifier::feature)).apply(builder, TorchBiomeModifier::new)));
+	public static final DeferredRegister<MapCodec<? extends BiomeModifier>> BIOME_MODIFIER_SERIALIZERS = DeferredRegister.create(ForgeRegistries.Keys.BIOME_MODIFIER_SERIALIZERS, RealisticTorches.MODID);
+	public static final RegistryObject<MapCodec<TorchBiomeModifier>> TORCH_BIOME_MODIFIER = BIOME_MODIFIER_SERIALIZERS.register(TorchFeature.NAME, () -> RecordCodecBuilder.mapCodec(builder -> builder.group(PlacedFeature.CODEC.fieldOf("feature").forGetter(TorchBiomeModifier::feature)).apply(builder, TorchBiomeModifier::new)));
 
 	// Blocks
 	public static final DeferredRegister<Block> BLOCK_REGISTRY = DeferredRegister.create(ForgeRegistries.BLOCKS, RealisticTorches.MODID);

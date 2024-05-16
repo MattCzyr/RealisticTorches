@@ -2,6 +2,7 @@ package com.chaosthedude.realistictorches.worldgen;
 
 import com.chaosthedude.realistictorches.registry.RealisticTorchesRegistry;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 
 import net.minecraft.core.Holder;
 import net.minecraft.world.level.biome.Biome;
@@ -20,7 +21,7 @@ public record TorchBiomeModifier(Holder<PlacedFeature> feature) implements Biome
 	}
 
 	@Override
-	public Codec<? extends BiomeModifier> codec() {
+	public MapCodec<? extends BiomeModifier> codec() {
 		return RealisticTorchesRegistry.TORCH_BIOME_MODIFIER.get();
 	}
 

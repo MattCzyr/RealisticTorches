@@ -13,7 +13,7 @@ public class MatchboxItem extends FlintAndSteelItem {
 	public static final String NAME = "matchbox";
 
 	public MatchboxItem(int maxDamage) {
-		super(new Item.Properties().durability(maxDamage > 0 ? maxDamage : 0).defaultDurability(maxDamage).setNoRepair());
+		super(new Item.Properties().durability(maxDamage > 0 ? maxDamage : 0).durability(maxDamage));
 	}
 
 	@Override

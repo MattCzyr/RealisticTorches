@@ -2,7 +2,7 @@ package com.chaosthedude.realistictorches.conditions;
 
 import com.chaosthedude.realistictorches.config.ConfigHandler;
 import com.chaosthedude.realistictorches.registry.RealisticTorchesRegistry;
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
@@ -14,7 +14,7 @@ public class DropUnlitCondition implements LootItemCondition {
 
 	private static final DropUnlitCondition INSTANCE = new DropUnlitCondition();
 	
-	public static final Codec<DropUnlitCondition> CODEC = Codec.unit(INSTANCE);
+	public static final MapCodec<DropUnlitCondition> CODEC = MapCodec.unit(INSTANCE);
 
 	private DropUnlitCondition() {
 	}

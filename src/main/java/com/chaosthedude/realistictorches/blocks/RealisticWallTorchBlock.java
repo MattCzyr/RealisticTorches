@@ -112,12 +112,12 @@ public class RealisticWallTorchBlock extends RealisticTorchBlock {
 
 	@Override
 	public BlockState rotate(BlockState state, Rotation rot) {
-		return Blocks.WALL_TORCH.rotate(state, rot);
+		return state.setValue(HORIZONTAL_FACING, rot.rotate(state.getValue(HORIZONTAL_FACING)));
 	}
 
 	@Override
 	public BlockState mirror(BlockState state, Mirror mirror) {
-		return Blocks.WALL_TORCH.mirror(state, mirror);
+		return state.rotate(mirror.getRotation(state.getValue(HORIZONTAL_FACING)));
 	}
 
 }

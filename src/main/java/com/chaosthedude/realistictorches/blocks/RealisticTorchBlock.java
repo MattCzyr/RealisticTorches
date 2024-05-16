@@ -12,7 +12,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -54,26 +54,23 @@ public class RealisticTorchBlock extends TorchBlock {
 	}
 
 	@Override
-	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+	protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
 		if (level.isClientSide()) {
-			return InteractionResult.SUCCESS;
+			return ItemInteractionResult.SUCCESS;
 		}
-		ItemStack stack = player.getItemInHand(hand);
 		if (stack.getItem() == Items.FLINT_AND_STEEL || stack.getItem() == RealisticTorchesRegistry.MATCHBOX_ITEM.get() || ConfigHandler.lightTorchItems.get().contains(ForgeRegistries.ITEMS.getKey(stack.getItem()).toString())) {
 			playLightingSound(level, pos);
 			if (!player.isCreative() && (stack.getItem() != RealisticTorchesRegistry.MATCHBOX_ITEM.get() || ConfigHandler.matchboxDurability.get() > 0)) {
-				stack.hurtAndBreak(1, player, playerEntity -> {
-					playerEntity.broadcastBreakEvent(hand);
-				});
+				stack.hurtAndBreak(1, player, LivingEntity.getSlotForHand(hand));
 			}
 			if (level.isRainingAt(pos)) {
 				playExtinguishSound(level, pos);
 			} else {
 				changeToLit(level, pos, state);
 			}
-			return InteractionResult.SUCCESS;
+			return ItemInteractionResult.SUCCESS;
 		}
-		return super.use(state, level, pos, player, hand, hit);
+		return super.useItemOn(stack, state, level, pos, player, hand, hit);
 	}
 
 	@Override
