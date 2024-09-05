@@ -1,10 +1,10 @@
 modLoader="javafml"
-loaderVersion="[51,)"
+loaderVersion="[52,)"
 license = "CC BY-NC-SA 4.0"
 issueTrackerURL="https://github.com/MattCzyr/RealisticTorches/issues"
 [[mods]]
     modId="realistictorches"
-    version="1.21-3.2.0"
+    version="1.21.1-3.2.0"
     displayName="Realistic Torches"
     displayURL="https://www.curseforge.com/minecraft/mc-mods/realistic-torches"
     authors="ChaosTheDude"
@@ -15,12 +15,12 @@ issueTrackerURL="https://github.com/MattCzyr/RealisticTorches/issues"
 [[dependencies.realistictorches]]
     modId="forge"
     mandatory=true
-    versionRange="[51,)"
+    versionRange="[52,)"
     ordering="AFTER"
     side="BOTH"
 [[dependencies.realistictorches]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.21,)"
+    versionRange="[1.21.1,)"
     ordering="AFTER"
     side="BOTH"
